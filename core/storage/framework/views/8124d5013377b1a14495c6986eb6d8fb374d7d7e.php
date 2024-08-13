@@ -1,5 +1,4 @@
-@extends($activeTemplate . 'layouts.app')
-@section('panel')
+<?php $__env->startSection('panel'); ?>
     <div class="row">
         <div class="col-12">
             <!--begin::Post-->
@@ -30,11 +29,11 @@
                                             <!--begin::Label-->
                                             <div class="stepper-label">
                                                 <h3 class="stepper-title">
-                                                    @lang('Step 1')
+                                                    <?php echo app('translator')->get('Step 1'); ?>
                                                 </h3>
 
                                                 <div class="stepper-desc fw-semibold">
-                                                    @lang('Select Wallet')
+                                                    <?php echo app('translator')->get('Select Wallet'); ?>
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -61,10 +60,10 @@
                                             <!--begin::Label-->
                                             <div class="stepper-label">
                                                 <h3 class="stepper-title">
-                                                    @lang('Step 2')
+                                                    <?php echo app('translator')->get('Step 2'); ?>
                                                 </h3>
                                                 <div class="stepper-desc fw-semibold">
-                                                    @lang('Select Currency')
+                                                    <?php echo app('translator')->get('Select Currency'); ?>
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -91,10 +90,10 @@
                                             <!--begin::Label-->
                                             <div class="stepper-label">
                                                 <h3 class="stepper-title">
-                                                    @lang('Step 3')
+                                                    <?php echo app('translator')->get('Step 3'); ?>
                                                 </h3>
                                                 <div class="stepper-desc fw-semibold">
-                                                    @lang('Enter Amount')
+                                                    <?php echo app('translator')->get('Enter Amount'); ?>
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -121,10 +120,10 @@
                                             <!--begin::Label-->
                                             <div class="stepper-label">
                                                 <h3 class="stepper-title">
-                                                    @lang('Step 4')
+                                                    <?php echo app('translator')->get('Step 4'); ?>
                                                 </h3>
                                                 <div class="stepper-desc fw-semibold">
-                                                    @lang('Preview Transaction')
+                                                    <?php echo app('translator')->get('Preview Transaction'); ?>
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -151,10 +150,10 @@
                                             <!--begin::Label-->
                                             <div class="stepper-label">
                                                 <h3 class="stepper-title">
-                                                    @lang('Completed')
+                                                    <?php echo app('translator')->get('Completed'); ?>
                                                 </h3>
                                                 <div class="stepper-desc fw-semibold">
-                                                    @lang('Woah, we are here')
+                                                    <?php echo app('translator')->get('Woah, we are here'); ?>
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -182,7 +181,7 @@
                                         <div class="pb-10 pb-lg-15">
                                             <!--begin::Title-->
                                             <h2 class="fw-bold d-flex align-items-center text-dark">
-                                                @lang('Select Wallet')
+                                                <?php echo app('translator')->get('Select Wallet'); ?>
 
 
                                                 <span class="ms-1" data-bs-toggle="tooltip"
@@ -195,8 +194,8 @@
 
                                             <!--begin::Notice-->
                                             <div class="text-muted fw-semibold fs-6">
-                                                @lang('If you need more info, please check out ')'
-                                                <a href="#" class="link-primary fw-bold">@lang('Help Page')</a>.
+                                                <?php echo app('translator')->get('If you need more info, please check out '); ?>'
+                                                <a href="#" class="link-primary fw-bold"><?php echo app('translator')->get('Help Page'); ?></a>.
                                             </div>
                                             <!--end::Notice-->
                                         </div>
@@ -217,9 +216,9 @@
                                                         <!--begin::Info-->
                                                         <span class="d-block fw-semibold text-start">
             <span class="text-dark fw-bold d-block fs-4 mb-2">
-                @lang('Main Wallet')
+                <?php echo app('translator')->get('Main Wallet'); ?>
             </span>
-            <span class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->balance) }}</span>
+            <span class="text-muted fw-semibold fs-6"><?php echo e($general->cur_sym); ?><?php echo e(showAmount(Auth::user()->balance)); ?></span>
         </span>
                                                         <!--end::Info-->
                                                     </label>
@@ -245,22 +244,22 @@
                                                         <!--begin::Info-->
                                                         <span class="d-block fw-semibold text-start">
                                                             <span
-                                                                class="text-dark fw-bold d-block fs-4 mb-2">@lang('Referral Wallet')</span>
+                                                                class="text-dark fw-bold d-block fs-4 mb-2"><?php echo app('translator')->get('Referral Wallet'); ?></span>
                                                             <span
-                                                                class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->ref_balance) }}</span>
+                                                                class="text-muted fw-semibold fs-6"><?php echo e($general->cur_sym); ?><?php echo e(showAmount(Auth::user()->ref_balance)); ?></span>
                                                         </span>
                                                         <!--end::Info-->
                                                     </label>
                                                     <!--end::Option-->
                                                 </div>
                                                 <!--end::Col-->
-                                                @push('script')
+                                                <?php $__env->startPush('script'); ?>
                                                     <script>
                                                         function selectwallet(wallet) {
                                                             localStorage.setItem('wallet', wallet);
                                                         }
                                                     </script>
-                                                @endpush
+                                                <?php $__env->stopPush(); ?>
                                             </div>
                                             <!--end::Row-->
                                         </div>
@@ -277,12 +276,12 @@
                                         <!--begin::Heading-->
                                         <div class="pb-10 pb-lg-15">
                                             <!--begin::Title-->
-                                            <h2 class="fw-bold text-dark">@lang('Trade Currency')</h2>
+                                            <h2 class="fw-bold text-dark"><?php echo app('translator')->get('Trade Currency'); ?></h2>
                                             <!--end::Title-->
 
                                             <!--begin::Notice-->
                                             <div class="text-muted fw-semibold fs-6">
-                                                @lang('Please select base currency and trade currency below and click on the continue button to proceed to the next page').
+                                                <?php echo app('translator')->get('Please select base currency and trade currency below and click on the continue button to proceed to the next page'); ?>.
                                             </div>
                                             <!--end::Notice-->
                                         </div>
@@ -291,22 +290,22 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label mb-3">@lang('Select Base Currency')</label>
+                                            <label class="form-label mb-3"><?php echo app('translator')->get('Select Base Currency'); ?></label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
                                             <select name="country" class="form-select form-select-solid"
                                                 data-control="select2" id="youSendCurrency" data-hide-search="false"
-                                                onchange="populate()" data-placeholder="@lang('Select Base Currency')">
-                                                <option selected disableds>@lang('Select a base currency')...</option>
+                                                onchange="populate()" data-placeholder="<?php echo app('translator')->get('Select Base Currency'); ?>">
+                                                <option selected disableds><?php echo app('translator')->get('Select a base currency'); ?>...</option>
                                                 <option data-callingCode="USD" data-countrycurrency="USD"
                                                     data-isoName="USD" data-countrycontinent="USD"
-                                                    data-currencies="{{ $currencies }}" value="USD"
+                                                    data-currencies="<?php echo e($currencies); ?>" value="USD"
                                                     data-icon="currency-flag currency-flag-usd me-1">USD</option>
                                             </select> <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
-                                        @push('script')
+                                        <?php $__env->startPush('script'); ?>
                                             <script>
                                                 function populate() {
                                                     // START GET DATA \\
@@ -335,7 +334,7 @@
                                                                         <span class="d-flex align-items-center me-2">
                                                                             <span class="symbol symbol-50px me-6">
                                                                                 <span class="symbol-label bg-light-primary">
-                                                                                    <i class="ti ti-image fs-2x text-warning"><img src="{{ url('/') }}/assets/images/coins/${plan['image']}" width="30" class="path1"/></i>
+                                                                                    <i class="ti ti-image fs-2x text-warning"><img src="<?php echo e(url('/')); ?>/assets/images/coins/${plan['image']}" width="30" class="path1"/></i>
                                                                                 </span>
 
                                                                             </span>
@@ -356,7 +355,7 @@
 
                                                     document.getElementById('providers').innerHTML =
                                                         ` <div class="mb-0"> <label class="d-flex align-items-center form-label mb-5">
-                                                                        @lang('Select Asset Currency')
+                                                                        <?php echo app('translator')->get('Select Asset Currency'); ?>
                                                                         <span class="ms-1"  data-bs-toggle="tooltip" title="Please select asset currency" >
                                                                         <i class="ti ti-alert-circle text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span>
                                                                         </label> ${html} </div>
@@ -383,7 +382,7 @@
                                                                   `;
                                                     KTApp.showPageLoading();
                                                     var raw = JSON.stringify({
-                                                        _token: "{{ csrf_token() }}",
+                                                        _token: "<?php echo e(csrf_token()); ?>",
                                                         coin: operatorId,
                                                         amount: 1,
                                                     });
@@ -395,7 +394,7 @@
                                                         },
                                                         body: raw
                                                     };
-                                                    fetch("{{ route('user.crypto.buy.coin.details') }}", requestOptions)
+                                                    fetch("<?php echo e(route('user.crypto.buy.coin.details')); ?>", requestOptions)
                                                         .then(response => response.text())
                                                         .then(result => {
                                                             let html = '';
@@ -408,7 +407,7 @@
                                                                 document.getElementById("globalrate").innerHTML = "1" + resp.rate.fiat_symbol +
                                                                     "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.rate.crypto_symbol;
                                                                 document.getElementById("ourrate").innerHTML = "1" + resp.rate.fiat_symbol + "&nbsp;=&nbsp;" +
-                                                                    resp.ourrate + "{{$general->cur_text}}";
+                                                                    resp.ourrate + "<?php echo e($general->cur_text); ?>";
                                                             }
 
                                                         })
@@ -420,7 +419,7 @@
                                                 }
                                                 // END GET OPERATORS
                                             </script>
-                                        @endpush
+                                        <?php $__env->stopPush(); ?>
 
 
                                         <!--begin::Input group-->
@@ -444,12 +443,12 @@
                                         <!--begin::Heading-->
                                         <div class="pb-10 pb-lg-12">
                                             <!--begin::Title-->
-                                            <h2 class="fw-bold text-dark">@lang('Trade Amount')</h2>
+                                            <h2 class="fw-bold text-dark"><?php echo app('translator')->get('Trade Amount'); ?></h2>
                                             <!--end::Title-->
 
                                             <!--begin::Notice-->
                                             <div class="text-muted fw-semibold fs-6">
-                                                @lang('Please enter trade amount below')</a>.
+                                                <?php echo app('translator')->get('Please enter trade amount below'); ?></a>.
                                             </div>
                                             <!--end::Notice-->
                                         </div>
@@ -458,7 +457,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-10">
                                             <!--begin::Label-->
-                                            <label class="form-label required">@lang('Enter Amount')</label>
+                                            <label class="form-label required"><?php echo app('translator')->get('Enter Amount'); ?></label>
                                             <!--end::Label-->
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">USD</span>
@@ -492,13 +491,13 @@
                                         <!--begin::Heading-->
                                         <div class="pb-10 pb-lg-15">
                                             <!--begin::Title-->
-                                            <h2 class="fw-bold text-dark">@lang('Preview Transaction')</h2>
+                                            <h2 class="fw-bold text-dark"><?php echo app('translator')->get('Preview Transaction'); ?></h2>
                                             <!--end::Title-->
 
                                             <!--begin::Notice-->
                                             <div class="text-muted fw-semibold fs-6">
-                                                @lang('If you need more info, please check out ')
-                                                <a href="#" class="text-primary fw-bold">@lang('Help Page')</a>.
+                                                <?php echo app('translator')->get('If you need more info, please check out '); ?>
+                                                <a href="#" class="text-primary fw-bold"><?php echo app('translator')->get('Help Page'); ?></a>.
                                             </div>
                                             <!--end::Notice-->
                                         </div>
@@ -523,7 +522,7 @@
                                                                         class="path2"></span><span
                                                                         class="path3"></span><span
                                                                         class="path4"></span><span
-                                                                        class="path5"></span></i> @lang('Asset')
+                                                                        class="path5"></span></i> <?php echo app('translator')->get('Asset'); ?>
 
 
                                                                 <span class="ms-1" data-bs-toggle="tooltip"
@@ -545,7 +544,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <i class="ti ti-globe fs-2 me-2"><span
                                                                         class="path1"></span><span
-                                                                        class="path2"></span></i> @lang('Global Price')
+                                                                        class="path2"></span></i> <?php echo app('translator')->get('Global Price'); ?>
 
 
                                                                 <span class="ms-1" data-bs-toggle="tooltip"
@@ -567,7 +566,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <i class="ti ti-exchange fs-2 me-2"><span
                                                                         class="path1"></span><span
-                                                                        class="path2"></span></i> @lang('Our Rate')
+                                                                        class="path2"></span></i> <?php echo app('translator')->get('Our Rate'); ?>
 
                                                                 <span class="ms-1" data-bs-toggle="tooltip"
                                                                     title="This is the rate at which we buy your asset">
@@ -587,7 +586,7 @@
 
 
                                             <label class="fs-6 fw-semibold mb-2">
-                                                @lang('Enter Transaction Password')
+                                                <?php echo app('translator')->get('Enter Transaction Password'); ?>
                                                 <span class="ms-1" data-bs-toggle="tooltip"
                                                     title="Please enter your transaction password to authenticate the wallet debit">
                                                     <i class="ti ti-alert-circle text-gray-500 fs-6"><span
@@ -603,7 +602,7 @@
                                             <div id="passmessage"></div>
                                         </div>
                                         <!--end::Input group-->
-                                        @push('script')
+                                        <?php $__env->startPush('script'); ?>
                                             <script>
                                                 function verifypassword(e) {
 
@@ -620,7 +619,7 @@
                                                     </button>`);
 
                                                     var raw = JSON.stringify({
-                                                        _token: "{{ csrf_token() }}",
+                                                        _token: "<?php echo e(csrf_token()); ?>",
                                                         password: e.value,
                                                     });
 
@@ -631,7 +630,7 @@
                                                         },
                                                         body: raw
                                                     };
-                                                    fetch("{{ route('user.trxpass') }}", requestOptions)
+                                                    fetch("<?php echo e(route('user.trxpass')); ?>", requestOptions)
                                                         .then(response => response.text())
                                                         .then(result => {
                                                             resp = JSON.parse(result);
@@ -651,7 +650,7 @@
                                                     // END GET DATA \\
                                                 }
                                             </script>
-                                        @endpush
+                                        <?php $__env->stopPush(); ?>
 
                                     </div>
                                     <!--end::Wrapper-->
@@ -710,9 +709,9 @@
 
             </div>
         </div>
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @push('script')
+    <?php $__env->startPush('script'); ?>
         <script></script>
         <script>
             "use strict";
@@ -836,7 +835,7 @@
                                                 function submitform() {
                                                     $("#passmessage").html(``);
                                                     var raw = JSON.stringify({
-                                                        _token: "{{ csrf_token() }}",
+                                                        _token: "<?php echo e(csrf_token()); ?>",
                                                         password: document
                                                             .getElementById(
                                                                 'password')
@@ -861,7 +860,7 @@
                                                         },
                                                         body: raw
                                                     };
-                                                    fetch("{{ route('user.crypto.buy.coin') }}",
+                                                    fetch("<?php echo e(route('user.crypto.buy.coin')); ?>",
                                                             requestOptions)
                                                         .then(response => response
                                                             .text())
@@ -896,20 +895,20 @@
                                                             <div class=" ">
                                                                 <!--begin::Title-->
                                                                 <section class="text-center">
-                                                                    <h5 class="fw-semibold fs-5 text-info">@lang('Payment received and transaction completed')</h5>
-                                                                    <h5 class="fw-semibold fs-5text-danger ">@lang('PLEASE, DO NOT REFRESH YOUR BROWSER')</h5>
-                                                                    <img src="{{ asset('assets/assets/dist/images/backgrounds/paymentcomplete.jpeg') }}" alt="" class="img-fluid mb-4"
+                                                                    <h5 class="fw-semibold fs-5 text-info"><?php echo app('translator')->get('Payment received and transaction completed'); ?></h5>
+                                                                    <h5 class="fw-semibold fs-5text-danger "><?php echo app('translator')->get('PLEASE, DO NOT REFRESH YOUR BROWSER'); ?></h5>
+                                                                    <img src="<?php echo e(asset('assets/assets/dist/images/backgrounds/paymentcomplete.jpeg')); ?>" alt="" class="img-fluid mb-4"
                                                                         width="300">
 
                                                                         <br>
-                                                                        <h6 class="fw-semibold text-danger mb-7">@lang('Please click the view order button below to view the transaction log'): </h6>
+                                                                        <h6 class="fw-semibold text-danger mb-7"><?php echo app('translator')->get('Please click the view order button below to view the transaction log'); ?>: </h6>
                                                                         <div class="order-summary border rounded p-4 my-4">
                                                                             <div class="p-3">
-                                                                            <h5 class="fs-5 fw-semibold mb-4">@lang('Payment Summary')</h5>
+                                                                            <h5 class="fs-5 fw-semibold mb-4"><?php echo app('translator')->get('Payment Summary'); ?></h5>
 
                                                                             <div class="d-flex justify-content-between mb-4">
                                                                                 <p class="mb-0 fs-4"><b>Payment Value</b></p>
-                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.fiat}{{$general->cur_text}}</b></h6>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.fiat}<?php echo e($general->cur_text); ?></b></h6>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between mb-4">
                                                                                 <p class="mb-0 fs-4"><b>Crypto Value</b></p>
@@ -921,7 +920,7 @@
                                                                                 <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.usd}USD</b></h6>
                                                                             </div>
 
-                                                                            <a href="{{route('user.crypto.buy.log')}}" class="btn btn-primary">
+                                                                            <a href="<?php echo e(route('user.crypto.buy.log')); ?>" class="btn btn-primary">
                                                                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                                                                 View Order
                                                                             </a>
@@ -973,7 +972,7 @@
                 id = entry.split('|')[0]
                 coin = entry.split('|')[1]
                 var raw = JSON.stringify({
-                    _token: "{{ csrf_token() }}",
+                    _token: "<?php echo e(csrf_token()); ?>",
                     invoice: id,
                     coin: coin,
                 });
@@ -984,13 +983,13 @@
                     },
                     body: raw
                 };
-                fetch("{{ route('user.crypto.sell.confirm') }}", requestOptions)
+                fetch("<?php echo e(route('user.crypto.sell.confirm')); ?>", requestOptions)
                     .then(response => response.text())
                     .then(result => {
                         const resp = JSON.parse(result);
                         SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
                         if (resp.ok != false) {
-                            window.location.href = "{{route('user.crypto.sell.log')}}";
+                            window.location.href = "<?php echo e(route('user.crypto.sell.log')); ?>";
                         }
                     })
                     .catch(error => {
@@ -1010,8 +1009,10 @@
 
         }
         </script>
-    @endpush
+    <?php $__env->stopPush(); ?>
 
-    @push('breadcrumb-plugins')
-        <a class="btn btn-sm btn-primary" href="{{ route('user.crypto.buy.log') }}"> <i class="ti ti-printer"></i> @lang('Trade Log')</a>
-    @endpush
+    <?php $__env->startPush('breadcrumb-plugins'); ?>
+        <a class="btn btn-sm btn-primary" href="<?php echo e(route('user.crypto.buy.log')); ?>"> <i class="ti ti-printer"></i> <?php echo app('translator')->get('Trade Log'); ?></a>
+    <?php $__env->stopPush(); ?>
+
+<?php echo $__env->make($activeTemplate . 'layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\vb\core\resources\views/templates/basic/user/assets/crypto/buycrypto/buy.blade.php ENDPATH**/ ?>
