@@ -29,15 +29,15 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
 });
 
 Route::namespace('User')->controller('InvoiceController')->prefix('invoice')->group(function () {
-    Route::get('/pay/{id}', 'invoice_pay'); 
-    Route::post('/pay/{id}', 'invoice_pay_submit'); 
-    Route::get('/confirm', 'invoiceConfirm')->name('invoice.confirm'); 
+    Route::get('/pay/{id}', 'invoice_pay');
+    Route::post('/pay/{id}', 'invoice_pay_submit');
+    Route::get('/confirm', 'invoiceConfirm')->name('invoice.confirm');
 });
 
 Route::namespace('User')->controller('QrController')->group(function () {
     Route::get('/qr/{id?}', 'index')->name('qr');
     Route::post('/qr/{id}', 'receivepayment');
-}); 
+});
 
 
 Route::middleware('auth')->name('user.')->group(function () {
@@ -46,7 +46,7 @@ Route::middleware('auth')->name('user.')->group(function () {
         Route::get('authorization', 'authorizeForm')->name('authorization');
         Route::get('resend-verify/{type}', 'sendVerifyCode')->name('send.verify.code');
         Route::post('verify-email', 'emailVerification')->name('verify.email');
-        Route::post('verify-mobile', 'mobileVerification')->name('verify.mobile'); 
+        Route::post('verify-mobile', 'mobileVerification')->name('verify.mobile');
         Route::post('verify-g2fa', 'g2faVerification')->name('go2fa.verify');
     });
 
@@ -71,7 +71,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('p2p/log', 'p2plog')->name('p2p.history');
                 Route::get('p2p/transfer', 'p2p')->name('p2p');
                 Route::post('p2p/transfer', 'p2ppost');
-      
+
                 // Withdraw
                 Route::get('/withdraw', 'withdrawMoney')->name('withdraw');
                 Route::post('/withdraw', 'withdrawStore')->name('withdraw.money');
@@ -88,13 +88,13 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('transactions', 'transactions')->name('transactions');
 
                 Route::get('attachment-download/{fil_hash}', 'attachmentDownload')->name('attachment.download');
-                 
+
             });
 
             Route::controller('InvoiceController')->prefix('invoice')->group(function () {
                 Route::get('invoice/{id}', 'invoice')->name('invoice');
                 Route::post('invoice/{id}', 'invoicesubmit');
-            }); 
+            });
 
 
             Route::controller('GiftcardAutoController')->prefix('giftcard')->group(function () {
@@ -103,7 +103,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('digital/history', 'giftcardHistory')->name('giftcard.digital.history');
                 Route::get('digital/details/{id}', 'giftcardDetails')->name('giftcard.details');
                 Route::get('digital/redeem/code/{id}', 'giftcardRedeemCode')->name('giftcard.redeem');
-                
+
                 Route::get('/giftcard/getToken', 'authenticate')->name('giftcard.authenticate');
                 Route::get('/buy/giftcard', 'buygiftcard')->name('buy.giftcard');
                 Route::get('/fetch/giftcard', 'fecthgiftcards')->name('fecthgiftcards');
@@ -137,12 +137,12 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('/{id}', 'createMilestone')->name('create');
                 Route::post('/pay/{id}', 'payMilestone')->name('pay');
             });
-            
+
             //Giftcards
             Route::controller('GiftcardController')->prefix('giftcard')->group(function () {
             Route::get('/index', 'index')->name('tradegift');
             Route::get('/sell-giftcard', 'sellgift')->name('sellgift');
-            Route::get('/sell-gift-card/{id}', 'selectgiftcard')->name('selectgiftcardsell'); 
+            Route::get('/sell-gift-card/{id}', 'selectgiftcard')->name('selectgiftcardsell');
             Route::post('/sell-gift-card/{id}', 'sellcard')->name('sellcard');
             Route::get('/sell/giftcard-log', 'sellcardlog')->name('sellcardlog');
 
@@ -152,7 +152,7 @@ Route::middleware('auth')->name('user.')->group(function () {
             Route::get('/buy/giftcard-log', 'buycardlog')->name('buycardlog');
 
             });
- 
+
                             //Buy Crypto
                             Route::controller('BuyCryptoController')->prefix('buy/asset')->name('crypto.')->group(function () {
                                 Route::get('/', 'index')->name('buy.index');
@@ -160,10 +160,10 @@ Route::middleware('auth')->name('user.')->group(function () {
                                 Route::post('request', 'buy')->name('buy.request');
                                 Route::post('coin/details', 'coindetails')->name('buy.coin.details');
                                 Route::post('coin/buy', 'buyProcess')->name('buy.coin');
-                                Route::get('log', 'log')->name('buy.log'); 
-                              
+                                Route::get('log', 'log')->name('buy.log');
+
                             });
-            
+
                             //Sell Crypto
                             Route::controller('SellCryptoController')->prefix('sell/asset')->name('crypto.')->group(function () {
                                 Route::get('/', 'index')->name('sell.index');
@@ -173,10 +173,10 @@ Route::middleware('auth')->name('user.')->group(function () {
                                 Route::post('coin/sell', 'sellProcess')->name('sell.coin');
                                 Route::post('sell/verify', 'sellConfirm')->name('sell.confirm');
                                 Route::post('sell/verify/manual', 'sellConfirmManual')->name('sell.confirm.manual');
-                                Route::get('log', 'log')->name('sell.log'); 
+                                Route::get('log', 'log')->name('sell.log');
                             });
 
-             
+
             //Bank Transfer
             Route::controller('BankTransferController')->group(function () {
                 Route::get('bank/transfer', 'index')->name('bank.transfer');
@@ -184,8 +184,8 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('bank/validate/strowallet', 'validatebankstrowallet')->name('bank.validate.strowallet');
                 Route::post('bank/transfer/strowallet', 'banktransferStrowallet')->name('bank.transfer.strowallet');
                 Route::post('bank/validate/monnify', 'validatebankmonnify')->name('bank.validate.monnify');
-                Route::post('bank/transfer/monnify', 'banktransfernubanMonnify')->name('bank.transfer.monnify'); 
-                Route::get('bank/transfer/log', 'history')->name('bank.transfer.history'); 
+                Route::post('bank/transfer/monnify', 'banktransfernubanMonnify')->name('bank.transfer.monnify');
+                Route::get('bank/transfer/log', 'history')->name('bank.transfer.history');
             });
 
 
@@ -202,15 +202,15 @@ Route::middleware('auth')->name('user.')->group(function () {
                 });
 
                 Route::controller('VoucherController')->prefix('voucher')->group(function () {
-                    Route::get('/', 'index')->name('voucher.index'); 
-                    Route::get('/create', 'create')->name('voucher.create'); 
-                    Route::post('/create', 'create_voucher');  
-                    Route::post('/redeem', 'redeem')->name('voucher.redeem'); 
+                    Route::get('/', 'index')->name('voucher.index');
+                    Route::get('/create', 'create')->name('voucher.create');
+                    Route::post('/create', 'create_voucher');
+                    Route::post('/redeem', 'redeem')->name('voucher.redeem');
                     Route::get('history', 'history')->name('voucher.history');
                 });
 
-                
-                
+
+
                 Route::middleware('vendor.account')->group(function () {
 
                     Route::controller('SavingsController')->prefix('savings')->group(function () {
@@ -224,31 +224,31 @@ Route::middleware('auth')->name('user.')->group(function () {
                     });
 
                     Route::controller('InvoiceController')->prefix('invoice')->group(function () {
-                        Route::get('/', 'index')->name('invoice.index'); 
-                        Route::get('/create', 'create')->name('invoice.create'); 
-                        Route::post('/create', 'create_link'); 
-                        Route::get('/edit/{id}', 'edit')->name('invoice.edit'); 
-                        Route::post('/edit/{id}', 'update'); 
+                        Route::get('/', 'index')->name('invoice.index');
+                        Route::get('/create', 'create')->name('invoice.create');
+                        Route::post('/create', 'create_link');
+                        Route::get('/edit/{id}', 'edit')->name('invoice.edit');
+                        Route::post('/edit/{id}', 'update');
                         Route::get('history', 'history')->name('invoice.history');
                         Route::get('invoice/{id}', 'invoice')->name('invoice');
                     });
-                    
+
                     Route::controller('StorefrontController')->prefix('storefront')->group(function () {
-                        Route::get('/', 'index')->name('storefront.index'); 
-                        Route::get('/create', 'create')->name('storefront.create'); 
-                        Route::post('/create', 'create_store'); 
+                        Route::get('/', 'index')->name('storefront.index');
+                        Route::get('/create', 'create')->name('storefront.create');
+                        Route::post('/create', 'create_store');
                         Route::get('history', 'history')->name('storefront.history');
-                        Route::get('/edit/{id}', 'edit')->name('storefront.edit'); 
-                        Route::post('/edit/{id}', 'update'); 
-                        Route::get('/products/{id}', 'products')->name('storefront.products'); 
-                        Route::post('/products/{id}', 'productsAdd'); 
-                        Route::post('/product/{id}', 'productUpdate')->name('storefront.product'); 
+                        Route::get('/edit/{id}', 'edit')->name('storefront.edit');
+                        Route::post('/edit/{id}', 'update');
+                        Route::get('/products/{id}', 'products')->name('storefront.products');
+                        Route::post('/products/{id}', 'productsAdd');
+                        Route::post('/product/{id}', 'productUpdate')->name('storefront.product');
                         Route::get('storefront/{id}', 'storefront')->name('storefront');
                         Route::post('product/buy/{id}', 'productBuy')->name('product.buy');
                         Route::get('purchase/order', 'Myorder')->name('storefront.purchase.order');
                         Route::get('order/status/{id}', 'orderStatus')->name('storefront.order.status');
                     });
-                    
+
                     Route::controller('VirtualCardController')->prefix('virtualcard')->group(function () {
                         Route::get('/request', 'index')->name('virtualcard.index');
                         Route::post('/request', 'Request_virtualCard');
@@ -260,7 +260,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                         Route::post('status/password/{id}', 'password')->name('virtualcard.status.password');
                         Route::post('fund/balance/{id}', 'fundbalance')->name('virtualcard.fund.balance');
                     });
-            
+
                 });
 
 
@@ -277,7 +277,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('cart/cart-data/', 'getCart')->name('event.get-cart-data');
                 Route::get('cart/cart-data2/', 'getCart2')->name('event.get-cart-data2');
                 Route::get('get_cart-total/', 'getCartTotal')->name('event.get-cart-total');
-                Route::post('remove_cart_item/{id}', 'removeCartItem')->name('event.remove-cart-item'); 
+                Route::post('remove_cart_item/{id}', 'removeCartItem')->name('event.remove-cart-item');
 
                 Route::get('history', 'history')->name('event.history');
              });
@@ -293,7 +293,7 @@ Route::middleware('auth')->name('user.')->group(function () {
             Route::controller('AirtimeController')->prefix('airtime')->group(function () {
                 Route::get('/', 'airtime')->name('airtime.index');
                 Route::get('buy/airtime', 'buy_airtime')->name('buy.airtime');
-                Route::post('buy/airtime', 'buy_airtime_post')->name('buy.airtime');
+                Route::post('buy/airtime', 'buy_airtime_post_giftbill')->name('buy.airtime');
                 Route::get('airtime_operators', 'airtime_operators')->name('airtime.operators');
 
                 Route::get('/airtime/local', 'airtimelocal')->name('airtime.indexlocal');
@@ -358,7 +358,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('cabletv_operator_id', 'operatorsUtilitydetails')->name('cabletv.operatorsUtilitydetails');
                 Route::get('history', 'history')->name('cabletv.history');
             });
-            
+
 
             Route::controller('InsuranceController')->prefix('insurance')->group(function () {
                 Route::get('/', 'insurance')->name('insurance.index');
@@ -369,8 +369,8 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('buy/insurance/personal', 'buy_insurance_post_personal')->name('buy.insurance.personal');
                 Route::get('history', 'history')->name('insurance.history');
             });
-            
-             
+
+
             //Profile setting
             Route::controller('ProfileController')->group(function () {
                 Route::get('downlines', 'downlines')->name('downlines');

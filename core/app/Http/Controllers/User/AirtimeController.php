@@ -5,9 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\GoogleAuthenticator;
-use App\Models\Order; 
-use App\Models\AirtimeCash; 
-use App\Models\GeneralSetting; 
+use App\Models\Order;
+use App\Models\AirtimeCash;
+use App\Models\GeneralSetting;
  use App\Models\AdminNotification;
 use App\Models\User;
 use App\Models\Transaction;
@@ -20,7 +20,7 @@ use Carbon\Carbon;
 class AirtimeController extends Controller
 {
 
- 
+
     public function __construct()
     {
         $this->middleware('airtime.status');
@@ -65,7 +65,7 @@ class AirtimeController extends Controller
         $reply = json_decode($response,true);
         return $reply;
     }
-    
+
     public function airtime_operators(Request $request)
     {
 
@@ -81,7 +81,7 @@ class AirtimeController extends Controller
 
 
        // $json = file_get_contents('php://input');
-       // $input = json_decode($json, true); 
+       // $input = json_decode($json, true);
 
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -112,12 +112,12 @@ class AirtimeController extends Controller
             'code' => '00',
             'response' => $resp,
              );
-                 
+
              return response()->json(['status'=>'true','message'=>'Network Fetched','content'=>$reply],200);
         }
- 
+
     }
-    
+
 
     public function operatorsdetails($id)
     {
@@ -182,7 +182,7 @@ class AirtimeController extends Controller
         $token = getToken('topups');
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $password = $input['password'];
         $amount = $input['amount'];
         $phone = $input['phone'];
@@ -206,7 +206,7 @@ class AirtimeController extends Controller
         $min = $operator['minAmount'];
         $max = $operator['maxAmount'];
         $rate = $operator['fx']['rate'];
-        
+
         if($amount < $min &&  $min > 0)
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Minimum amount you can purchase is '.getAmount($min)],400);
@@ -312,11 +312,11 @@ class AirtimeController extends Controller
                 'currency'        => @$operatorCurrency,
                 'amount'          => @showAmount($amount),
                 'rate'           =>  @showAmount($payment),
-                'beneficiary'     => @$phone, 
+                'beneficiary'     => @$phone,
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$code,
             ]);
-            
+
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $response['transactionId']],200);
         }
         else
@@ -326,12 +326,12 @@ class AirtimeController extends Controller
         //return json_decode($resp,true);
     }
 
-     
+
 
     public function airtimelocal(Request $request)
     {
         $pageTitle = 'Buy Airtime';
-        $countries = []; 
+        $countries = [];
         $networks =  '[
             {
                 "name": "MTN",
@@ -339,7 +339,7 @@ class AirtimeController extends Controller
                 "networkid": "mtn"
             },
             {
-                "name": "AIRTEL", 
+                "name": "AIRTEL",
                 "logo": "airtel.jpeg",
                 "networkid": "airtel"
             },
@@ -354,17 +354,17 @@ class AirtimeController extends Controller
                 "networkid": "etisalat"
             }
             ]';
-        $general   = gs();         
+        $general   = gs();
         return view($this->activeTemplate . 'user.bills.airtime.airtime_buy_local', compact('pageTitle','countries','networks'));
      }
 
      public function buy_airtime_post_local()
     {
-        $general   = gs(); 
+        $general   = gs();
         $user = auth()->user();
         $json = file_get_contents('php://input');
         $input = json_decode($json, true);
-                
+
         if($general->airtime_provider == 'VTPASS')
         {
            return $this->buy_airtime_post_vtpass($input);
@@ -374,10 +374,10 @@ class AirtimeController extends Controller
            return $this->buy_airtime_post_n3tdata($input);
         }
     }
-   
+
     public function buy_airtime_post_vtpass($input)
     {
-        $user = auth()->user(); 
+        $user = auth()->user();
         $password = $input['password'];
         $amount =  @$input['amount'];
         $operator = @$input['operator'];
@@ -458,7 +458,7 @@ class AirtimeController extends Controller
         return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'.@$resp],400);
     }
 
-  
+
     if(!isset($reply['content']['transactions']['transactionId']))
     {
         return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'],400);
@@ -514,11 +514,149 @@ class AirtimeController extends Controller
                 'currency'        => @$operator,
                 'amount'          => @showAmount($amount),
                 'rate'           =>  @showAmount($amount),
-                'beneficiary'     => @$phone, 
+                'beneficiary'     => @$phone,
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$trx,
             ]);
-            
+
+            return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $order->trx],200);
+        }
+        else
+        {
+            return response()->json(['ok'=>false,'status'=>'danger','message'=> $response['message']. 'API ERROR'],400);
+        }
+        //return json_decode($resp,true);
+    }
+    public function buy_airtime_post_giftbill($input)
+    {
+        $user = auth()->user();
+        $password = $input['password'];
+        $amount =  @$input['amount'];
+        $operator = @$input['operator'];
+        $wallet = @$input['wallet'];
+        $phone = @$input['phone'];
+
+        if (Hash::check($password, $user->trx_password)) {
+            $passcheck = true;
+            } else {
+            $passcheck = false;
+                return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
+            }
+
+
+        if($wallet == 'main')
+        {
+            $balance = $user->balance;
+        }
+        else
+        {
+            $balance = $user->ref_balance;
+        }
+        if($amount > $balance)
+        {
+            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
+        }
+
+        $mode = env('MODE');
+        $auth = env('GIFTBILLS');
+        $datecode = date('Y').date('m').date('d').date('H').date('i').date('s');
+        $codex = substr(str_shuffle('01234567890') , 0 , 5 );
+        $trx = $datecode.$codex;
+        if($mode == 'TEST')
+        {
+        $url = 'https://sandbox.giftbills.com/api/v1/airtime/topup';
+        }
+        else
+        {
+        $url = 'https://giftbills.com/api/v1/airtime/topup';
+        }
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS =>'{
+        "amount": "'.$amount.'",
+        "number": "'.$phone.'",
+        "provider": "'.$operator.'",
+        "reference": "'.$trx.'"
+        }',
+      CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic '.$auth,
+    'Content-Type: application/json',
+      ),
+    ));
+
+    $resp = curl_exec($curl);
+    $response = $resp;
+    $reply = json_decode($resp, true);
+    // return $response;
+    curl_close($curl);
+    if($reply['success'] != true)
+    {
+        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'.@$resp],400);
+    }
+
+        // END AIRTIME VENDING \\
+        if($reply['success'] == true )
+        {
+            if($wallet == 'main')
+            {
+                $user->balance -= $amount;
+                $balance_after = $user->balance;
+            }
+            else
+            {
+                $user->ref_balance -= $amount;
+                $balance_after = $user->ref_balance;
+            }
+            $user->save();
+            $order               = new Order();
+            $order->user_id      = $user->id;
+            $order->type         =  'airtime';
+            $order->val_1        = $phone;
+            $order->product_id   = $operator;
+            $order->product_name = @$operator;
+            $order->product_logo = @$operator;
+            $order->details      = json_encode($response,true);
+            $order->quantity     = 1;
+            $order->price        = @$amount;
+            $order->currency     = 'NGN';
+            $order->status       = @$reply['data']['status'];
+            $order->payment      = @$amount;
+            $order->trx          = $trx;
+            $order->source       = $wallet;
+            $order->balance_before  = $balance;
+            $order->balance_after   = $balance_after;
+            $order->transaction_id  = @$reply['data']['reference'];
+            $order->save();
+
+            $transaction               = new Transaction();
+            $transaction->user_id      = $order->user_id;
+            $transaction->amount       = $order->payment;
+            $transaction->post_balance = $order->balance_after;
+            $transaction->charge       = 0;
+            $transaction->trx_type     = '-';
+            $transaction->details      = 'Purchase airtime Via ' . strToUpper($wallet).' Wallet';
+            $transaction->trx          = $order->trx;
+            $transaction->remark       = 'airtime';
+            $transaction->save();
+
+            notify($user,'AIRTIME_BUY', [
+                'provider'        => @$operator,
+                'currency'        => @$operator,
+                'amount'          => @showAmount($amount),
+                'rate'           =>  @showAmount($amount),
+                'beneficiary'     => @$phone,
+                'purchase_at'     => @Carbon::now(),
+                'trx'             => @$trx,
+            ]);
+
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $order->trx],200);
         }
         else
@@ -531,7 +669,7 @@ class AirtimeController extends Controller
 
     public function buy_airtime_post_n3tdata($input)
     {
-        $user = auth()->user(); 
+        $user = auth()->user();
         $password = $input['password'];
         $amount =  @$input['amount'];
         $operator = @$input['operator'];
@@ -540,21 +678,21 @@ class AirtimeController extends Controller
 
         if($operator == 'mtn')
         {
-          $operatorId = 1;  
+          $operatorId = 1;
         }
         if($operator == 'airtel')
         {
-          $operatorId = 2;  
+          $operatorId = 2;
         }
         if($operator == 'glo')
         {
-          $operatorId = 3;  
+          $operatorId = 3;
         }
         if($operator == 'etisalat')
         {
-          $operatorId = 4;  
+          $operatorId = 4;
         }
-        
+
 
         if (Hash::check($password, $user->trx_password)) {
             $passcheck = true;
@@ -606,13 +744,13 @@ class AirtimeController extends Controller
         $resp = curl_exec($curl);
         curl_close($curl);
         //var_dump($resp);
-        $response = json_decode($resp,true); 
+        $response = json_decode($resp,true);
 
         if(!isset($response['status']) && !isset($response['newbal']))
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> json_encode($response).'Sorry we cant process this request at the moment'],400);
         }
- 
+
         // END AIRTIME VENDING \\
         if($response['status'] == 'success')
         {
@@ -663,11 +801,11 @@ class AirtimeController extends Controller
                 'currency'        => @$operator,
                 'amount'          => @showAmount($amount),
                 'rate'           =>  @showAmount($amount),
-                'beneficiary'     => @$phone, 
+                'beneficiary'     => @$phone,
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$trx,
             ]);
-            
+
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $order->trx],200);
         }
         else
@@ -702,34 +840,34 @@ class AirtimeController extends Controller
 
     public function to_cash_request_fee()
     {
-        
+
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $fee = $input['fee'];
         $network = $input['network'];
         $range = AirtimeCash::whereNetwork($network)->whereStatus(1)->get();
         if($fee == true)
-        { 
+        {
             if(count($range) < 1)
             {
-                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Sorry we are not buying this network at the moment','range'=> $range],200); 
+                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Sorry we are not buying this network at the moment','range'=> $range],200);
             }
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Network Available','range'=> $range],200);
         }
 
             $amount = $input['amount'];
-         
+
             foreach($range as $data)
             {
                 if($amount >= $data->min && $amount <= $data->max)
                 {
                     return response()->json(['ok'=>true,'status'=>'success','message'=> 'Successful','range'=> $data],200);
                 }
-            } 
-        
-        return response()->json(['ok'=>false,'status'=>'error','message'=>'Sorry, there is no amount range in the entered amount for this network'],200);  
-         
+            }
+
+        return response()->json(['ok'=>false,'status'=>'error','message'=>'Sorry, there is no amount range in the entered amount for this network'],200);
+
     }
 
 
@@ -752,7 +890,7 @@ class AirtimeController extends Controller
                 {
                     $com = (@$request->amount / 100) * @$data->fee; // Correct Calculation
                 }
-            } 
+            }
             if(count($range) < 1)
             {
             $notify[] = ['error', 'Sorry, we are not buying this network amount at the moment'];
@@ -768,10 +906,10 @@ class AirtimeController extends Controller
             $order->payment        = $request->amount - $com;
             $order->status       = 0;
             $order->trx          = getTrx();
-            $order->save(); 
+            $order->save();
             $notify[] = ['success', 'Airtime Logged Successfuly'];
             return redirect()->route('user.airtime.tocash.history')->withNotify($notify);
-            
+
         } else {
             $notify[] = ['error', 'Invalid transaction password'];
             return back()->withNotify($notify);
@@ -789,5 +927,5 @@ class AirtimeController extends Controller
 
 
 
-    
+
 }
