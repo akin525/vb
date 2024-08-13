@@ -430,7 +430,7 @@
     <div class="row">
         <?php $__currentLoopData = $coins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-sm-6 col-xl-6">
-                <div class="card bg-light-info shadow-none">
+                <div class="card  bg-light-info shadow-none">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center">
                             <h6 class="mb-0 ms-3"><?php echo e($data->symbol); ?></h6>
