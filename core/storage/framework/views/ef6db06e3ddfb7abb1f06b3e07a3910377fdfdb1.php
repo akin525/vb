@@ -511,26 +511,7 @@
             <!--end::Wrapper-->
     </div>
 
-    <div class="row">
-        <?php $__currentLoopData = $coins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-sm-6 col-xl-6">
-                <div class="card  bg-light-info shadow-none">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center">
-                            <h6 class="mb-0 ms-3"><?php echo e($data->symbol); ?></h6>
-                            <div class="ms-auto text-primary d-flex align-items-center">
-                                <span class="fs-2 fw-bold" id="<?php echo e($data->symbol); ?>percent"><i class="fa fa-spinner fa-spin"></i></span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-4">
-                            <a href="<?php echo e(route('user.crypto.wallet',encrypt($data->id))); ?>" class="btn btn-sm btn-primary"><?php echo app('translator')->get('View Wallet'); ?></a>
-                            <span class="fw-bold"><?php echo app('translator')->get('Price'); ?>: <span id="<?php echo e($data->symbol); ?>"><i class="fa fa-spinner fa-spin"></i></span> </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
+  
 
 <!--begin::Row-->
 <div class="row gy-5 g-xl-10">

@@ -512,26 +512,7 @@
             <!--end::Wrapper-->
     </div>
 
-    <div class="row">
-        @foreach($coins as $data)
-            <div class="col-sm-6 col-xl-6">
-                <div class="card  bg-light-info shadow-none">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center">
-                            <h6 class="mb-0 ms-3">{{$data->symbol}}</h6>
-                            <div class="ms-auto text-primary d-flex align-items-center">
-                                <span class="fs-2 fw-bold" id="{{$data->symbol}}percent"><i class="fa fa-spinner fa-spin"></i></span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-4">
-                            <a href="{{route('user.crypto.wallet',encrypt($data->id))}}" class="btn btn-sm btn-primary">@lang('View Wallet')</a>
-                            <span class="fw-bold">@lang('Price'): <span id="{{$data->symbol}}"><i class="fa fa-spinner fa-spin"></i></span> </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
+
 
 <!--begin::Row-->
 <div class="row gy-5 g-xl-10">
