@@ -1,3 +1,99 @@
+<style>
+    .subscribe {
+        position: relative;
+        padding: 20px;
+        background-color: #FFF;
+        border-radius: 4px;
+        color: #333;
+        box-shadow: 0px 0px 60px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .subscribe:after {
+        position: absolute;
+        content: "";
+        right: -10px;
+        bottom: 18px;
+        width: 0;
+        height: 0;
+        border-left: 0px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #763ebd;
+    }
+
+    .subscribe p {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        line-height: 28px;
+    }
+
+
+
+    .subscribe .submit-btn {
+        position: absolute;
+        border-radius: 30px;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        background-color: #763ebd;
+        color: #FFF;
+        padding: 12px 25px;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 5px;
+        right: -10px;
+        bottom: -20px;
+        cursor: pointer;
+        transition: all .25s ease;
+        box-shadow: -5px 6px 20px 0px rgba(26, 26, 26, 0.4);
+    }
+
+    .subscribe .submit-btn:hover {
+        background-color: #763ebd;
+        box-shadow: -5px 6px 20px 0px rgb(255, 255, 255);
+    }
+</style>
+
+<style>
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<div class="loading-overlay" id="loadingSpinner" style="display: none;">
+    <div class="loading-spinner"></div>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.css">
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
+<!-- SweetAlert JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+
 <!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
@@ -297,27 +393,27 @@
               </a>
             </li>
             <?php endif; ?>
-            <?php if($general->airtimelocal > 0): ?>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="<?php echo e(route('user.airtime.indexlocal')); ?>" aria-expanded="false">
-                <span class="d-flex">
-                  <i class="ti ti-device-mobile"></i>
-                </span>
-                <span class="hide-menu"><?php echo app('translator')->get('Airtime '); ?><small>(<?php echo app('translator')->get('Non Global'); ?>)</small></span>
-              </a>
-            </li>
-            <?php endif; ?>
-            <?php if($general->internet > 0): ?>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="<?php echo e(route('user.internet.index')); ?>" aria-expanded="false">
-                <span class="d-flex">
-                  <i class="ti ti-building-broadcast-tower"></i>
-                </span>
-                <span class="hide-menu"><?php echo app('translator')->get('Internet'); ?> <small>(<?php echo app('translator')->get('Global'); ?>)</small></span>
 
-              </a>
-            </li>
-            <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <?php if($general->internetsme > 0): ?>
             <li class="sidebar-item">
               <a class="sidebar-link" href="<?php echo e(route('user.internet_sme.index')); ?>" aria-expanded="false">
@@ -338,16 +434,16 @@
               </a>
             </li>
             <?php endif; ?>
-            <?php if($general->utilitylocal > 0): ?>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="<?php echo e(route('user.utility.local.index')); ?>" aria-expanded="false">
-                <span class="d-flex">
-                  <i class="ti ti-bulb"></i>
-                </span>
-                <span class="hide-menu"><?php echo app('translator')->get('Utility Bills'); ?> <small>(<?php echo app('translator')->get('Non Global'); ?>)</small></span>
-              </a>
-            </li>
-            <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
             <?php if($general->cabletv > 0): ?>
             <li class="sidebar-item">
               <a class="sidebar-link" href="<?php echo e(route('user.cabletv.index')); ?>" aria-expanded="false">
@@ -431,17 +527,17 @@
 
 
           </ul>
-          <div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
-            <div class="d-flex">
-              <div class="unlimited-access-img">
-                <img src="<?php echo e(asset('assets/assets/dist/images/backgrounds/lock.png')); ?>" alt="" class="img-fluid">
-                <center>
-                <h6 class="fw-semibold fs-4 mb-6 text-dark w-85"><?php echo e(__(systemDetails()['name'])); ?></h6>
-                <button class="btn btn-primary fs-2 fw-semibold lh-sm"><?php echo app('translator')->get('V'); ?><?php echo e(systemDetails()['version']); ?></button>
-              </center>
-              </div>
-            </div>
-          </div>
+
+
+
+
+
+
+
+
+
+
+
         </nav>
         <div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
           <div class="hstack gap-3">

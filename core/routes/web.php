@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
-
+ Route::get('listdata',[\App\Http\Controllers\User\InternetSmeController::class, 'listdata']);
 //Cron Controller
 Route::get('cron', 'CronController@placeOrderToApi')->name('cron');
 // User Support Ticket
@@ -20,7 +20,7 @@ Route::controller('TicketController')->prefix('ticket')->name('ticket.')->group(
 });
 
 Route::get('app/deposit/confirm/{hash}', 'Gateway\PaymentController@appDepositConfirm')->name('deposit.app.confirm');
- 
+
 
 //Cart
 Route::controller('CartController')->group(function () {
@@ -29,7 +29,7 @@ Route::controller('CartController')->group(function () {
 });
 
 Route::controller('SiteController')->group(function () {
-    
+
     Route::get('/contact', 'contact')->name('contact');
     Route::post('/contact', 'contactSubmit');
     Route::get('/change/{lang?}', 'changeLanguage')->name('lang');
@@ -45,9 +45,11 @@ Route::controller('SiteController')->group(function () {
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
     Route::post('subscribe', 'subscribe')->name('subscribe');
     Route::get('/api', 'apiDocumentation')->name('api.documentation');
-    Route::get('/blog', 'blog')->name('blog'); 
+    Route::get('/blog', 'blog')->name('blog');
 
     Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/', 'index')->name('home');
     Route::get('/assets/rates', 'rates')->name('rates');
 });
+
+Route::get('getlist/{selectedValue}', [\App\Http\Controllers\User\InternetController::class, 'fecthdata'])->name('getlist');

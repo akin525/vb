@@ -5,8 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\GoogleAuthenticator;
-use App\Models\Order; 
-use App\Models\GeneralSetting; 
+use App\Models\Giftbills;
+use App\Models\Order;
+use App\Models\GeneralSetting;
  use App\Models\AdminNotification;
 use App\Models\User;
 use App\Models\Transaction;
@@ -19,7 +20,7 @@ use Carbon\Carbon;
 class InternetController extends Controller
 {
 
- 
+
     public function __construct()
     {
         $this->middleware('kyc.status');
@@ -79,7 +80,7 @@ class InternetController extends Controller
 
 
        // $json = file_get_contents('php://input');
-       // $input = json_decode($json, true); 
+       // $input = json_decode($json, true);
 
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -110,12 +111,12 @@ class InternetController extends Controller
             'code' => '00',
             'response' => $resp,
              );
-                 
+
              return response()->json(['status'=>'true','message'=>'Network Fetched','content'=>$reply],200);
         }
- 
+
     }
-    
+
 
     public function operatorsdetails($id)
     {
@@ -166,12 +167,12 @@ class InternetController extends Controller
             $url = "https://topups.reloadly.com";
         }
 
-         
+
 
             $json = file_get_contents('php://input');
-            $input = json_decode($json, true); 
+            $input = json_decode($json, true);
             $id = @$input['operatorId'];
-        
+
 
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -191,7 +192,7 @@ class InternetController extends Controller
         $response = curl_exec($curl);
         $err = curl_error($curl);
 
-        curl_close($curl); 
+        curl_close($curl);
         $f = json_decode($response) ;
         $ff = json_decode(json_encode($f->fixedAmountsDescriptions), true);
         return $ff ;
@@ -225,9 +226,9 @@ class InternetController extends Controller
         $token = getToken('topups');
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $password = $input['password'];
-        $arr = explode("|", $input['amount'], 2); 
+        $arr = explode("|", $input['amount'], 2);
 
         $amount =  $arr[0];
         $plan = $arr[1];
@@ -253,7 +254,7 @@ class InternetController extends Controller
         $min = $operator['minAmount'];
         $max = $operator['maxAmount'];
         $rate = $operator['fx']['rate'];
-        
+
         if($amount < $min &&  $min > 0)
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Minimum amount you can purchase is '.getAmount($min)],400);
@@ -359,8 +360,8 @@ class InternetController extends Controller
                 'provider'        => @$operatorName,
                 'currency'        => @$operatorCurrency,
                 'amount'          => @showAmount($amount),
-                'product'         => @$plan, 
-                'beneficiary'     => @$phone, 
+                'product'         => @$plan,
+                'beneficiary'     => @$phone,
                 'rate'           => @showAmount($payment),
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$code,
@@ -387,7 +388,7 @@ class InternetController extends Controller
         } else {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
         }
- 
+
     }
 
 
@@ -400,5 +401,12 @@ class InternetController extends Controller
     }
 
 
-    
+    function fecthdata(Request $request, $selectedValue)
+    {
+        $data = Giftbills::where(['status' => 1])->where('network', $selectedValue)->get();
+
+        return response()->json($data);
+
+    }
+
 }

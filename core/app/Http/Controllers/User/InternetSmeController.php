@@ -5,8 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\GoogleAuthenticator;
-use App\Models\Order; 
-use App\Models\GeneralSetting; 
+use App\Models\Order;
+use App\Models\GeneralSetting;
  use App\Models\AdminNotification;
 use App\Models\User;
 use App\Models\Transaction;
@@ -19,16 +19,16 @@ use Carbon\Carbon;
 class InternetSmeController extends Controller
 {
 
- 
+
     public function __construct()
     {
         $this->middleware('kyc.status');
         $this->middleware('internetsme.status');
         $this->activeTemplate = activeTemplate();
     }
- 
+
     public function internet_operators(Request $request)
-    { 
+    {
         $networks =  '[
             {
                 "name": "MTN"
@@ -50,11 +50,11 @@ class InternetSmeController extends Controller
             'code' => '00',
             'response' => $networks,
              );
-                 
+
              return response()->json(['status'=>'true','message'=>'Network Fetched','content'=>$reply],200);
-      
+
     }
-    
+
 
     public function operatorsInternetdetailsN3TDATA(Request $request)
     {
@@ -87,7 +87,7 @@ class InternetSmeController extends Controller
                 "networkid": "1"
             },
             {
-                "name": "AIRTEL", 
+                "name": "AIRTEL",
                 "logo": "airtel.jpeg",
                 "networkid": "2"
             },
@@ -102,7 +102,7 @@ class InternetSmeController extends Controller
                 "networkid": "4"
             }
             ]';
-            
+
         $plans = [];
         if(gs()->internetsme_provider == 'N3TDATA')
         {
@@ -113,21 +113,21 @@ class InternetSmeController extends Controller
             return view($this->activeTemplate . 'user.bills.internetsme.internet_buy_GSUBZ', compact('pageTitle','countries','networks','plans'));
         }
     }
-    
+
     public function buy_internet_post_n3tdata()
     {
-        try {  
+        try {
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $password = $input['password'];
-        $arr = explode("|", $input['amount'], 3); 
+        $arr = explode("|", $input['amount'], 3);
 
         $amount =  $arr[1];
-        $data_plan = $input['data_plan']; 
-        $networkname = $input['networkname']; 
-        $plan = $arr[0]; 
-        $network = $arr[2]; 
+        $data_plan = $input['data_plan'];
+        $networkname = $input['networkname'];
+        $plan = $arr[0];
+        $network = $arr[2];
         $phone = $input['phone'];
         $wallet = @$input['wallet'];
         $operatorId = @$input['networkid'];
@@ -138,7 +138,7 @@ class InternetSmeController extends Controller
             $passcheck = false;
                 return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
             }
-  
+
         $payment = $amount;
         if($wallet == 'main')
         {
@@ -237,8 +237,8 @@ class InternetSmeController extends Controller
                 'provider'        => @$networkname,
                 'currency'        => @gs()->cur_text,
                 'amount'          => @showAmount($amount),
-                'product'         => @$plan, 
-                'beneficiary'     => @$phone, 
+                'product'         => @$plan,
+                'beneficiary'     => @$phone,
                 'rate'           => @showAmount($payment),
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$code,
@@ -250,7 +250,7 @@ class InternetSmeController extends Controller
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> @$response['message']. 'API ERROR'],400);
         }
-        } catch (\Exception $e) {  
+        } catch (\Exception $e) {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
         }
         //return json_decode($resp,true);
@@ -259,18 +259,18 @@ class InternetSmeController extends Controller
 
     public function buy_internet_post_gsubz()
     {
-        try {  
+        try {
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $password = $input['password'];
-        $arr = explode("|", $input['amount'], 3); 
+        $arr = explode("|", $input['amount'], 3);
 
         $amount =  $arr[1];
-        $data_plan = $input['data_plan']; 
-        $networkname = $input['networkname']; 
-        $plan = $arr[0]; 
-        $network = $arr[2]; 
+        $data_plan = $input['data_plan'];
+        $networkname = $input['networkname'];
+        $plan = $arr[0];
+        $network = $arr[2];
         $phone = $input['phone'];
         $data_type = $input['data_type'];
         $wallet = @$input['wallet'];
@@ -282,7 +282,7 @@ class InternetSmeController extends Controller
             $passcheck = false;
                 return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
             }
-  
+
         $payment = $amount;
         if($wallet == 'main')
         {
@@ -297,7 +297,7 @@ class InternetSmeController extends Controller
             return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
         }
 
- 
+
         $url = 'https://gsubz.com/api/pay/';
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -382,8 +382,8 @@ class InternetSmeController extends Controller
                 'provider'        => @$networkname,
                 'currency'        => @gs()->cur_text,
                 'amount'          => @showAmount($amount),
-                'product'         => @$plan, 
-                'beneficiary'     => @$phone, 
+                'product'         => @$plan,
+                'beneficiary'     => @$phone,
                 'rate'            => @showAmount($payment),
                 'purchase_at'     => @Carbon::now(),
                 'trx'             => @$code,
@@ -395,7 +395,7 @@ class InternetSmeController extends Controller
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> @$response['description']. '. API ERROR!!'],400);
         }
-        } catch (\Exception $e) {  
+        } catch (\Exception $e) {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
         }
         //return json_decode($resp,true);
@@ -409,5 +409,31 @@ class InternetSmeController extends Controller
         $log = Order::whereUserId($user->id)->whereType('smedata')->searchable(['trx'])->orderBy('id', 'desc')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.bills.internetsme.internet_log', compact('pageTitle', 'log'));
     }
-    
+
+    function listdata()
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://sandbox.giftbills.com/api/v1/internet/data_types',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.env('GIFTBILLS'),
+                'MerchantId: '.env('GIFTBILLS_MID'),
+                'Content-Type: application/json',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+
+    }
 }

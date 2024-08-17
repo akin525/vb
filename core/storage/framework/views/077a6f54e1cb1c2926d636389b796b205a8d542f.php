@@ -1,6 +1,6 @@
-<?php $__env->startSection('panel'); ?> 
+<?php $__env->startSection('panel'); ?>
 <div class="container-fluid">
-  
+
     <!--  Row 1 -->
 
 
@@ -70,7 +70,7 @@
           </div>
       </div>
   </div>
-  
+
     <div class="row">
       <div class="col-lg-12 d-flex align-items-strech">
         <div class="card w-100">
@@ -78,10 +78,10 @@
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Deposit Report'); ?></h5>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
-              
+
               <div class="col-lg-4 col-md-6">
                 <div class="card border-top border-warning">
                   <div class="card-body">
@@ -128,12 +128,12 @@
                 </div>
               </div>
 
-               
+
             </div>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- End Row -->
 
 
@@ -146,10 +146,10 @@
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Withdrawal Report'); ?></h5>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
-              
+
               <div class="col-lg-4 col-md-6">
                 <div class="card border-top border-warning">
                   <div class="card-body">
@@ -196,12 +196,12 @@
                 </div>
               </div>
 
-               
+
             </div>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- End Row -->
 
 
@@ -212,10 +212,10 @@
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Overall Transaction Report'); ?></h5>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
-              
+
               <div class="col-lg-6 col-md-6">
                 <div class="card border-top border-danger">
                   <div class="card-body">
@@ -246,13 +246,13 @@
                   </div>
                 </div>
               </div>
-              
-               
+
+
             </div>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- End Row -->
 
 
@@ -265,10 +265,10 @@
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Bills Payment Overview'); ?></h5>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
-              
+
               <div class="col-lg-4 col-md-6">
                 <div class="card border-top border-primary">
                   <div class="card-body">
@@ -350,174 +350,174 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- End Row -->
 
 
 
-    <div class="row">
-      <div class="col-lg-12 d-flex align-items-strech">
-        <div class="card w-100">
-          <div class="card-body">
-            <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-              <div class="mb-3 mb-sm-0">
-                <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Escrow Payment Overview'); ?></h5>
-              </div> 
-            </div>
-            <div class="row align-items-center">
-              
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-danger">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['escrowdisputed'])); ?></h2>
-                        <h6 class="fw-medium text-danger mb-0"><?php echo app('translator')->get('Disputed'); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-danger display-6"><i class="ti ti-alert-circle"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-warning">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['escrowpending'])); ?></h2>
-                        <h6 class="fw-medium text-warning mb-0"><?php echo app('translator')->get('Not Accepted '); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-warning display-6"><i class="ti ti-alert-triangle"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-success">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['escrowcompleted'])); ?></h2>
-                        <h6 class="fw-medium text-success mb-0"><?php echo app('translator')->get('Completed '); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-success display-6"><i class="ti ti-check"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-lg-6 col-md-6">
-                <div class="card border-top border-primary">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['escrowrunning'])); ?></h2>
-                        <h6 class="fw-medium text-primary mb-0"><?php echo app('translator')->get('Running'); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-primary display-6"><i class="ti ti-clock"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-               
 
-              <div class="col-lg-6 col-md-6">
-                <div class="card border-top border-danger">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"><?php echo e(getAmount($widget['escrowcancelled'])); ?></h2>
-                        <h6 class="fw-medium text-danger mb-0"><?php echo app('translator')->get('Cancelled'); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-danger display-6"><i class="ti ti-alert-hexagon"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- End Row -->
 
 
 
-    <div class="row">
-      <div class="col-lg-12 d-flex align-items-strech">
-        <div class="card w-100">
-          <div class="card-body">
-            <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-              <div class="mb-3 mb-sm-0">
-                <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Events Overview'); ?></h5>
-              </div> 
-            </div>
-            <div class="row align-items-center">
-              
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-warning">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['eventpending'])); ?></h2>
-                        <h6 class="fw-medium text-warning mb-0"><?php echo app('translator')->get('Pending'); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-warning display-6"><i class="ti ti-alert-circle"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-success">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['eventapproved'])); ?></h2>
-                        <h6 class="fw-medium text-success mb-0"><?php echo app('translator')->get('Approved '); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-success display-6"><i class="ti ti-check"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                <div class="card border-top border-danger">
-                  <div class="card-body">
-                    <div class="d-flex no-block align-items-center">
-                      <div>
-                        <h2 class="fs-7"> <?php echo e(getAmount($widget['eventcancelled'])); ?></h2>
-                        <h6 class="fw-medium text-danger mb-0"><?php echo app('translator')->get('Cancelled '); ?></h6>
-                      </div>
-                      <div class="ms-auto">
-                        <span class="text-danger display-6"><i class="ti ti-alert-hexagon"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-               
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- End Row -->
 
     <div class="row">
@@ -528,12 +528,12 @@
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Monthly Transaction Overview'); ?></h5>
                 <p class="card-subtitle mb-0"> <?php echo app('translator')->get('Year '. date('Y')); ?></p>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
               <div class="col-lg-8 col-md-8">
                 <div id="DepositYear"></div>
-              </div> 
+              </div>
               <div class="col-lg-4 col-md-4">
                 <div class="d-flex align-items-center mb-4 pb-1">
                   <div class="p-8 bg-light-success rounded-1 me-3 d-flex align-items-center justify-content-center">
@@ -564,7 +564,7 @@
                       <p class="fs-3 mb-0"><?php echo app('translator')->get('Rejected Deposited'); ?></p>
                     </div>
                   </div>
-                <div> 
+                <div>
                   <div>
                     <a href="<?php echo e(route('admin.deposit.list')); ?>" class="btn btn-outline-primary w-100">View Deposit Report</a>
                   </div>
@@ -582,20 +582,20 @@
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Transactions Report'); ?></h5>
                 <p class="card-subtitle mb-0"> (<?php echo app('translator')->get('Last 30 Days'); ?>)</p>
-              </div> 
+              </div>
             </div>
             <div class="row align-items-center">
               <div class="col-lg-12 col-md-12">
                 <div id="apex-line"></div>
-              </div>  
-              
+              </div>
+
             </div>
           </div>
         </div>
       </div>
-       
+
     </div>
-    <!--  Row 2 --> 
+    <!--  Row 2 -->
      <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card overflow-hidden">
@@ -618,8 +618,8 @@
                 </div>
               </div>
             </div>
-        </div> 
- 
+        </div>
+
     <!--  Row 3 -->
     <div class="row">
       <!-- Top Performers -->
@@ -630,7 +630,7 @@
               <div class="mb-3 mb-sm-0">
                 <h5 class="card-title fw-semibold"><?php echo app('translator')->get('Top 10 Performers'); ?></h5>
                 <p class="card-subtitle mb-0"><?php echo app('translator')->get('Best customers by transaction volume'); ?></p>
-              </div> 
+              </div>
             </div>
             <div class="table-responsive">
               <table class="table align-middle text-nowrap mb-0">
@@ -653,15 +653,15 @@
                           <p class="fs-2 mb-0 text-muted"><?php echo e(@$data->user->username); ?></p>
                         </div>
                       </div>
-                    </td> 
+                    </td>
                     <td>
                       <a class="label fw-semibold py-1 w-85 bg-light-primary text-primary"><?php echo e($general->cur_sym); ?><?php echo e(showAMount($data->sums)); ?></a>
-                    </td> 
+                    </td>
                   </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <?php echo emptyData(); ?>
 
-                <?php endif; ?> 
+                <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -671,7 +671,7 @@
     </div>
   </div>
 
-  
+
   <div class="modal fade" id="cronModal" role="dialog" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -711,7 +711,7 @@
         <strong class="text-primary"><?php echo e(diffForHumans($general->last_cron)); ?></strong>
     </span>
 <?php $__env->stopPush(); ?>
-<?php $__env->startPush('script'); ?> 
+<?php $__env->startPush('script'); ?>
 <script>
   (function($) {
       "use strict";
@@ -733,7 +733,7 @@
       });
   });
 </script>
- 
+
 <?php $__env->startPush('script'); ?>
 <script>
      // apex-line trxchart
@@ -765,7 +765,7 @@
                     }
                 },
             },
-            
+
             dataLabels: {
                 enabled: false
             },
@@ -812,7 +812,7 @@
                 },
             },
             },
-            
+
         };
 
     var chart = new ApexCharts(document.querySelector("#apex-line"), options);
@@ -890,7 +890,7 @@
   };
   var chart = new ApexCharts(document.querySelector("#DepositYear"), chart);
   chart.render();
-</script> 
+</script>
 <?php $__env->stopPush(); ?>
 <?php $__env->startPush('script'); ?>
         <script>
@@ -971,4 +971,5 @@
 
         </script>
         <?php $__env->stopPush(); ?>
+
 <?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\vb\core\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

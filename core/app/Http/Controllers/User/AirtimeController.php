@@ -12,6 +12,7 @@ use App\Models\GeneralSetting;
 use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -527,8 +528,13 @@ class AirtimeController extends Controller
         }
         //return json_decode($resp,true);
     }
-    public function buy_airtime_post_giftbill($input)
+    public function buy_airtime_post_giftbill(Request $input)
     {
+        $input->validate([
+            'operator'=>'required',
+            'amount'=>'required',
+            'phone'=>'required',
+        ]);
         $user = auth()->user();
         $password = $input['password'];
         $amount =  @$input['amount'];
@@ -536,32 +542,35 @@ class AirtimeController extends Controller
         $wallet = @$input['wallet'];
         $phone = @$input['phone'];
 
-        if (Hash::check($password, $user->trx_password)) {
-            $passcheck = true;
-            } else {
-            $passcheck = false;
-                return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
-            }
+//        if (Hash::check($password, $user->trx_password)) {
+//            $passcheck = true;
+//            } else {
+//            $passcheck = false;
+//                return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
+//            }
 
 
-        if($wallet == 'main')
-        {
+//        if($wallet == 'main')
+//        {
             $balance = $user->balance;
-        }
-        else
-        {
-            $balance = $user->ref_balance;
-        }
+//        }
+//        else
+//        {
+//            $balance = $user->ref_balance;
+//        }
+
         if($amount > $balance)
         {
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
+            $mg='Insufficient wallet balance';
+            return response()->json($mg, Response::HTTP_BAD_REQUEST);
+
+//            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
         }
 
         $mode = env('MODE');
         $auth = env('GIFTBILLS');
-        $datecode = date('Y').date('m').date('d').date('H').date('i').date('s');
-        $codex = substr(str_shuffle('01234567890') , 0 , 5 );
-        $trx = $datecode.$codex;
+//        return response()->json($auth, Response::HTTP_BAD_REQUEST);
+
         if($mode == 'TEST')
         {
         $url = 'https://sandbox.giftbills.com/api/v1/airtime/topup';
@@ -584,10 +593,11 @@ class AirtimeController extends Controller
         "amount": "'.$amount.'",
         "number": "'.$phone.'",
         "provider": "'.$operator.'",
-        "reference": "'.$trx.'"
+        "reference": "'.$input->refid.'"
         }',
       CURLOPT_HTTPHEADER => array(
-    'Authorization: Basic '.$auth,
+    'Authorization: Bearer '.$auth,
+          'MerchantId: '.env('GIFTBILLS_MID'),
     'Content-Type: application/json',
       ),
     ));
@@ -597,9 +607,13 @@ class AirtimeController extends Controller
     $reply = json_decode($resp, true);
     // return $response;
     curl_close($curl);
+//        return response()->json($reply, Response::HTTP_BAD_REQUEST);
+
     if($reply['success'] != true)
     {
-        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'.@$resp],400);
+        return response()->json($reply, Response::HTTP_BAD_REQUEST);
+
+//        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'.@$resp],400);
     }
 
         // END AIRTIME VENDING \\
@@ -629,7 +643,7 @@ class AirtimeController extends Controller
             $order->currency     = 'NGN';
             $order->status       = @$reply['data']['status'];
             $order->payment      = @$amount;
-            $order->trx          = $trx;
+            $order->trx          = $input['refid'];
             $order->source       = $wallet;
             $order->balance_before  = $balance;
             $order->balance_after   = $balance_after;
@@ -654,7 +668,7 @@ class AirtimeController extends Controller
                 'rate'           =>  @showAmount($amount),
                 'beneficiary'     => @$phone,
                 'purchase_at'     => @Carbon::now(),
-                'trx'             => @$trx,
+                'trx'             => @$input['refid'],
             ]);
 
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $order->trx],200);
