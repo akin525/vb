@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $general->siteName($pageTitle ?? '') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    
+
     <link rel="shortcut icon" type="image/png" href="{{ getImage(getFilePath('logoIcon') . '/favicon.png') }}">
     <link  id="themeColors"  rel="stylesheet" href="{{ asset('assets/assets/dist/css/style-purple.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('assets/assets/dist/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css')}}">
@@ -31,16 +31,16 @@
       </div>
 
     @yield('content')
- 
+
     @auth
     <div class="ps-footer-mobile">
         <div class="menu__content">
             <ul class="menu--footer">
-                <li class="nav-item"><a class="nav-link" href="{{ route('user.buy.airtime') }}"><i class="ti ti-device-mobile"></i><span>@lang('Airtime')</span></a></li>
-                <li class="nav-item"><a class="nav-link footer-category" href="{{ route('user.buy.internet') }}"><i class="ti ti-building-broadcast-tower"></i><span>@lang('Internet')</span></a></li>
-                <li class="nav-item"><a class="nav-link footer-cart" href="{{route('user.buy.insurance')}}"><i class="ti ti-umbrella"></i><span class="badge bg-warning"></span><span>@lang('Insurance')</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('user.airtime.index') }}"><i class="ti ti-device-mobile"></i><span>@lang('Airtime')</span></a></li>
+                <li class="nav-item"><a class="nav-link footer-category" href="{{ route('user.internet_sme.index') }}"><i class="ti ti-building-broadcast-tower"></i><span>@lang('Internet')</span></a></li>
+{{--                <li class="nav-item"><a class="nav-link footer-cart" href="{{route('user.buy.insurance')}}"><i class="ti ti-umbrella"></i><span class="badge bg-warning"></span><span>@lang('Insurance')</span></a></li>--}}
                 <li class="nav-item"><a class="nav-link" href="{{ route('user.buy.cabletv') }}"><i class="ti ti-device-remote"></i><span>@lang('Cable TV')</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('user.buy.airtime') }}"><i class="ti ti-bulb"></i><span>@Lang('Utility')</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('user.airtime.index') }}"><i class="ti ti-bulb"></i><span>@Lang('Utility')</span></a></li>
             </ul>
         </div>
     </div>
@@ -70,7 +70,7 @@
 
     <script src="{{ asset('assets/thirdparty/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{ asset('assets/thirdparty/js/scripts.bundle.js')}}"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 

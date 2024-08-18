@@ -10,194 +10,194 @@
                     <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid gap-10"
                         id="kt_create_account_stepper">
                         <!--begin::Aside-->
-                        <div
-                            class="card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px">
-                            <!--begin::Wrapper-->
-                            <div class="card-body px-6 px-lg-10 px-xxl-15 py-20">
-                                <!--begin::Nav-->
-                                <div class="stepper-nav">
-                                    <!--begin::Step 1-->
-                                    <div class="stepper-item current" data-kt-stepper-element="nav">
-                                        <!--begin::Wrapper-->
-                                        <div class="stepper-wrapper">
-                                            <!--begin::Icon-->
-                                            <div class="stepper-icon w-40px h-40px">
-                                                <i class="ti ti-check fs-2 stepper-check"></i>
-                                                <span class="stepper-number">1</span>
-                                            </div>
-                                            <!--end::Icon-->
+{{--                        <div--}}
+{{--                            class="card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px">--}}
+{{--                            <!--begin::Wrapper-->--}}
+{{--                            <div class="card-body px-6 px-lg-10 px-xxl-15 py-20">--}}
+{{--                                <!--begin::Nav-->--}}
+{{--                                <div class="stepper-nav">--}}
+{{--                                    <!--begin::Step 1-->--}}
+{{--                                    <div class="stepper-item current" data-kt-stepper-element="nav">--}}
+{{--                                        <!--begin::Wrapper-->--}}
+{{--                                        <div class="stepper-wrapper">--}}
+{{--                                            <!--begin::Icon-->--}}
+{{--                                            <div class="stepper-icon w-40px h-40px">--}}
+{{--                                                <i class="ti ti-check fs-2 stepper-check"></i>--}}
+{{--                                                <span class="stepper-number">1</span>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Icon-->--}}
 
-                                            <!--begin::Label-->
-                                            <div class="stepper-label">
-                                                <h3 class="stepper-title">
-                                                    @lang('Step 1')
-                                                </h3>
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <div class="stepper-label">--}}
+{{--                                                <h3 class="stepper-title">--}}
+{{--                                                    @lang('Step 1')--}}
+{{--                                                </h3>--}}
 
-                                                <div class="stepper-desc fw-semibold">
-                                                    @lang('Select Wallet')
-                                                </div>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Wrapper-->
+{{--                                                <div class="stepper-desc fw-semibold">--}}
+{{--                                                    @lang('Select Wallet')--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Wrapper-->--}}
 
-                                        <!--begin::Line-->
-                                        <div class="stepper-line h-40px"></div>
-                                        <!--end::Line-->
-                                    </div>
-                                    <!--end::Step 1-->
+{{--                                        <!--begin::Line-->--}}
+{{--                                        <div class="stepper-line h-40px"></div>--}}
+{{--                                        <!--end::Line-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Step 1-->--}}
 
-                                    <!--begin::Step 2-->
-                                    <div class="stepper-item" data-kt-stepper-element="nav">
-                                        <!--begin::Wrapper-->
-                                        <div class="stepper-wrapper">
-                                            <!--begin::Icon-->
-                                            <div class="stepper-icon w-40px h-40px">
-                                                <i class="ti ti-check fs-2 stepper-check"></i> <span
-                                                    class="stepper-number">2</span>
-                                            </div>
-                                            <!--end::Icon-->
+{{--                                    <!--begin::Step 2-->--}}
+{{--                                    <div class="stepper-item" data-kt-stepper-element="nav">--}}
+{{--                                        <!--begin::Wrapper-->--}}
+{{--                                        <div class="stepper-wrapper">--}}
+{{--                                            <!--begin::Icon-->--}}
+{{--                                            <div class="stepper-icon w-40px h-40px">--}}
+{{--                                                <i class="ti ti-check fs-2 stepper-check"></i> <span--}}
+{{--                                                    class="stepper-number">2</span>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Icon-->--}}
 
-                                            <!--begin::Label-->
-                                            <div class="stepper-label">
-                                                <h3 class="stepper-title">
-                                                    @lang('Step 2')
-                                                </h3>
-                                                <div class="stepper-desc fw-semibold">
-                                                    @lang('Select Currency')
-                                                </div>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Wrapper-->
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <div class="stepper-label">--}}
+{{--                                                <h3 class="stepper-title">--}}
+{{--                                                    @lang('Step 2')--}}
+{{--                                                </h3>--}}
+{{--                                                <div class="stepper-desc fw-semibold">--}}
+{{--                                                    @lang('Select Currency')--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Wrapper-->--}}
 
-                                        <!--begin::Line-->
-                                        <div class="stepper-line h-40px"></div>
-                                        <!--end::Line-->
-                                    </div>
-                                    <!--end::Step 2-->
+{{--                                        <!--begin::Line-->--}}
+{{--                                        <div class="stepper-line h-40px"></div>--}}
+{{--                                        <!--end::Line-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Step 2-->--}}
 
-                                    <!--begin::Step 3-->
-                                    <div class="stepper-item" data-kt-stepper-element="nav">
-                                        <!--begin::Wrapper-->
-                                        <div class="stepper-wrapper">
-                                            <!--begin::Icon-->
-                                            <div class="stepper-icon w-40px h-40px">
-                                                <i class="ti ti-check fs-2 stepper-check"></i> <span
-                                                    class="stepper-number">3</span>
-                                            </div>
-                                            <!--end::Icon-->
+{{--                                    <!--begin::Step 3-->--}}
+{{--                                    <div class="stepper-item" data-kt-stepper-element="nav">--}}
+{{--                                        <!--begin::Wrapper-->--}}
+{{--                                        <div class="stepper-wrapper">--}}
+{{--                                            <!--begin::Icon-->--}}
+{{--                                            <div class="stepper-icon w-40px h-40px">--}}
+{{--                                                <i class="ti ti-check fs-2 stepper-check"></i> <span--}}
+{{--                                                    class="stepper-number">3</span>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Icon-->--}}
 
-                                            <!--begin::Label-->
-                                            <div class="stepper-label">
-                                                <h3 class="stepper-title">
-                                                    @lang('Step 3')
-                                                </h3>
-                                                <div class="stepper-desc fw-semibold">
-                                                    @lang('Enter Amount')
-                                                </div>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Wrapper-->
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <div class="stepper-label">--}}
+{{--                                                <h3 class="stepper-title">--}}
+{{--                                                    @lang('Step 3')--}}
+{{--                                                </h3>--}}
+{{--                                                <div class="stepper-desc fw-semibold">--}}
+{{--                                                    @lang('Enter Amount')--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Wrapper-->--}}
 
-                                        <!--begin::Line-->
-                                        <div class="stepper-line h-40px"></div>
-                                        <!--end::Line-->
-                                    </div>
-                                    <!--end::Step 3-->
+{{--                                        <!--begin::Line-->--}}
+{{--                                        <div class="stepper-line h-40px"></div>--}}
+{{--                                        <!--end::Line-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Step 3-->--}}
 
-                                    <!--begin::Step 4-->
-                                    <div class="stepper-item" data-kt-stepper-element="nav">
-                                        <!--begin::Wrapper-->
-                                        <div class="stepper-wrapper">
-                                            <!--begin::Icon-->
-                                            <div class="stepper-icon w-40px h-40px">
-                                                <i class="ti ti-check fs-2 stepper-check"></i> <span
-                                                    class="stepper-number">4</span>
-                                            </div>
-                                            <!--end::Icon-->
+{{--                                    <!--begin::Step 4-->--}}
+{{--                                    <div class="stepper-item" data-kt-stepper-element="nav">--}}
+{{--                                        <!--begin::Wrapper-->--}}
+{{--                                        <div class="stepper-wrapper">--}}
+{{--                                            <!--begin::Icon-->--}}
+{{--                                            <div class="stepper-icon w-40px h-40px">--}}
+{{--                                                <i class="ti ti-check fs-2 stepper-check"></i> <span--}}
+{{--                                                    class="stepper-number">4</span>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Icon-->--}}
 
-                                            <!--begin::Label-->
-                                            <div class="stepper-label">
-                                                <h3 class="stepper-title">
-                                                    @lang('Step 4')
-                                                </h3>
-                                                <div class="stepper-desc fw-semibold">
-                                                    @lang('Preview Transaction')
-                                                </div>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Wrapper-->
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <div class="stepper-label">--}}
+{{--                                                <h3 class="stepper-title">--}}
+{{--                                                    @lang('Step 4')--}}
+{{--                                                </h3>--}}
+{{--                                                <div class="stepper-desc fw-semibold">--}}
+{{--                                                    @lang('Preview Transaction')--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Wrapper-->--}}
 
-                                        <!--begin::Line-->
-                                        <div class="stepper-line h-40px"></div>
-                                        <!--end::Line-->
-                                    </div>
-                                    <!--end::Step 4-->
+{{--                                        <!--begin::Line-->--}}
+{{--                                        <div class="stepper-line h-40px"></div>--}}
+{{--                                        <!--end::Line-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Step 4-->--}}
 
-                                    <!--begin::Step 5-->
-                                    <div class="stepper-item mark-completed" data-kt-stepper-element="nav">
-                                        <!--begin::Wrapper-->
-                                        <div class="stepper-wrapper">
-                                            <!--begin::Icon-->
-                                            <div class="stepper-icon w-40px h-40px">
-                                                <i class="ti ti-check fs-2 stepper-check"></i> <span
-                                                    class="stepper-number">5</span>
-                                            </div>
-                                            <!--end::Icon-->
+{{--                                    <!--begin::Step 5-->--}}
+{{--                                    <div class="stepper-item mark-completed" data-kt-stepper-element="nav">--}}
+{{--                                        <!--begin::Wrapper-->--}}
+{{--                                        <div class="stepper-wrapper">--}}
+{{--                                            <!--begin::Icon-->--}}
+{{--                                            <div class="stepper-icon w-40px h-40px">--}}
+{{--                                                <i class="ti ti-check fs-2 stepper-check"></i> <span--}}
+{{--                                                    class="stepper-number">5</span>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Icon-->--}}
 
-                                            <!--begin::Label-->
-                                            <div class="stepper-label">
-                                                <h3 class="stepper-title">
-                                                    @lang('Completed')
-                                                </h3>
-                                                <div class="stepper-desc fw-semibold">
-                                                    @lang('Woah, we are here')
-                                                </div>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Wrapper-->
-                                    </div>
-                                    <!--end::Step 5-->
-                                </div>
-                                <!--end::Nav-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <div class="stepper-label">--}}
+{{--                                                <h3 class="stepper-title">--}}
+{{--                                                    @lang('Completed')--}}
+{{--                                                </h3>--}}
+{{--                                                <div class="stepper-desc fw-semibold">--}}
+{{--                                                    @lang('Woah, we are here')--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Wrapper-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Step 5-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Nav-->--}}
+{{--                            </div>--}}
+{{--                            <!--end::Wrapper-->--}}
+{{--                        </div>--}}
                         <!--begin::Aside-->
 
                         <!--begin::Content-->
                         <div class="card d-flex flex-row-fluid flex-center">
                             <!--begin::Form-->
-                            <form class="card-body py-20 w-100 mw-xl-700px px-9" novalidate="novalidate"
+                            <form class="card-body py-20 w-100 mw-xl-700px px-9 subscribe" novalidate="novalidate"
                                 id="kt_create_account_form">
                                 <!--begin::Step 1-->
-                                <div class="current" data-kt-stepper-element="content">
+                                <div class="current" >
                                     <!--begin::Wrapper-->
                                     <div class="w-100">
                                         <!--begin::Heading-->
                                         <div class="pb-10 pb-lg-15">
                                             <!--begin::Title-->
-                                            <h2 class="fw-bold d-flex align-items-center text-dark">
-                                                @lang('Select Wallet')
+{{--                                            <h2 class="fw-bold d-flex align-items-center text-dark">--}}
+{{--                                                @lang('Select Wallet')--}}
 
 
-                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                    title="Payment is processed based on your selected account type">
-                                                    <i class="ti ti-alert-circle text-gray-500 fs-6"><span
-                                                            class="path1"></span><span class="path2"></span><span
-                                                            class="path3"></span></i></span>
-                                            </h2>
+{{--                                                <span class="ms-1" data-bs-toggle="tooltip"--}}
+{{--                                                    title="Payment is processed based on your selected account type">--}}
+{{--                                                    <i class="ti ti-alert-circle text-gray-500 fs-6"><span--}}
+{{--                                                            class="path1"></span><span class="path2"></span><span--}}
+{{--                                                            class="path3"></span></i></span>--}}
+{{--                                            </h2>--}}
                                             <!--end::Title-->
 
                                             <!--begin::Notice-->
-                                            <div class="text-muted fw-semibold fs-6">
-                                                @lang('If you need more info, please check out ')'
-                                                <a href="#" class="link-primary fw-bold">@lang('Help Page')</a>.
-                                            </div>
+{{--                                            <div class="text-muted fw-semibold fs-6">--}}
+{{--                                                @lang('If you need more info, please check out ')'--}}
+{{--                                                <a href="#" class="link-primary fw-bold">@lang('Help Page')</a>.--}}
+{{--                                            </div>--}}
                                             <!--end::Notice-->
                                         </div>
                                         <!--end::Heading-->
@@ -209,22 +209,22 @@
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6">
                                                     <!--begin::Option-->
-                                                    <input type="radio" class="btn-check" name="account_type" onchange="selectwallet('main')" id="mainwallet" checked />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10"
-                                                        for="mainwallet">
-                                                        <i class="ti ti-wallet fs-3x me-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
-                                                        <!--begin::Info-->
-                                                        <span class="d-block fw-semibold text-start">
-            <span class="text-dark fw-bold d-block fs-4 mb-2">
-                @lang('Main Wallet')
-            </span>
-            <span class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->balance) }}</span>
-        </span>
-                                                        <!--end::Info-->
-                                                    </label>
+                                                    <input type="hidden" class="btn-check" name="account_type" onchange="selectwallet('main')" value="wallet" id="mainwallet" checked />
+{{--                                                    <label--}}
+{{--                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10"--}}
+{{--                                                        for="mainwallet">--}}
+{{--                                                        <i class="ti ti-wallet fs-3x me-5"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>--}}
+{{--                                                        <!--begin::Info-->--}}
+{{--                                                        <span class="d-block fw-semibold text-start">--}}
+{{--            <span class="text-dark fw-bold d-block fs-4 mb-2">--}}
+{{--                @lang('Main Wallet')--}}
+{{--            </span>--}}
+{{--            <span class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->balance) }}</span>--}}
+{{--        </span>--}}
+{{--                                                        <!--end::Info-->--}}
+{{--                                                    </label>--}}
                                                     <!--end::Option-->
-                                                </div>
+{{--                                                </div>--}}
                                                 <script>
                                                     document.addEventListener("DOMContentLoaded", function() {
                                                         document.getElementById("mainwallet").checked = true;
@@ -233,26 +233,26 @@
                                                 <!--end::Col-->
 
                                                 <!--begin::Col-->
-                                                <div class="col-lg-6">
-                                                    <!--begin::Option-->
-                                                    <input type="radio" class="btn-check" name="account_type"
-                                                        onchange="selectwallet('ref')" id="refwallet" />
-                                                    <label
-                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
-                                                        for="refwallet">
-                                                        <i class="ti ti-wallet fs-3x me-5"><span
-                                                                class="path1"></span><span class="path2"></span></i>
-                                                        <!--begin::Info-->
-                                                        <span class="d-block fw-semibold text-start">
-                                                            <span
-                                                                class="text-dark fw-bold d-block fs-4 mb-2">@lang('Referral Wallet')</span>
-                                                            <span
-                                                                class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->ref_balance) }}</span>
-                                                        </span>
-                                                        <!--end::Info-->
-                                                    </label>
-                                                    <!--end::Option-->
-                                                </div>
+{{--                                                <div class="col-lg-6">--}}
+{{--                                                    <!--begin::Option-->--}}
+{{--                                                    <input type="radio" class="btn-check" name="account_type"--}}
+{{--                                                        onchange="selectwallet('ref')" id="refwallet" />--}}
+{{--                                                    <label--}}
+{{--                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"--}}
+{{--                                                        for="refwallet">--}}
+{{--                                                        <i class="ti ti-wallet fs-3x me-5"><span--}}
+{{--                                                                class="path1"></span><span class="path2"></span></i>--}}
+{{--                                                        <!--begin::Info-->--}}
+{{--                                                        <span class="d-block fw-semibold text-start">--}}
+{{--                                                            <span--}}
+{{--                                                                class="text-dark fw-bold d-block fs-4 mb-2">@lang('Referral Wallet')</span>--}}
+{{--                                                            <span--}}
+{{--                                                                class="text-muted fw-semibold fs-6">{{ $general->cur_sym }}{{ showAmount(Auth::user()->ref_balance) }}</span>--}}
+{{--                                                        </span>--}}
+{{--                                                        <!--end::Info-->--}}
+{{--                                                    </label>--}}
+{{--                                                    <!--end::Option-->--}}
+{{--                                                </div>--}}
                                                 <!--end::Col-->
                                                 @push('script')
                                                     <script>
@@ -271,11 +271,11 @@
                                 <!--end::Step 1-->
 
                                 <!--begin::Step 2-->
-                                <div data-kt-stepper-element="content">
+                                <div >
                                     <!--begin::Wrapper-->
                                     <div class="w-100">
                                         <!--begin::Heading-->
-                                        <div class="pb-10 pb-lg-15">
+                                        <div class="pb-10 pb-lg-15 alert alert-info">
                                             <!--begin::Title-->
                                             <h2 class="fw-bold text-dark">@lang('Trade Currency')</h2>
                                             <!--end::Title-->
@@ -440,7 +440,7 @@
                                 <!--end::Step 2-->
 
                                 <!--begin::Step 3-->
-                                <div data-kt-stepper-element="content">
+                                <div >
                                     <!--begin::Wrapper-->
                                     <div class="w-100">
                                         <!--begin::Heading-->
@@ -488,7 +488,7 @@
                                 <!--end::Step 3-->
 
                                 <!--begin::Step 4-->
-                                <div data-kt-stepper-element="content">
+                                <div >
                                     <!--begin::Wrapper-->
                                     <div class="w-100">
                                         <!--begin::Heading-->
@@ -662,7 +662,7 @@
                                 <!--end::Step 4-->
 
                                 <!--begin::Step 5-->
-                                <div data-kt-stepper-element="content">
+                                <div >
                                     <div id="invoicedetails"></div>
                                 </div>
                                 <!--end::Step 5-->
@@ -681,8 +681,8 @@
 
                                     <!--begin::Wrapper-->
                                     <div>
-                                        <button type="button" class="btn btn-lg btn-primary me-3"
-                                            data-kt-stepper-action="submit" id="submit">
+                                        <button type="button" class="btn btn-lg btn-primary me-3 submit-btn"
+                                                data-kt-stepper-action="submit"  id="submit">
                                             <span class="indicator-label">
                                                 Submit
                                                 <i class="ti ti-arrow-right fs-3 ms-2 me-0"><span
@@ -693,11 +693,11 @@
                                             </span>
                                         </button>
 
-                                        <button type="button" class="btn btn-lg btn-primary"
-                                            data-kt-stepper-action="next">
-                                            Continue
-                                            <i class="ti ti-arrow-right fs-4 ms-1 me-0"><span class="path1"></span><span
-                                                    class="path2"></span></i> </button>
+{{--                                        <button type="button" class="btn btn-lg btn-primary"--}}
+{{--                                            data-kt-stepper-action="next">--}}
+{{--                                            Continue--}}
+{{--                                            <i class="ti ti-arrow-right fs-4 ms-1 me-0"><span class="path1"></span><span--}}
+{{--                                                    class="path2"></span></i> </button>--}}
                                     </div>
                                     <!--end::Wrapper-->
                                 </div>
@@ -907,7 +907,7 @@
                                                                 );
                                                                 o.disabled = !1;
                                                             }
-                                                            if (resp.ok != false && resp.auto != false) {
+                                                            if (resp.ok !== false && resp.auto !== false) {
                                                                 var qrcode ="{{ cryptoQR('+resp.data.address+') }}";
                                                                 let coinvalue = resp.data.total_amount;
                                                                 console.info(coinvalue);
