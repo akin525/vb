@@ -5,9 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\GoogleAuthenticator;
-use App\Models\Order; 
-use App\Models\Cryptocurrency; 
-use App\Models\GeneralSetting; 
+use App\Models\Order;
+use App\Models\Cryptocurrency;
+use App\Models\GeneralSetting;
  use App\Models\AdminNotification;
 use App\Models\User;
 use App\Models\Transaction;
@@ -20,7 +20,7 @@ use Carbon\Carbon;
 class BuyCryptoController extends Controller
 {
 
- 
+
     public function __construct()
     {
         $this->middleware('buy_crypto.status');
@@ -28,7 +28,7 @@ class BuyCryptoController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-       
+
     public function index(Request $request)
     {
         $pageTitle       = 'Buy Crypto';
@@ -40,7 +40,7 @@ class BuyCryptoController extends Controller
     public function buy(Request $request)
     {
         $pageTitle = 'Buy Crypto';
-        $countries = []; 
+        $countries = [];
         $plans = [];
         $currencies = Cryptocurrency::whereStatus(1)->get();
         return view($this->activeTemplate . 'user.assets.crypto.buycrypto.buy', compact('pageTitle','currencies'));
@@ -49,7 +49,7 @@ class BuyCryptoController extends Controller
     public function coindetails()
     {
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $coin = $input['coin'];
         $amount = $input['amount'];
         $currency = Cryptocurrency::whereId($coin)->firstOrFail();
@@ -68,7 +68,7 @@ class BuyCryptoController extends Controller
             "api_key": "$currency->apikey",
             "password": "$currency->apipass",
             "fiat_symbol": "USD",
-            "fiat_amount": "$amount" 
+            "fiat_amount": "$amount"
         }
         DATA;
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
@@ -77,35 +77,35 @@ class BuyCryptoController extends Controller
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $resp = curl_exec($curl);
         curl_close($curl);
-        //var_dump($resp); 
+        //var_dump($resp);
         $resp = json_decode($resp,true);
         if($resp['msg'] == 'success')
         {
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Asset Price Calculated','rate'=>$resp['data'],'ourrate'=>$currency->buy_rate],200);
-        } 
+        }
         return response()->json(['ok'=>false,'status'=>'error','message'=> 'Sorry, we cant calculate asset rate at the moment.'],200);
     }
 
 
-    
+
     public function buyProcess()
     {
         try {
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $coin = $input['coin'];
         $amount = $input['amount'];
-        $wallet = $input['wallet'];
+        $wallet = 'main';
         $currency = Cryptocurrency::whereId($coin)->firstOrFail();
         $total = $currency->buy_rate * $amount;
         if($wallet == 'main' && $user->balance < $total)
             {
-                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Insufficient main wallet balance'],200);   
+                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Insufficient main wallet balance'],200);
             }
         elseif($wallet != 'main' && $user->ref_balance < $total)
             {
-                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Insufficient referral wallet balance'],200);   
+                return response()->json(['ok'=>false,'status'=>'error','message'=> 'Insufficient referral wallet balance'],200);
             }
             $url = "https://coinremitter.com/api/v3/".$currency->symbol."/get-fiat-to-crypto-rate";
             $curl = curl_init($url);
@@ -122,7 +122,7 @@ class BuyCryptoController extends Controller
                 "api_key": "$currency->apikey",
                 "password": "$currency->apipass",
                 "fiat_symbol": "USD",
-                "fiat_amount": "$amount" 
+                "fiat_amount": "$amount"
             }
             DATA;
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
@@ -131,12 +131,12 @@ class BuyCryptoController extends Controller
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $resp = curl_exec($curl);
             curl_close($curl);
-            //var_dump($resp); 
+            //var_dump($resp);
             $resp = json_decode($resp,true);
             if($resp['msg'] != 'success')
             {
                 return response()->json(['ok'=>false,'status'=>'error','message'=> 'Sorry, we cant calculate asset rate at the moment.'],200);
-            } 
+            }
         $code = getTrx();
         $crypto = $resp['data']['crypto_amount'];
         $usdvalue = $resp['data']['fiat_amount'];
@@ -155,7 +155,7 @@ class BuyCryptoController extends Controller
         $order->status       = 'success';
         $order->payment      = @$total;
         $order->trx          = $code;
-        $order->source       = @$wallet; 
+        $order->source       = @$wallet;
         $order->transaction_id  = getTrx();
         $order->save();
         return response()->json(['ok'=>true,'status'=>'success','message'=> 'Trade Created Successfully','coin'=> $crypto.$currency->symbol,'usd'=> $usdvalue,'fiat'=> $total],200);
@@ -164,7 +164,7 @@ class BuyCryptoController extends Controller
 
         }
     }
- 
+
     public function log(Request $request)
     {
         $pageTitle       = 'Purchase Log';
@@ -173,5 +173,5 @@ class BuyCryptoController extends Controller
         return view($this->activeTemplate . 'user.assets.crypto.buycrypto.buy_log', compact('pageTitle', 'log'));
     }
 
-    
+
 }

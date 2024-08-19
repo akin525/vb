@@ -211,7 +211,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6">
                                                     <!--begin::Option-->
-                                                    <input type="hidden" class="btn-check" name="account_type" onchange="selectwallet('main')" value="wallet" id="mainwallet" checked />
+                                                    <input type="hidden" class="btn-check" name="account_type" onchange="selectwallet('main')" value="main" id="mainwallet" checked />
 {{--                                                    <label--}}
 {{--                                                        class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10"--}}
 {{--                                                        for="mainwallet">--}}
