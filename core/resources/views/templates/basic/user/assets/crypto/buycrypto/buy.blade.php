@@ -704,6 +704,15 @@
                             <!--end::Form-->
                         </div>
                         <!--end::Content-->
+                        <div class="">
+                            <br>
+                            <div class="card-body">
+                                <div class="text-center ">
+                                    <img src="{{ asset('assets/assets/dist/images/backgrounds/2.png') }}" alt="" class="mw-100 h-200px h-sm-325px" />
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!--end::Stepper-->
                 </div>

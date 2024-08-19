@@ -170,6 +170,8 @@
                         <!--begin::Aside-->
 
                         <!--begin::Content-->
+
+
                         <div class="card d-flex flex-row-fluid flex-center">
                             <!--begin::Form-->
                             <form class="card-body py-20 w-100 mw-xl-700px px-9 subscribe" novalidate="novalidate"
@@ -705,6 +707,15 @@
                             </form>
                             <!--end::Form-->
                         </div>
+                            <div class="">
+                                <br>
+                                <div class="card-body">
+                                    <div class="text-center pb-15 px-5">
+                                        <img src="{{ asset('assets/assets/dist/images/backgrounds/2.png') }}" alt="" class="mw-100 h-200px h-sm-325px" />
+                                    </div>
+                            </div>
+                        </div>
+
                         <!--end::Content-->
                     </div>
                     <!--end::Stepper-->
