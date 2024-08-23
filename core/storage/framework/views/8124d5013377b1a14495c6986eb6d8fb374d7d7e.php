@@ -208,7 +208,7 @@
                                                 <!--begin::Col-->
 
                                                     <!--begin::Option-->
-                                                    <input type="hidden" class="btn-check" name="account_type" value="wallet" onchange="selectwallet('main')" id="mainwallet" checked />
+                                                    <input type="hidden" class="btn-check" name="account_type" value="main" onchange="selectwallet('main')" id="mainwallet" checked />
 
 
 
@@ -744,21 +744,21 @@
                                             a.classList.remove("d-none"))
                                 })), r.on("kt.stepper.next", (function(e) {
                                 console.log("stepper.next");
-                                var t = s[e.getCurrentStepIndex() - 1];
-                                t ? t.validate().then((function(t) {
-                                    console.log("validated!"), "Valid" == t ? (e.goNext(),
-                                        KTUtil.scrollTop()) : Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-light"
-                                        }
-                                    }).then((function() {
-                                        KTUtil.scrollTop()
-                                    }))
-                                })) : (e.goNext(), KTUtil.scrollTop())
+                                // var t = s[e.getCurrentStepIndex() - 1];
+                                // t ? t.validate().then((function(t) {
+                                //     console.log("validated!"), "Valid" == t ? (e.goNext(),
+                                //         KTUtil.scrollTop()) : Swal.fire({
+                                //         text: "Sorry, looks like there are some errors detected, please try again.",
+                                //         icon: "error",
+                                //         buttonsStyling: !1,
+                                //         confirmButtonText: "Ok, got it!",
+                                //         customClass: {
+                                //             confirmButton: "btn btn-light"
+                                //         }
+                                //     }).then((function() {
+                                //         KTUtil.scrollTop()
+                                //     }))
+                                // })) : (e.goNext(), KTUtil.scrollTop())
                             })), r.on("kt.stepper.previous", (function(e) {
                                 console.log("stepper.previous"), e.goPrevious(), KTUtil.scrollTop()
                             })), s.push(FormValidation.formValidation(i, {
@@ -846,10 +846,10 @@
                                                     $("#passmessage").html(``);
                                                     var raw = JSON.stringify({
                                                         _token: "<?php echo e(csrf_token()); ?>",
-                                                        password: document
-                                                            .getElementById(
-                                                                'password')
-                                                            .value,
+                                                        // password: document
+                                                        //     .getElementById(
+                                                        //         'password')
+                                                        //     .value,
                                                         amount: document
                                                             .getElementById(
                                                                 'amount').value,

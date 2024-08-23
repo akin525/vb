@@ -157,12 +157,14 @@ function removeElement($array, $value)
 
 function cryptoQR($wallet)
 {
-    return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$wallet&choe=UTF-8";
+    $wallet = urlencode($wallet);
+    return "https://quickchart.io/qr?text={$wallet}&size=300";
 }
 
 function QR($url)
 {
-    return "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$url&choe=UTF-8";
+    $url = urlencode($url);
+    return "https://quickchart.io/qr?text={$url}&size=300";
 }
 
 
@@ -422,7 +424,7 @@ function imagePath()
         'path' => 'assets/images/city',
         'size' => '768x550'
     ];
-    
+
     $data['kyc'] = [
         'path' => 'assets/images/kyc',
     ];
@@ -620,7 +622,7 @@ function getTokenGiftcard()
     {
     return $token;
     }
-    
+
     if(env('MODE') == "TEST")
     {
         $client_id = env('CLIENTIDTEST');
@@ -800,7 +802,7 @@ function get_exchange_rate($currency)
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS =>'{ 
+        CURLOPT_POSTFIELDS =>'{
             "funding_currency": "'.$currency.'"
         }',
         CURLOPT_HTTPHEADER => array(
@@ -815,7 +817,7 @@ function get_exchange_rate($currency)
     if(!isset($reply['access_token']))
     {
         return false;
-    } 
+    }
     return $reply['access_token'];
 }
 

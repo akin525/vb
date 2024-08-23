@@ -210,7 +210,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6">
                                                     <!--begin::Option-->
-                                                    <input type="hidden" class="btn-check" name="account_type" onchange="selectwallet('main')" value="wallet" id="mainwallet" checked />
+                                                    <input type="hidden" class="btn-check" name="account_type" onchange="selectwallet('main')" value="main" id="mainwallet" checked />
 
 
 
@@ -881,10 +881,10 @@
                                                     $("#passmessage").html(``);
                                                     var raw = JSON.stringify({
                                                         _token: "<?php echo e(csrf_token()); ?>",
-                                                        password: document
-                                                            .getElementById(
-                                                                'password')
-                                                            .value,
+                                                        // password: document
+                                                        //     .getElementById(
+                                                        //         'password')
+                                                        //     .value,
                                                         amount: document
                                                             .getElementById(
                                                                 'amount').value,
@@ -918,7 +918,8 @@
                                                                 o.disabled = !1;
                                                             }
                                                             if (resp.ok !== false && resp.auto !== false) {
-                                                                var qrcode ="<?php echo e(cryptoQR('+resp.data.address+')); ?>";
+
+                                                                var qrcode = "https://quickchart.io/qr?text=" + encodeURIComponent(resp.data.address) + "&size=300"
                                                                 let coinvalue = resp.data.total_amount;
                                                                 console.info(coinvalue);
                                                                 o.removeAttribute(
@@ -969,7 +970,10 @@
                                                                                         <a href="#" onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">Click Here To Verify Payment</a>
 
                                                                                         </div>
-                                                                                        
+
+                                                                                      
+                                                                                    <a href="javascript:void(0)" onClick="confirmPaymentManual('${resp.data.trx}')"  data-bs-toggle="modal" data-bs-target="#confirmPayment-modal" class="btn btn-primary">I Have Paid</a>
+
                                                                                     </div>
                                                                             </section>
                                                                         </div>
@@ -978,7 +982,7 @@
                                                                     `;
 
                                                             }
-                                                            if (resp.ok != false && resp.auto != true) {
+                                                            if (resp.ok !== false && resp.auto !== true) {
                                                             var qrcode ="<?php echo e(cryptoQR('+resp.coin.wallet_address+')); ?>";
                                                             o.removeAttribute(
                                                                 "data-kt-indicator"

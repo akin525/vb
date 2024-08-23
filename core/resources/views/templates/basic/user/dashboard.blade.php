@@ -50,221 +50,221 @@
         <!--end::Engage widget 4-->
 
         <!--begin::Notice-->
-        <div class="col-lg-12 mb-4 align-items-strech">
+{{--        <div class="col-lg-12 mb-4 align-items-strech">--}}
 
-            <div class="notice d-flex @if(Auth::user()->nuban == null) bg-light-danger rounded border-danger @else bg-light-primary rounded border-primary @endif  border border-dashed min-w-lg-600px flex-shrink-0 p-6">
-                <!--begin::Icon-->
+{{--            <div class="notice d-flex @if(Auth::user()->nuban == null) bg-light-danger rounded border-danger @else bg-light-primary rounded border-primary @endif  border border-dashed min-w-lg-600px flex-shrink-0 p-6">--}}
+{{--                <!--begin::Icon-->--}}
 
-                <i class="@if(Auth::user()->nuban == null) ti ti-alert-circle fs-2tx text-danger @else  ti ti-building-bank fs-2tx text-primary @endif me-4">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                    <span class="path3"></span>
-                </i> <!--end::Icon-->
+{{--                <i class="@if(Auth::user()->nuban == null) ti ti-alert-circle fs-2tx text-danger @else  ti ti-building-bank fs-2tx text-primary @endif me-4">--}}
+{{--                    <span class="path1"></span>--}}
+{{--                    <span class="path2"></span>--}}
+{{--                    <span class="path3"></span>--}}
+{{--                </i> <!--end::Icon-->--}}
 
-                <!--begin::Wrapper-->
-                <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
-                    <!--begin::Content-->
-                    <div class="mb-3 mb-md-0 fw-semibold">
-                        <h4 class="text-gray-900 fw-bold">@lang('Dedicated Account Number')</h4>
-                        @if(Auth::user()->nuban == null)
-                        <div class="fs-6 text-gray-700 pe-7">@lang('Please click the generate button to generate your dedicated account number')
-                        </div>
-                        @else
-                            @if($general->nuban_provider == "MONNIFY")
-                            @php
-                            $nuban = json_decode(Auth::user()->nuban, true);
-                            @endphp
-                            @foreach($nuban as $data)
-                             <div class="d-flex align-items-center flex-wrap d-grid gap-2 mb-3">
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                <!--begin::Wrapper-->--}}
+{{--                <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">--}}
+{{--                    <!--begin::Content-->--}}
+{{--                    <div class="mb-3 mb-md-0 fw-semibold">--}}
+{{--                        <h4 class="text-gray-900 fw-bold">@lang('Dedicated Account Number')</h4>--}}
+{{--                        @if(Auth::user()->nuban == null)--}}
+{{--                        <div class="fs-6 text-gray-700 pe-7">@lang('Please click the generate button to generate your dedicated account number')--}}
+{{--                        </div>--}}
+{{--                        @else--}}
+{{--                            @if($general->nuban_provider == "MONNIFY")--}}
+{{--                            @php--}}
+{{--                            $nuban = json_decode(Auth::user()->nuban, true);--}}
+{{--                            @endphp--}}
+{{--                            @foreach($nuban as $data)--}}
+{{--                             <div class="d-flex align-items-center flex-wrap d-grid gap-2 mb-3">--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['bankName']}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['bankName']}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
 
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['accountName']}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['accountName']}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['accountNumber']}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                            </div>
-                            @endforeach
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$data['accountNumber']}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                            </div>--}}
+{{--                            @endforeach--}}
 
-                            @elseif($general->nuban_provider == "STROWALLET")
-                            <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                            @elseif($general->nuban_provider == "STROWALLET")--}}
+{{--                            <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>
-                                        @php
-                                        $bankdetails = json_decode(Auth::user()->nuban);
-                                        @endphp
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->bank_name}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>--}}
+{{--                                        @php--}}
+{{--                                        $bankdetails = json_decode(Auth::user()->nuban);--}}
+{{--                                        @endphp--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->bank_name}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
 
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_name}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_name}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_number}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                            </div>
-                            @elseif($general->nuban_provider == "PAYLONY")
-                            <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_number}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                            </div>--}}
+{{--                            @elseif($general->nuban_provider == "PAYLONY")--}}
+{{--                            <div class="d-flex align-items-center flex-wrap d-grid gap-2 ">--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-building-bank fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>
-                                        @php
-                                        $bankdetails = json_decode(Auth::user()->nuban);
-                                        @endphp
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->bank_name}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Bank Name')</a>--}}
+{{--                                        @php--}}
+{{--                                        $bankdetails = json_decode(Auth::user()->nuban);--}}
+{{--                                        @endphp--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->bank_name}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
 
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-user fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_name}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                                <!--begin::Item-->
-                                <div class="d-flex align-items-center me-5 me-xl-13">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-30px symbol-circle me-3">
-                                        <span class="symbol-label" style="background: #410a8fc1;">
-                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>
-                                    </div>
-                                    <!--end::Symbol-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Name')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_name}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                                <!--begin::Item-->--}}
+{{--                                <div class="d-flex align-items-center me-5 me-xl-13">--}}
+{{--                                    <!--begin::Symbol-->--}}
+{{--                                    <div class="symbol symbol-30px symbol-circle me-3">--}}
+{{--                                        <span class="symbol-label" style="background: #410a8fc1;">--}}
+{{--                                            <i class="ti ti-wallet fs-4 text-white"><span class="path1"></span><span class="path2"></span></i>                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Symbol-->--}}
 
-                                    <!--begin::Info-->
-                                    <div class="m-0">
-                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>
-                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_number}}</span>
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                            </div>
-                            @endif
-                        <!--end::Items-->
+{{--                                    <!--begin::Info-->--}}
+{{--                                    <div class="m-0">--}}
+{{--                                        <a href="#" class="text-dark text-opacity-75 fs-8">@lang('Account Number')</a>--}}
+{{--                                        <span class="fw-bold text-dark fs-7 d-block">{{@$bankdetails->account_number}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Info-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Item-->--}}
+{{--                            </div>--}}
+{{--                            @endif--}}
+{{--                        <!--end::Items-->--}}
 
-                        @endif
-                        <div id="responsemessage"></div>
-                    </div>
-                    <!--end::Content-->
+{{--                        @endif--}}
+{{--                        <div id="responsemessage"></div>--}}
+{{--                    </div>--}}
+{{--                    <!--end::Content-->--}}
 
-                    <!--begin::Action-->
-                    @if(Auth::user()->nuban == null)
-                    <a href="#" id="fundbutton" onclick="generatenuban()" class="btn btn-primary px-6 align-self-center text-nowrap">
-                        @lang('Generate') </a>
-                    <!--end::Action-->
-                    @endif
-                </div>
-                <!--end::Wrapper-->
-            </div>
-        </div>
+{{--                    <!--begin::Action-->--}}
+{{--                    @if(Auth::user()->nuban == null)--}}
+{{--                    <a href="#" id="fundbutton" onclick="generatenuban()" class="btn btn-primary px-6 align-self-center text-nowrap">--}}
+{{--                        @lang('Generate') </a>--}}
+{{--                    <!--end::Action-->--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <!--end::Wrapper-->--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <br><br>
         <br><br>
 
@@ -396,6 +396,37 @@
         </div>
 
 
+            <!--begin::Wrapper-->
+            <div class="card card-body d-flex flex-stack flex-grow-1 ">
+                <!--begin::Content-->
+                <div class=" fw-semibold">
+                    <h4 class="text-gray-900 fw-bold">@lang('Trade Crypto')</h4>
+
+                    <div class="fs-6 text-gray-700 ">@lang('Welcome to our crypto trade portal where you can buy and sell crypto digital assets from over 70 currencies available on the platform. <br>
+                                   <b> You can click on the Trade Log button at the top right corner of your screen to view your trade log</b>
+                                    ')
+                        <br> <br>
+
+                        <!--begin::Action-->
+                        <a href="{{ route('user.crypto.sell') }}" class="btn btn-primary er fs-6 px-8 py-4 mb-4">
+                            @lang('Sell Crypto Now') </a>
+
+                        <a href="{{ route('user.crypto.buy') }}" class="btn btn-secondary er fs-6 px-8 py-4 mb-4">
+                            @lang('Buy Crypto Now') </a>
+                        <br> <br>
+
+
+
+                        <a href="{{ route('user.crypto.rates') }}" class="btn btn-info fs-6 px-8 py-4 mb-4">
+                            @lang('View Our Rates') </a>
+                        <!--end::Action-->
+                    </div>
+                </div>
+                <!--end::Content-->
+
+            </div>
+            <!--end::Wrapper-->
+
             <div class="card-body ">
                 <div class="row ">
 
@@ -480,36 +511,7 @@
             </div>
 
 
-            <!--begin::Wrapper-->
-            <div class="card card-body d-flex flex-stack flex-grow-1 ">
-                <!--begin::Content-->
-                <div class=" fw-semibold">
-                    <h4 class="text-gray-900 fw-bold">@lang('Trade Crypto')</h4>
 
-                    <div class="fs-6 text-gray-700 ">@lang('Welcome to our crypto trade portal where you can buy and sell crypto digital assets from over 70 currencies available on the platform. <br>
-                                   <b> You can click on the Trade Log button at the top right corner of your screen to view your trade log</b>
-                                    ')
-                        <br> <br>
-
-                        <!--begin::Action-->
-                        <a href="{{ route('user.crypto.sell') }}" class="btn btn-primary er fs-6 px-8 py-4 mb-4">
-                            @lang('Sell Asset Now') </a>
-
-                        <a href="{{ route('user.crypto.buy') }}" class="btn btn-secondary er fs-6 px-8 py-4 mb-4">
-                            @lang('Buy Asset Now') </a>
-                        <br> <br>
-
-
-
-                        <a href="{{ route('user.crypto.rates') }}" class="btn btn-info fs-6 px-8 py-4 mb-4">
-                            @lang('View Our Rates') </a>
-                        <!--end::Action-->
-                    </div>
-                </div>
-                <!--end::Content-->
-
-            </div>
-            <!--end::Wrapper-->
     </div>
 
 
