@@ -382,7 +382,7 @@ class AirtimeController extends Controller
         $password = $input['password'];
         $amount =  @$input['amount'];
         $operator = @$input['operator'];
-        $wallet = @$input['wallet'];
+        $wallet = "main";
         $phone = @$input['phone'];
 
         if (Hash::check($password, $user->trx_password)) {
@@ -539,7 +539,7 @@ class AirtimeController extends Controller
         $password = $input['password'];
         $amount =  @$input['amount'];
         $operator = @$input['operator'];
-        $wallet = @$input['wallet'];
+        $wallet = "main";
         $phone = @$input['phone'];
 
 //        if (Hash::check($password, $user->trx_password)) {

@@ -233,7 +233,7 @@ class InternetController extends Controller
         $amount =  $arr[0];
         $plan = $arr[1];
         $phone = $input['phone'];
-        $wallet = @$input['wallet'];
+        $wallet = "main";
         $operatorId = @$input['operator'];
 
         if (Hash::check($password, $user->trx_password)) {
