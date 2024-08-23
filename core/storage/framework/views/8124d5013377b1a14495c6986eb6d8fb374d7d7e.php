@@ -586,13 +586,13 @@
                                             <br><br><br>
 
 
-                                            <label class="fs-6 fw-semibold mb-2">
-                                                <?php echo app('translator')->get('Enter Transaction Password'); ?>
-                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                      title="Please enter your transaction password to authenticate the wallet debit">
-                                                    <i class="ti ti-alert-circle text-gray-500 fs-6"><span
-                                                            class="path1"></span><span class="path2"></span><span
-                                                            class="path3"></span></i></span> </label>
+
+
+
+
+
+
+
                                             <!--End::Label-->
 
                                             <!--begin::Input-->

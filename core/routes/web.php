@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\SellCryptoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/clear', function () {
@@ -51,5 +52,6 @@ Route::controller('SiteController')->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/assets/rates', 'rates')->name('rates');
 });
+//Route::post('user/crypto/sell/confirm', [SellCryptoController::class, 'sellConfirmManual'])->name('user.crypto.sell.confirm');
 
 Route::get('getlist/{selectedValue}', [\App\Http\Controllers\User\InternetController::class, 'fecthdata'])->name('getlist');

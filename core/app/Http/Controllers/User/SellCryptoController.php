@@ -5,9 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\GoogleAuthenticator;
-use App\Models\Order; 
-use App\Models\Cryptocurrency; 
-use App\Models\GeneralSetting; 
+use App\Models\Order;
+use App\Models\Cryptocurrency;
+use App\Models\GeneralSetting;
  use App\Models\AdminNotification;
 use App\Models\User;
 use App\Models\Transaction;
@@ -22,7 +22,7 @@ use Carbon\Carbon;
 class SellCryptoController extends Controller
 {
 
- 
+
     public function __construct()
     {
         $this->middleware('kyc.status');
@@ -30,7 +30,7 @@ class SellCryptoController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-       
+
     public function index(Request $request)
     {
         $pageTitle       = 'Sell Crypto';
@@ -42,7 +42,7 @@ class SellCryptoController extends Controller
     public function sell(Request $request)
     {
         $pageTitle = 'Sell Crypto';
-        $countries = []; 
+        $countries = [];
         $plans = [];
         $currencies = Cryptocurrency::whereStatus(1)->get();
         return view($this->activeTemplate . 'user.assets.crypto.sellcrypto.sell', compact('pageTitle','currencies'));
@@ -53,7 +53,7 @@ class SellCryptoController extends Controller
         $general = gs();
 
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $coin = $input['coin'];
         $amount = $input['amount'];
         $currency = Cryptocurrency::whereId($coin)->firstOrFail();
@@ -75,7 +75,7 @@ class SellCryptoController extends Controller
                 "api_key": "$currency->apikey",
                 "password": "$currency->apipass",
                 "fiat_symbol": "USD",
-                "fiat_amount": "$amount" 
+                "fiat_amount": "$amount"
             }
             DATA;
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
@@ -84,17 +84,17 @@ class SellCryptoController extends Controller
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $resp = curl_exec($curl);
             curl_close($curl);
-            //var_dump($resp); 
+            //var_dump($resp);
             $resp = json_decode($resp,true);
             if($resp['msg'] == 'success')
             {
                 return response()->json(['ok'=>true,'status'=>'success','message'=> 'Asset Price Calculated','currency'=>$currency->symbol,'rate'=>$resp['data'],'ourrate'=>$currency->sell_rate],200);
-            } 
+            }
             return response()->json(['ok'=>false,'status'=>'error','message'=> 'Sorry, we cant calculate asset rate at the moment.'],200);
         }
         return response()->json(['ok'=>true,'status'=>'success','message'=> 'Asset Price Calculated','currency'=>$currency->symbol,'rate'=>$currency->sell_rate,'ourrate'=>$currency->sell_rate],200);
 
-        
+
     }
 
 
@@ -103,7 +103,7 @@ class SellCryptoController extends Controller
         $general = gs();
         $user = auth()->user();
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $coin = $input['coin'];
         $invoice = $input['invoice'];
         $currency = Cryptocurrency::whereSymbol($coin)->firstOrFail();
@@ -131,9 +131,9 @@ class SellCryptoController extends Controller
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $resp = curl_exec($curl);
         curl_close($curl);
-        //var_dump($resp); 
-        $resp = json_decode($resp,true); 
-            
+        //var_dump($resp);
+        $resp = json_decode($resp,true);
+
         $trx = Transaction::whereTrx($order->trx)->whereUserId($user->id)->first();
 
         $order->status = $resp['data']['status'];
@@ -174,13 +174,13 @@ class SellCryptoController extends Controller
                     'purchase_at'     => @Carbon::now(),
                     'trx'             => @$order->trx,
                 ]);
-            } 
+            }
             //FUND WALLET AND CLOSE TRANSACTIONS
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Invoice Is '.$resp['data']['status']],200);
         }
         return response()->json(['ok'=>false,'status'=>'error','message'=> 'Invoice Is '.$resp['data']['status']],200);
     }
- 
+
     public function sellProcess()
     {
         $general = gs();
@@ -188,7 +188,7 @@ class SellCryptoController extends Controller
         {
         try {
         $json = file_get_contents('php://input');
-        $input = json_decode($json, true); 
+        $input = json_decode($json, true);
         $coin = $input['coin'];
         $amount = $input['amount'];
         $wallet = $input['wallet'];
@@ -208,7 +208,7 @@ class SellCryptoController extends Controller
             "api_key": "$currency->apikey",
             "password": "$currency->apipass",
             "currency": "USD",
-            "amount": "$amount" 
+            "amount": "$amount"
         }
         DATA;
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
@@ -217,12 +217,12 @@ class SellCryptoController extends Controller
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $resp = curl_exec($curl);
         curl_close($curl);
-        //var_dump($resp); 
+        //var_dump($resp);
         $resp = json_decode($resp,true);
         if($resp['flag'] != 1)
         {
             return response()->json(['ok'=>false,'status'=>'error','message'=> $resp['msg']],200);
-        } 
+        }
         $user = auth()->user();
         $crypto = array_values($resp['data']['total_amount']);
         $value = $amount*$currency->sell_rate;
@@ -241,7 +241,7 @@ class SellCryptoController extends Controller
             $order->status       = @$resp['data']['status'];
             $order->payment      = $crypto[0];
             $order->trx          = @$resp['data']['invoice_id'];
-            $order->source       = @$wallet; 
+            $order->source       = @$wallet;
             $order->transaction_id  = @$resp['data']['id'];
             $order->save();
         return response()->json(['ok'=>true,'status'=>'success','message'=> 'Trade Invoice Created Successfully','data'=> $resp['data'],'auto'=> true],200);
@@ -255,12 +255,12 @@ class SellCryptoController extends Controller
         {
             try {
                 $json = file_get_contents('php://input');
-                $input = json_decode($json, true); 
+                $input = json_decode($json, true);
                 $coin = $input['coin'];
                 $amount = $input['amount'];
                 $wallet = $input['wallet'];
                 $currency = Cryptocurrency::whereId($coin)->firstOrFail();
-                 
+
                 $user = auth()->user();
                 $value = $amount*$currency->sell_rate;
                 $order               = new Order();
@@ -278,13 +278,13 @@ class SellCryptoController extends Controller
                     $order->status       = 'pending';
                     $order->payment      = $amount;
                     $order->trx          = getTrx();
-                    $order->source       = @$wallet; 
+                    $order->source       = @$wallet;
                     $order->transaction_id  = rand(1000000,100000000);
                     $order->save();
                 return response()->json(['ok'=>true,'status'=>'success','message'=> 'Trade Invoice Created Successfully','coin'=> $currency,'data'=> $order,'auto'=> false],200);
                 } catch (\Exception $exp) {
                     return response()->json(['ok'=>false,'status'=>'error','message'=> $exp->getMessage()],200);
-        
+
                 }
         }
     }
@@ -292,34 +292,51 @@ class SellCryptoController extends Controller
 
     public function sellConfirmManual(Request $request)
     {
-        $general = gs();
         $user = auth()->user();
-        $order = Order::whereTrx($request->trx)->whereUserId($user->id)->firstOrFail();         
-        $order->val_1 = $request->trxhash;
-        $path = imagePath()['trade']['path'].'/'.$user->username;
-        if ($request->hasFile('proof')) {
-            $request->validate([ 
-                'proof'     => ['required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
-            ]);
-            try {
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
-                }
-               $file = getTrx().'.png';
-               $image = Image::make($request->proof)->save($path . '/'.$file);
-               $order->val_2 = $file;
 
-            } catch (\Exception $exp) {
-                //return $exp;
-                //$notify[] = ['error', 'Could not upload your Proof of payment'];
-                //return back()->withNotify($notify)->withInput();
+        // Validate the incoming request
+        $request->validate([
+            'trx' => 'required|string',
+            'trxhash' => 'required|string',
+            'proof' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate the image file
+        ]);
+
+        try {
+            // Retrieve the order
+            $order = Order::whereTrx($request->trx)
+                ->whereUserId($user->id)
+                ->firstOrFail();
+
+            // Update order with trx hash
+            $order->val_1 = $request->trxhash;
+
+            // Handle the file upload if present
+            if ($request->hasFile('proof')) {
+                $path = 'trade/' . $user->username;
+                $fileName = getTrx() . '.png';
+
+                // Store the image
+                $imagePath = $request->file('proof')->storeAs($path, $fileName, 'public');
+
+                $order->val_2 = $fileName;
             }
-        } 
-        $order->save();
-        $notify[] = ['success', 'Transaction submitted successfuly successfuly.'];
-        return redirect()->route('user.crypto.sell.log')->withNotify($notify);  
+
+            // Save the order
+            $order->save();
+
+            // Success notification
+            $notify[] = ['success', 'Transaction submitted successfully.'];
+        } catch (\Exception $exp) {
+            // Log the exception for debugging
+            \Log::error('Error in sellConfirmManual: ' . $exp->getMessage());
+
+            // Error notification
+            $notify[] = ['error', 'Could not process the transaction. Please try again.'];
+        }
+
+        return redirect()->route('user.crypto.sell.log')->withNotify($notify);
     }
- 
+
     public function log(Request $request)
     {
         $pageTitle       = 'Sales Log';
@@ -327,6 +344,6 @@ class SellCryptoController extends Controller
         $log = Order::whereUserId($user->id)->whereType('sell_crypto')->searchable(['deposit_code'])->with('asset')->orderBy('id', 'desc')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.assets.crypto.sellcrypto.sell_log', compact('pageTitle', 'log'));
     }
-  
-    
+
+
 }
