@@ -596,62 +596,62 @@
                                             <!--End::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="password" onkeyup="verifypassword(this)" id="password"
-                                                   class="form-control form-control-lg form-control-solid" name="password"
-                                                   placeholder="" value="" autocomplete="off" />
+
+
+
                                             <!--end::Input-->
                                             <div id="passmessage"></div>
                                         </div>
                                         <!--end::Input group-->
-                                        <?php $__env->startPush('script'); ?>
-                                            <script>
-                                                function verifypassword(e) {
 
-                                                    var password = e.value;
-                                                    if (password.length < 4) {
-                                                        return;
-                                                    }
-                                                    $("#passmessage").html(`<button class="btn btn-primary" type="button" disabled>
-                                                    <span
-                                                      class="spinner-border spinner-border-sm"
-                                                      role="status"
-                                                      aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Loading...</span>
-                                                    </button>`);
 
-                                                    var raw = JSON.stringify({
-                                                        _token: "<?php echo e(csrf_token()); ?>",
-                                                        password: e.value,
-                                                    });
 
-                                                    var requestOptions = {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        body: raw
-                                                    };
-                                                    fetch("<?php echo e(route('user.trxpass')); ?>", requestOptions)
-                                                        .then(response => response.text())
-                                                        .then(result => {
-                                                            resp = JSON.parse(result);
-                                                            if (resp.ok != true) {
-                                                                document.getElementById("submit").disabled = true;
-                                                            }
-                                                            if (resp.ok != false) {
-                                                                document.getElementById("submit").disabled = false;
-                                                            }
-                                                            $("#passmessage").html(
-                                                                `<div class="alert alert-${resp.status}" role="alert"><strong>${resp.status} - </strong> ${resp.message}</div>`
-                                                            );
-                                                        })
-                                                        .catch(error => {
 
-                                                        });
-                                                    // END GET DATA \\
-                                                }
-                                            </script>
-                                        <?php $__env->stopPush(); ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     </div>
                                     <!--end::Wrapper-->
@@ -723,45 +723,66 @@
 
     <?php $__env->startPush('script'); ?>
         <script></script>
-        <script>
-            "use strict";
-            var KTCreateAccount = function() {
-                var e, t, i, o, a, r, s = [];
-                return {
-                    init: function() {
-                        (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e), (t =
-                            document.querySelector("#kt_create_account_stepper")) && (i = t.querySelector(
-                                "#kt_create_account_form"),
-                            o = t.querySelector('[data-kt-stepper-action="submit"]'),
-                            a = t.querySelector('[data-kt-stepper-action="next"]'), (r = new KTStepper(t)).on(
-                                "kt.stepper.changed",
-                                (function(e) {
-                                    4 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"), o.classList
-                                            .add("d-inline-block"), a.classList.add("d-none")) : 5 === r
-                                        .getCurrentStepIndex() ? (o.classList.add("d-none"),
-                                            a.classList.add("d-none")) : (o.classList.remove("d-inline-block"),
-                                            o.classList.remove("d-none"),
-                                            a.classList.remove("d-none"))
-                                })), r.on("kt.stepper.next", (function(e) {
+            <script>
+                "use strict";
+                var KTCreateAccount = function() {
+                    var e, t, i, o, a, r, s = [];
+                    return {
+                        init: function() {
+                            (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e);
+                            (t = document.querySelector("#kt_create_account_stepper")) && (
+                                i = t.querySelector("#kt_create_account_form"),
+                                    o = t.querySelector('[data-kt-stepper-action="submit"]'),
+                                    a = t.querySelector('[data-kt-stepper-action="next"]'),
+                                    r = new KTStepper(t)
+                            );
+
+                            r.on("kt.stepper.changed", function(e) {
+                                if (r.getCurrentStepIndex() === 4) {
+                                    o.classList.remove("d-none");
+                                    o.classList.add("d-inline-block");
+                                    a.classList.add("d-none");
+                                } else if (r.getCurrentStepIndex() === 5) {
+                                    o.classList.add("d-none");
+                                    a.classList.add("d-none");
+                                } else {
+                                    o.classList.remove("d-inline-block");
+                                    o.classList.remove("d-none");
+                                    a.classList.remove("d-none");
+                                }
+                            });
+
+                            r.on("kt.stepper.next", function(e) {
                                 console.log("stepper.next");
-                                // var t = s[e.getCurrentStepIndex() - 1];
-                                // t ? t.validate().then((function(t) {
-                                //     console.log("validated!"), "Valid" == t ? (e.goNext(),
-                                //         KTUtil.scrollTop()) : Swal.fire({
-                                //         text: "Sorry, looks like there are some errors detected, please try again.",
-                                //         icon: "error",
-                                //         buttonsStyling: !1,
-                                //         confirmButtonText: "Ok, got it!",
-                                //         customClass: {
-                                //             confirmButton: "btn btn-light"
-                                //         }
-                                //     }).then((function() {
-                                //         KTUtil.scrollTop()
-                                //     }))
-                                // })) : (e.goNext(), KTUtil.scrollTop())
-                            })), r.on("kt.stepper.previous", (function(e) {
-                                console.log("stepper.previous"), e.goPrevious(), KTUtil.scrollTop()
-                            })), s.push(FormValidation.formValidation(i, {
+                                var t = s[e.getCurrentStepIndex() - 1];
+                                t ? t.validate().then(function(t) {
+                                    console.log("validated!");
+                                    if (t === "Valid") {
+                                        e.goNext();
+                                        KTUtil.scrollTop();
+                                    } else {
+                                        Swal.fire({
+                                            text: "Sorry, looks like there are some errors detected, please try again.",
+                                            icon: "error",
+                                            buttonsStyling: false,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: {
+                                                confirmButton: "btn btn-light"
+                                            }
+                                        }).then(function() {
+                                            KTUtil.scrollTop();
+                                        });
+                                    }
+                                }) : (e.goNext(), KTUtil.scrollTop());
+                            });
+
+                            r.on("kt.stepper.previous", function(e) {
+                                console.log("stepper.previous");
+                                e.goPrevious();
+                                KTUtil.scrollTop();
+                            });
+
+                            s.push(FormValidation.formValidation(i, {
                                 fields: {
                                     account_type: {
                                         validators: {
@@ -772,16 +793,17 @@
                                     }
                                 },
                                 plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
+                                    trigger: new FormValidation.plugins.Trigger(),
                                     bootstrap: new FormValidation.plugins.Bootstrap5({
                                         rowSelector: ".fv-row",
                                         eleInvalidClass: "",
                                         eleValidClass: ""
                                     })
                                 }
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
+                            }));
 
+                            s.push(FormValidation.formValidation(i, {
+                                fields: {
                                     country: {
                                         validators: {
                                             notEmpty: {
@@ -797,8 +819,9 @@
                                         }
                                     }
                                 }
+                            }));
 
-                            })), s.push(FormValidation.formValidation(i, {
+                            s.push(FormValidation.formValidation(i, {
                                 fields: {
                                     amount: {
                                         validators: {
@@ -809,165 +832,145 @@
                                     }
                                 },
                                 plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
+                                    trigger: new FormValidation.plugins.Trigger(),
                                     bootstrap: new FormValidation.plugins.Bootstrap5({
                                         rowSelector: ".fv-row",
                                         eleInvalidClass: "",
                                         eleValidClass: ""
                                     })
                                 }
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
-                                    password: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Please enter account password"
-                                            }
-                                        }
-                                    }
-                                },
-                                plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
-                                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                                        rowSelector: ".fv-row",
-                                        eleInvalidClass: "",
-                                        eleValidClass: ""
-                                    })
-                                }
-                            })), o.addEventListener("click", (function(e) {
-                                s[3].validate().then((function(t) {
-                                    console.log("SUBMITED", t), "Valid" == t ? (e
-                                        .preventDefault(), o.disabled = !0, o.setAttribute(
-                                            "data-kt-indicator", "on"), setTimeout((
-                                            function() {
-                                                submitform();
-                                                // START BUY ASSET \\
-                                                function submitform() {
-                                                    $("#passmessage").html(``);
-                                                    var raw = JSON.stringify({
-                                                        _token: "<?php echo e(csrf_token()); ?>",
-                                                        // password: document
-                                                        //     .getElementById(
-                                                        //         'password')
-                                                        //     .value,
-                                                        amount: document
-                                                            .getElementById(
-                                                                'amount').value,
-                                                        coin: document
-                                                            .getElementById(
-                                                                'coin').value,
-                                                        wallet: localStorage
-                                                            .getItem('wallet'),
-                                                    });
+                            }));
 
-                                                    var requestOptions = {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $(
-                                                                'meta[name="csrf-token"]'
-                                                            ).attr(
-                                                                'content')
-                                                        },
-                                                        body: raw
-                                                    };
-                                                    fetch("<?php echo e(route('user.crypto.buy.coin')); ?>",
-                                                            requestOptions)
-                                                        .then(response => response.text())
-                                                        .then(result => {
-                                                            resp = JSON.parse(result);
-                                                            if (resp.ok === false) {
-                                                                o.removeAttribute(
-                                                                    "data-kt-indicator"
-                                                                );
-                                                                o.disabled = !1;
-                                                            }
-                                                            if (resp.ok === true) {
+                            // Removed password validation
+                            // s.push(FormValidation.formValidation(i, {
+                            //     fields: {
+                            //         password: {
+                            //             validators: {
+                            //                 notEmpty: {
+                            //                     message: "Please enter account password"
+                            //                 }
+                            //             }
+                            //         }
+                            //     },
+                            //     plugins: {
+                            //         trigger: new FormValidation.plugins.Trigger(),
+                            //         bootstrap: new FormValidation.plugins.Bootstrap5({
+                            //             rowSelector: ".fv-row",
+                            //             eleInvalidClass: "",
+                            //             eleValidClass: ""
+                            //         })
+                            //     }
+                            // }));
 
-                                                                // SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
-                                                                console.info(resp);
-                                                                o.removeAttribute(
-                                                                    "data-kt-indicator"
-                                                                );
-                                                                o.disabled = !1;
-                                                                document.getElementById("back").hidden = true;
-                                                                document.getElementById("invoicedetails").innerHTML = `
-                                                      <!--begin::Wrapper-->
-                                                        <div class="w-100">
-                                                            <!--begin::Heading-->
-                                                            <div class=" ">
-                                                                <!--begin::Title-->
-                                                                <section class="text-center">
-                                                                    <h5 class="fw-semibold fs-5 text-info"><?php echo app('translator')->get('Payment received and transaction completed'); ?></h5>
-                                                                    <h5 class="fw-semibold fs-5text-danger "><?php echo app('translator')->get('PLEASE, DO NOT REFRESH YOUR BROWSER'); ?></h5>
-                                                                    <img src="<?php echo e(asset('assets/assets/dist/images/backgrounds/paymentcomplete.jpeg')); ?>" alt="" class="img-fluid mb-4"
-                                                                        width="300">
+                            o.addEventListener("click", function(e) {
+                                s[2].validate().then(function(t) {
+                                    console.log("SUBMITTED", t);
+                                    if (t === "Valid") {
+                                        e.preventDefault();
+                                        o.disabled = true;
+                                        o.setAttribute("data-kt-indicator", "on");
 
-                                                                        <br>
-                                                                        <h6 class="fw-semibold text-danger mb-7"><?php echo app('translator')->get('Please click the view order button below to view the transaction log'); ?>: </h6>
-                                                                        <div class="order-summary border rounded p-4 my-4">
-                                                                            <div class="p-3">
-                                                                            <h5 class="fs-5 fw-semibold mb-4"><?php echo app('translator')->get('Payment Summary'); ?></h5>
+                                        setTimeout(function() {
+                                            submitForm();
+                                            function submitForm() {
+                                                var raw = JSON.stringify({
+                                                    _token: "<?php echo e(csrf_token()); ?>",
+                                                    amount: document.getElementById('amount').value,
+                                                    coin: document.getElementById('coin').value,
+                                                    wallet: localStorage.getItem('wallet')
+                                                });
 
-                                                                            <div class="d-flex justify-content-between mb-4">
-                                                                                <p class="mb-0 fs-4"><b>Payment Value</b></p>
-                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.fiat}<?php echo e($general->cur_text); ?></b></h6>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between mb-4">
-                                                                                <p class="mb-0 fs-4"><b>Crypto Value</b></p>
-                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.coin}</b></h6>
-                                                                            </div>
+                                                var requestOptions = {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    },
+                                                    body: raw
+                                                };
 
-                                                                            <div class="d-flex justify-content-between mb-4">
-                                                                                <p class="mb-0 fs-4"><b>USD Value</b></p>
-                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.usd}USD</b></h6>
-                                                                            </div>
-
-                                                                            <a href="<?php echo e(route('user.crypto.buy.log')); ?>" class="btn btn-primary">
-                                                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                View Order
-                                                                            </a>
-                                                                            </div>
+                                                fetch("<?php echo e(route('user.crypto.buy.coin')); ?>", requestOptions)
+                                                    .then(response => response.text())
+                                                    .then(result => {
+                                                        var resp = JSON.parse(result);
+                                                        if (resp.ok === false) {
+                                                            console.log('Stopping spinner');
+                                                            o.removeAttribute("data-kt-indicator");
+                                                            o.disabled = false;
+                                                            SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
+                                                        } else if (resp.ok === true) {
+                                                            console.info(resp);
+                                                            o.removeAttribute("data-kt-indicator");
+                                                            o.disabled = false;
+                                                            document.getElementById("back").hidden = true;
+                                                            document.getElementById("invoicedetails").innerHTML = `
+                                                    <!--begin::Wrapper-->
+                                                    <div class="w-100">
+                                                        <div class=" ">
+                                                            <section class="text-center">
+                                                                <h5 class="fw-semibold fs-5 text-info"><?php echo app('translator')->get('Payment received and transaction completed'); ?></h5>
+                                                                <h5 class="fw-semibold fs-5text-danger "><?php echo app('translator')->get('PLEASE, DO NOT REFRESH YOUR BROWSER'); ?></h5>
+                                                                <img src="<?php echo e(asset('assets/assets/dist/images/backgrounds/paymentcomplete.jpeg')); ?>" alt="" class="img-fluid mb-4" width="300">
+                                                                <br>
+                                                                <h6 class="fw-semibold text-danger mb-7"><?php echo app('translator')->get('Please click the view order button below to view the transaction log'); ?>: </h6>
+                                                                <div class="order-summary border rounded p-4 my-4">
+                                                                    <div class="p-3">
+                                                                        <h5 class="fs-5 fw-semibold mb-4"><?php echo app('translator')->get('Payment Summary'); ?></h5>
+                                                                        <div class="d-flex justify-content-between mb-4">
+                                                                            <p class="mb-0 fs-4"><b>Payment Value</b></p>
+                                                                            <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.fiat}<?php echo e($general->cur_text); ?></b></h6>
                                                                         </div>
-                                                                </section>
-                                                            </div>
+                                                                        <div class="d-flex justify-content-between mb-4">
+                                                                            <p class="mb-0 fs-4"><b>Crypto Value</b></p>
+                                                                            <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.coin}</b></h6>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between mb-4">
+                                                                            <p class="mb-0 fs-4"><b>USD Value</b></p>
+                                                                            <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.usd}USD</b></h6>
+                                                                        </div>
+                                                                        <a href="<?php echo e(route('user.crypto.buy.log')); ?>" class="btn btn-primary">
+                                                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                                            View Order
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
                                                         </div>
-                                                        <!--end::Wrapper-->
-                                                        `;
-                                                            }
-                                                            SlimNotifierJs
-                                                                .notification(resp
-                                                                    .status, resp
-                                                                    .status, resp
-                                                                    .message, 3000);
-                                                            //$("#passmessage").html(`<div class="alert alert-${resp.status}" role="alert"><strong>${resp.status} - </strong> ${resp.message}</div>`);
-                                                        })
-                                                        .catch(error => {
-
-                                                        });
-                                                }
-                                                // END BUY ASSET \\
-                                                // o.removeAttribute("data-kt-indicator"),
-                                                // o.disabled = !1, r.goNext()
-                                            }), 2e3)) : Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-light"
-                                        }
-                                    }).then((function() {
-                                        KTUtil.scrollTop()
-                                    }))
-                                }))
-                            })))
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                `;
+                                                            SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                        o.removeAttribute("data-kt-indicator");
+                                                        o.disabled = false;
+                                                    });
+                                            }
+                                        }, 2000);
+                                    } else {
+                                        Swal.fire({
+                                            text: "Sorry, looks like there are some errors detected, please try again.",
+                                            icon: "error",
+                                            buttonsStyling: false,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: {
+                                                confirmButton: "btn btn-light"
+                                            }
+                                        }).then(function() {
+                                            KTUtil.scrollTop();
+                                        });
+                                    }
+                                });
+                            });
+                        }
                     }
-                }
-            }();
-            KTUtil.onDOMContentLoaded((function() {
-                KTCreateAccount.init()
-            }));
-        </script>
+                }();
+
+                KTUtil.onDOMContentLoaded(function() {
+                    KTCreateAccount.init();
+                });
+            </script>
         <script>
             function confirmPayment(entry) {
                 id = entry.split('|')[0]

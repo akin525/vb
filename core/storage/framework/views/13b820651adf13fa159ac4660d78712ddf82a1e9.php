@@ -181,25 +181,7 @@
                                     <div class="w-100">
                                         <!--begin::Heading-->
                                         <div class="pb-10 pb-lg-15">
-                                            <!--begin::Title-->
 
-
-
-
-
-
-
-
-
-
-                                            <!--end::Title-->
-
-                                            <!--begin::Notice-->
-
-
-
-
-                                            <!--end::Notice-->
                                         </div>
                                         <!--end::Heading-->
 
@@ -590,72 +572,73 @@
                                             <br><br><br>
 
 
-                                            <label class="fs-6 fw-semibold mb-2">
-                                                <?php echo app('translator')->get('Enter Transaction Password'); ?>
-                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                    title="Please enter your transaction password to authenticate the wallet debit">
-                                                    <i class="ti ti-alert-circle text-gray-500 fs-6"><span
-                                                            class="path1"></span><span class="path2"></span><span
-                                                            class="path3"></span></i></span> </label>
+
+
+
+
+
+
+
                                             <!--End::Label-->
 
                                             <!--begin::Input-->
-                                            <input type="password" onkeyup="verifypassword(this)" id="password"
-                                                class="form-control form-control-lg form-control-solid" name="password"
-                                                placeholder="" value="" autocomplete="off" />
+
+
+
                                             <!--end::Input-->
                                             <div id="passmessage"></div>
                                         </div>
+
                                         <!--end::Input group-->
-                                        <?php $__env->startPush('script'); ?>
-                                            <script>
-                                                function verifypassword(e) {
 
-                                                    var password = e.value;
-                                                    if (password.length < 4) {
-                                                        return;
-                                                    }
-                                                    $("#passmessage").html(`<button class="btn btn-primary" type="button" disabled>
-                                                    <span
-                                                      class="spinner-border spinner-border-sm"
-                                                      role="status"
-                                                      aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Loading...</span>
-                                                    </button>`);
 
-                                                    var raw = JSON.stringify({
-                                                        _token: "<?php echo e(csrf_token()); ?>",
-                                                        password: e.value,
-                                                    });
 
-                                                    var requestOptions = {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                        },
-                                                        body: raw
-                                                    };
-                                                    fetch("<?php echo e(route('user.trxpass')); ?>", requestOptions)
-                                                        .then(response => response.text())
-                                                        .then(result => {
-                                                            resp = JSON.parse(result);
-                                                            if (resp.ok != true) {
-                                                                document.getElementById("submit").disabled = true;
-                                                            }
-                                                            if (resp.ok != false) {
-                                                                document.getElementById("submit").disabled = false;
-                                                            }
-                                                            $("#passmessage").html(
-                                                                `<div class="alert alert-${resp.status}" role="alert"><strong>${resp.status} - </strong> ${resp.message}</div>`
-                                                            );
-                                                        })
-                                                        .catch(error => {
 
-                                                        });
-                                                    // END GET DATA \\
-                                                }
-                                            </script>
-                                        <?php $__env->stopPush(); ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     </div>
                                     <!--end::Wrapper-->
@@ -683,7 +666,7 @@
                                     <!--begin::Wrapper-->
                                     <div>
                                         <button type="button" class="btn btn-lg btn-primary me-3 submit-btn"
-                                                data-kt-stepper-action="submit"  id="submit">
+                                                data-kt-stepper-action="submit" >
                                             <span class="indicator-label">
                                                 Submit
                                                 <i class="ti ti-arrow-right fs-3 ms-2 me-0"><span
@@ -758,316 +741,270 @@
 
     <?php $__env->startPush('script'); ?>
         <script></script>
-        <script>
-            "use strict";
-            var KTCreateAccount = function() {
-                var e, t, i, o, a, r, s = [];
-                return {
-                    init: function() {
-                        (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e), (t =
-                            document.querySelector("#kt_create_account_stepper")) && (i = t.querySelector(
-                                "#kt_create_account_form"),
-                            o = t.querySelector('[data-kt-stepper-action="submit"]'),
-                            a = t.querySelector('[data-kt-stepper-action="next"]'), (r = new KTStepper(t)).on(
-                                "kt.stepper.changed",
-                                (function(e) {
-                                    4 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"), o.classList
-                                            .add("d-inline-block"), a.classList.add("d-none")) : 5 === r
-                                        .getCurrentStepIndex() ? (o.classList.add("d-none"),
-                                            a.classList.add("d-none")) : (o.classList.remove("d-inline-block"),
-                                            o.classList.remove("d-none"),
-                                            a.classList.remove("d-none"))
-                                })), r.on("kt.stepper.next", (function(e) {
-                                console.log("stepper.next");
-                                var t = s[e.getCurrentStepIndex() - 1];
-                                t ? t.validate().then((function(t) {
-                                    console.log("validated!"), "Valid" == t ? (e.goNext(),
-                                        KTUtil.scrollTop()) : Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-light"
-                                        }
-                                    }).then((function() {
-                                        KTUtil.scrollTop()
-                                    }))
-                                })) : (e.goNext(), KTUtil.scrollTop())
-                            })), r.on("kt.stepper.previous", (function(e) {
-                                console.log("stepper.previous"), e.goPrevious(), KTUtil.scrollTop()
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
-                                    account_type: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Account type is required"
-                                            }
-                                        }
+            <script>
+                "use strict";
+                var KTCreateAccount = function() {
+                    var e, t, i, o, a, r, s = [];
+                    return {
+                        init: function() {
+                            // Initialize modal and stepper
+                            (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e);
+                            (t = document.querySelector("#kt_create_account_stepper")) && (i = t.querySelector("#kt_create_account_form"),
+                                o = t.querySelector('[data-kt-stepper-action="submit"]'),
+                                a = t.querySelector('[data-kt-stepper-action="next"]'),
+                                (r = new KTStepper(t)).on("kt.stepper.changed", function(e) {
+                                    // Handle stepper UI changes
+                                    if (r.getCurrentStepIndex() === 4) {
+                                        o.classList.remove("d-none");
+                                        o.classList.add("d-inline-block");
+                                        a.classList.add("d-none");
+                                    } else if (r.getCurrentStepIndex() === 5) {
+                                        o.classList.add("d-none");
+                                        a.classList.add("d-none");
+                                    } else {
+                                        o.classList.remove("d-inline-block");
+                                        o.classList.remove("d-none");
+                                        a.classList.remove("d-none");
                                     }
-                                },
-                                plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
-                                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                                        rowSelector: ".fv-row",
-                                        eleInvalidClass: "",
-                                        eleValidClass: ""
-                                    })
-                                }
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
+                                }),
 
-                                    country: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Please Select Currency"
+                                r.on("kt.stepper.next", function(e) {
+                                    console.log("stepper.next");
+                                    var t = s[e.getCurrentStepIndex() - 1];
+                                    // Validate current step
+                                    if (t) {
+                                        t.validate().then(function(result) {
+                                            console.log("validated!", result);
+                                            if (result === "Valid") {
+                                                e.goNext();
+                                                KTUtil.scrollTop();
+                                            } else {
+                                                Swal.fire({
+                                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                                    icon: "error",
+                                                    buttonsStyling: !1,
+                                                    confirmButtonText: "Ok, got it!",
+                                                    customClass: {
+                                                        confirmButton: "btn btn-light"
+                                                    }
+                                                }).then(function() {
+                                                    KTUtil.scrollTop();
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        e.goNext();
+                                        KTUtil.scrollTop();
+                                    }
+                                }),
+
+                                r.on("kt.stepper.previous", function(e) {
+                                    console.log("stepper.previous");
+                                    e.goPrevious();
+                                    KTUtil.scrollTop();
+                                }),
+
+                                // Initialize form validation for each step
+                                s.push(FormValidation.formValidation(i, {
+                                    fields: {
+                                        account_type: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: "Account type is required"
+                                                }
                                             }
                                         }
                                     },
-                                    coin: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Please Select Asset"
-                                            }
-                                        }
+                                    plugins: {
+                                        trigger: new FormValidation.plugins.Trigger(),
+                                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                                            rowSelector: ".fv-row",
+                                            eleInvalidClass: "",
+                                            eleValidClass: ""
+                                        })
                                     }
-                                }
+                                })),
 
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
-                                    amount: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Amount is required"
+                                s.push(FormValidation.formValidation(i, {
+                                    fields: {
+                                        country: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: "Please Select Country"
+                                                }
+                                            }
+                                        },
+                                        coin: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: "Please Select Asset"
+                                                }
                                             }
                                         }
                                     }
-                                },
-                                plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
-                                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                                        rowSelector: ".fv-row",
-                                        eleInvalidClass: "",
-                                        eleValidClass: ""
-                                    })
-                                }
-                            })), s.push(FormValidation.formValidation(i, {
-                                fields: {
-                                    password: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: "Please enter account password"
+                                })),
+
+                                s.push(FormValidation.formValidation(i, {
+                                    fields: {
+                                        amount: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: "Amount is required"
+                                                }
                                             }
                                         }
+                                    },
+                                    plugins: {
+                                        trigger: new FormValidation.plugins.Trigger(),
+                                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                                            rowSelector: ".fv-row",
+                                            eleInvalidClass: "",
+                                            eleValidClass: ""
+                                        })
                                     }
-                                },
-                                plugins: {
-                                    trigger: new FormValidation.plugins.Trigger,
-                                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                                        rowSelector: ".fv-row",
-                                        eleInvalidClass: "",
-                                        eleValidClass: ""
-                                    })
-                                }
-                            })), o.addEventListener("click", (function(e) {
-                                s[3].validate().then((function(t) {
-                                    console.log("SUBMITED", t), "Valid" == t ? (e
-                                        .preventDefault(), o.disabled = !0, o.setAttribute(
-                                            "data-kt-indicator", "on"), setTimeout((
-                                            function() {
+                                })),
+
+                                s.push(FormValidation.formValidation(i, {
+                                    fields: {},
+                                    plugins: {
+                                        trigger: new FormValidation.plugins.Trigger(),
+                                        bootstrap: new FormValidation.plugins.Bootstrap5({
+                                            rowSelector: ".fv-row",
+                                            eleInvalidClass: "",
+                                            eleValidClass: ""
+                                        })
+                                    }
+                                })),
+
+                                // Handle form submission
+                                o.addEventListener("click", function(e) {
+                                    s[3].validate().then(function(result) {
+                                        console.log("SUBMITTED", result);
+                                        if (result === "Valid") {
+                                            e.preventDefault();
+                                            o.disabled = true;
+                                            o.setAttribute("data-kt-indicator", "on");
+
+                                            setTimeout(function() {
                                                 submitform();
-                                                // START SELL ASSET \\
                                                 function submitform() {
-                                                    $("#passmessage").html(``);
                                                     var raw = JSON.stringify({
                                                         _token: "<?php echo e(csrf_token()); ?>",
-                                                        // password: document
-                                                        //     .getElementById(
-                                                        //         'password')
-                                                        //     .value,
-                                                        amount: document
-                                                            .getElementById(
-                                                                'amount').value,
-                                                        coin: document
-                                                            .getElementById(
-                                                                'coin').value,
-                                                        wallet: localStorage
-                                                            .getItem('wallet'),
+                                                        amount: document.getElementById('amount').value,
+                                                        coin: document.getElementById('coin').value,
+                                                        wallet: localStorage.getItem('wallet'),
                                                     });
 
                                                     var requestOptions = {
                                                         method: 'POST',
                                                         headers: {
-                                                            'X-CSRF-TOKEN': $(
-                                                                'meta[name="csrf-token"]'
-                                                            ).attr(
-                                                                'content')
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                         },
                                                         body: raw
                                                     };
-                                                    fetch("<?php echo e(route('user.crypto.sell.coin')); ?>",
-                                                            requestOptions)
+
+                                                    fetch("<?php echo e(route('user.crypto.sell.coin')); ?>", requestOptions)
                                                         .then(response => response.text())
                                                         .then(result => {
-                                                            resp = JSON.parse(result);
+                                                            var resp = JSON.parse(result);
                                                             console.info(resp);
-                                                            if (resp.ok == false) {
-                                                                o.removeAttribute(
-                                                                    "data-kt-indicator"
-                                                                );
-                                                                o.disabled = !1;
-                                                            }
-                                                            if (resp.ok !== false && resp.auto !== false) {
 
-                                                                var qrcode = "https://quickchart.io/qr?text=" + encodeURIComponent(resp.data.address) + "&size=300"
+                                                            if (resp.ok === false) {
+                                                                o.removeAttribute("data-kt-indicator");
+                                                                o.disabled = false;
+                                                            }
+
+                                                            if (resp.ok !== false && resp.auto !== false) {
+                                                                var qrcode = "https://quickchart.io/qr?text=" + encodeURIComponent(resp.data.address) + "&size=300";
                                                                 let coinvalue = resp.data.total_amount;
                                                                 console.info(coinvalue);
-                                                                o.removeAttribute(
-                                                                    "data-kt-indicator"
-                                                                );
-                                                                o.disabled = !1;
+
+                                                                o.removeAttribute("data-kt-indicator");
+                                                                o.disabled = false;
+
                                                                 document.getElementById("back").hidden = true;
                                                                 document.getElementById("invoicedetails").innerHTML = `
-                                                                <!--begin::Wrapper-->
-                                                                    <div class="w-100">
-                                                                        <!--begin::Heading-->
-                                                                        <div class="pb-8 pb-lg-10">
-                                                                            <!--begin::Title-->
-                                                                            <div id="finaldiv"></div>
-                                                                            <section class="payment-method text-center">
-                                                                                <h5 class="fw-semibold fs-5 text-info"><?php echo app('translator')->get('Please make payment to the wallet address below'); ?></h5>
-                                                                                <h5 class="fw-semibold fs-5text-danger "><?php echo app('translator')->get('PLEASE, DO NOT REFRESH YOUR BROWSER'); ?></h5>
-                                                                                <img src="${qrcode}" alt="" class="img-fluid mb-4"
-                                                                                    width="300">
-                                                                                    <div class="input-group rounded">
-                                                                                        <input type="text" id="WalletAddress" readonly class="form-control  border-end-0" aria-label="Text input with dropdown button"
-                                                                                        value="${resp.data.address}" />
-                                                                                        <button onclick="CopyWalletAddress()" class="btn p-0 border-top border-bottom border-end border-0" type="button">
-                                                                                        <span class=" btn btn-primary m-1 rounded"> Copy <i class="ti ti-copy fs-4"></i>
-                                                                                        </span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <br>
-                                                                                    <h6 class="fw-semibold text-danger mb-7"><?php echo app('translator')->get('We will not be liable to any loss arising from you sending coin to the a wallet other than the one specified on this page'); ?>: </h6>
-                                                                                    <div class="order-summary border rounded p-4 my-4">
-                                                                                        <div class="p-3">
-                                                                                        <h5 class="fs-5 fw-semibold mb-4"><?php echo app('translator')->get('Payment Summary'); ?></h5>
-
-                                                                                        <div class="d-flex justify-content-between mb-4">
-                                                                                            <p class="mb-0 fs-4"><b>Fiat Value</b></p>
-                                                                                            <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[1]}${Object.keys(coinvalue)[1]}</b></h6>
-                                                                                        </div>
-                                                                                        <div class="d-flex justify-content-between mb-4">
-                                                                                            <p class="mb-0 fs-4"><b>Crypto Value</b></p>
-                                                                                            <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[0]}${Object.keys(coinvalue)[0]}</b></h6>
-                                                                                        </div>
-
-                                                                                        <button class="btn btn-primary confirmPayment" type="button" disabled onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">
-                                                                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                            Waiting For Payment...
-                                                                                        </button>
-                                                                                        <br>
-                                                                                        <a href="#" onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">Click Here To Verify Payment</a>
-
-                                                                                        </div>
-
-                                                                                      
-                                                                                    <a href="javascript:void(0)" onClick="confirmPaymentManual('${resp.data.trx}')"  data-bs-toggle="modal" data-bs-target="#confirmPayment-modal" class="btn btn-primary">I Have Paid</a>
-
-                                                                                    </div>
-                                                                            </section>
+                                                        <div class="w-100">
+                                                            <div class="pb-8 pb-lg-10">
+                                                                <div id="finaldiv"></div>
+                                                                <section class="payment-method text-center">
+                                                                    <h5 class="fw-semibold fs-5 text-info">Please make payment to the wallet address below</h5>
+                                                                    <h5 class="fw-semibold fs-5 text-danger">PLEASE, DO NOT REFRESH YOUR BROWSER</h5>
+                                                                    <img src="${qrcode}" alt="" class="img-fluid mb-4" width="300">
+                                                                    <div class="input-group rounded">
+                                                                        <input type="text" id="WalletAddress" readonly class="form-control border-end-0" aria-label="Text input with dropdown button" value="${resp.data.address}" />
+                                                                        <button onclick="CopyWalletAddress()" class="btn p-0 border-top border-bottom border-end border-0" type="button">
+                                                                            <span class="btn btn-primary m-1 rounded">Copy <i class="ti ti-copy fs-4"></i></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <br>
+                                                                    <h6 class="fw-semibold text-danger mb-7">We will not be liable to any loss arising from you sending coin to a wallet other than the one specified on this page.</h6>
+                                                                    <div class="order-summary border rounded p-4 my-4">
+                                                                        <div class="p-3">
+                                                                            <h5 class="fs-5 fw-semibold mb-4">Payment Summary</h5>
+                                                                            <div class="d-flex justify-content-between mb-4">
+                                                                                <p class="mb-0 fs-4"><b>Fiat Value</b></p>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[1]}${Object.keys(coinvalue)[1]}</b></h6>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between mb-4">
+                                                                                <p class="mb-0 fs-4"><b>Crypto Value</b></p>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[0]}${Object.keys(coinvalue)[0]}</b></h6>
+                                                                            </div>
+                                                                            <button class="btn btn-primary confirmPayment" type="button" disabled onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">
+                                                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                                                Waiting For Payment...
+                                                                            </button>
+                                                                            <br>
+                                                                            <a href="#" onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">Click Here To Verify Payment</a>
                                                                         </div>
+                                                                        <a href="javascript:void(0)" onClick="confirmPaymentManual('${resp.data.trx}')" data-bs-toggle="modal" data-bs-target="#confirmPayment-modal" class="btn btn-primary">I Have Paid</a>
                                                                     </div>
-                                                                    <!--end::Wrapper-->
-                                                                    `;
-
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                    `;
                                                             }
-                                                            if (resp.ok !== false && resp.auto !== true) {
-                                                            var qrcode ="<?php echo e(cryptoQR('+resp.coin.wallet_address+')); ?>";
-                                                            o.removeAttribute(
-                                                                "data-kt-indicator"
-                                                            );
-                                                            o.disabled = !1;
-                                                            document.getElementById("back").hidden = true;
-                                                            document.getElementById("invoicedetails").innerHTML = `
-                                                            <!--begin::Wrapper-->
-                                                                <div class="w-100">
-                                                                    <!--begin::Heading-->
-                                                                    <div class="pb-8 pb-lg-10">
-                                                                        <!--begin::Title-->
-                                                                        <div id="finaldiv"></div>
-                                                                        <section class="payment-method text-center">
-                                                                            <h5 class="fw-semibold fs-5 text-info"><?php echo app('translator')->get('Please make payment to the wallet address below'); ?></h5>
-                                                                            <h5 class="fw-semibold fs-5text-danger "><?php echo app('translator')->get('PLEASE, DO NOT REFRESH YOUR BROWSER'); ?></h5>
-                                                                            <img src="${qrcode}" alt="" class="img-fluid mb-4"
-                                                                                width="300">
-                                                                                <div class="input-group rounded">
-                                                                                    <input type="text" id="WalletAddress" readonly class="form-control  border-end-0" aria-label="Text input with dropdown button"
-                                                                                    value="${resp.coin.wallet_address}" />
-                                                                                    <button onclick="CopyWalletAddress()" class="btn p-0 border-top border-bottom border-end border-0" type="button">
-                                                                                    <span class=" btn btn-primary m-1 rounded"> Copy <i class="ti ti-copy fs-4"></i>
-                                                                                    </span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <br>
-                                                                                <h6 class="fw-semibold text-danger mb-7"><?php echo app('translator')->get('Please make your payment to the wallet address above or scan the QR code to complete payment. We will not be liable to any loss arising from sending coin to any other wallet other than the one shown on this page. Please click on the i have paid button to complete your payment process once payment has been made'); ?>: </h6>
-                                                                                <div class="order-summary border rounded p-4 my-4">
-                                                                                    <div class="p-3">
-                                                                                    <h5 class="fs-5 fw-semibold mb-4"><?php echo app('translator')->get('Payment Summary'); ?></h5>
 
-                                                                                    <div class="d-flex justify-content-between mb-4">
-                                                                                        <p class="mb-0 fs-4"><b>Amount</b></p>
-                                                                                        <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.data.payment}USD</b></h6>
-                                                                                    </div>
-
-                                                                                    <button class="btn btn-primary confirmPayment" type="button" disabled onClick="confirmPayment()">
-                                                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                        Waiting For Payment...
-                                                                                    </button>
-                                                                                    <br><br>
-
-                                                                                    <a href="javascript:void(0)" onClick="confirmPaymentManual('${resp.data.trx}')"  data-bs-toggle="modal" data-bs-target="#confirmPayment-modal" class="btn btn-primary">I Have Paid</a>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                        </section>
-                                                                    </div>
-                                                                </div>
-                                                                <!--end::Wrapper-->
-                                                                `;
-
-                                                            }
                                                             SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
                                                             r.goNext();
                                                         })
                                                         .catch(error => {
-
+                                                            console.error('Error:', error);
+                                                            o.removeAttribute("data-kt-indicator");
+                                                            o.disabled = false;
                                                         });
                                                 }
-                                                // END SELL ASSET \\
-                                                // o.removeAttribute("data-kt-indicator"),
-                                                // o.disabled = !1, r.goNext()
-                                            }), 2e3)) : Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-light"
+
+                                                // o.removeAttribute("data-kt-indicator");
+                                                // o.disabled = false;
+                                                r.goNext();
+                                            }, 2000);
+                                        } else {
+                                            Swal.fire({
+                                                text: "Sorry, looks like there are some errors detected, please try again.",
+                                                icon: "error",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Ok, got it!",
+                                                customClass: {
+                                                    confirmButton: "btn btn-light"
+
+                                                }
+                                            }).then(function() {
+                                                KTUtil.scrollTop();
+                                            });
                                         }
-                                    }).then((function() {
-                                        KTUtil.scrollTop()
-                                    }))
-                                }))
-                            })))
+                                    });
+                                })
+                            );
+                        }
                     }
-                }
-            }();
-            KTUtil.onDOMContentLoaded((function() {
-                KTCreateAccount.init()
-            }));
-        </script>
-        <script>
+                }();
+
+                KTUtil.onDOMContentLoaded(function() {
+                    KTCreateAccount.init();
+                });
+            </script>
+            <script>
             function confirmPaymentManual(entry) {
                 document.getElementById("trxnumber").value = entry;
             }
