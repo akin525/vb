@@ -292,48 +292,31 @@ class SellCryptoController extends Controller
 
     public function sellConfirmManual(Request $request)
     {
+        $general = gs();
         $user = auth()->user();
+        $order = Order::whereTrx($request->trxhash)->whereUserId($user->id)->firstOrFail();
+        $order->val_1 = $request->trxhash;
+        $path = imagePath()['trade']['path'].'/'.$user->username;
+        if ($request->hasFile('proof')) {
+            $request->validate([
+                'proof'     => ['required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
+            ]);
+            try {
+                if (!file_exists($path)) {
+                    mkdir($path, 0755, true);
+                }
+               $file = getTrx().'.png';
+               $image = Image::make($request->proof)->save($path . '/'.$file);
+               $order->val_2 = $file;
 
-        // Validate the incoming request
-        $request->validate([
-            'trx' => 'required|string',
-            'trxhash' => 'required|string',
-            'proof' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate the image file
-        ]);
-
-        try {
-            // Retrieve the order
-            $order = Order::whereTrx($request->trx)
-                ->whereUserId($user->id)
-                ->firstOrFail();
-
-            // Update order with trx hash
-            $order->val_1 = $request->trxhash;
-
-            // Handle the file upload if present
-            if ($request->hasFile('proof')) {
-                $path = 'trade/' . $user->username;
-                $fileName = getTrx() . '.png';
-
-                // Store the image
-                $imagePath = $request->file('proof')->storeAs($path, $fileName, 'public');
-
-                $order->val_2 = $fileName;
+            } catch (\Exception $exp) {
+                //return $exp;
+                //$notify[] = ['error', 'Could not upload your Proof of payment'];
+                //return back()->withNotify($notify)->withInput();
             }
-
-            // Save the order
-            $order->save();
-
-            // Success notification
-            $notify[] = ['success', 'Transaction submitted successfully.'];
-        } catch (\Exception $exp) {
-            // Log the exception for debugging
-            \Log::error('Error in sellConfirmManual: ' . $exp->getMessage());
-
-            // Error notification
-            $notify[] = ['error', 'Could not process the transaction. Please try again.'];
         }
-
+        $order->save();
+        $notify[] = ['success', 'Transaction submitted successfuly successfuly.'];
         return redirect()->route('user.crypto.sell.log')->withNotify($notify);
     }
 

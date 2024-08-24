@@ -950,6 +950,9 @@
                                                                             <div class="d-flex justify-content-between mb-4">
                                                                                 <p class="mb-0 fs-4"><b>Crypto Value</b></p>
                                                                                 <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[0]}${Object.keys(coinvalue)[0]}</b></h6>
+                                                                            </div> <div class="d-flex justify-content-between mb-4">
+                                                                                <p class="mb-0 fs-4"><b>TRX Number</b></p>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${resp.data.invoice_id}</b></h6>
                                                                             </div>
                                                                             <button class="btn btn-primary confirmPayment" type="button" disabled onClick="confirmPayment('${resp.data.invoice_id}|${resp.data.coin}')">
                                                                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
