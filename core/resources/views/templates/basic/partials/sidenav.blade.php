@@ -262,6 +262,22 @@
                 <span class="hide-menu">@lang('Crypto Wallet')</span>
               </a>
             </li>
+                  <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ route('user.crypto.sell.log') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-history"></i>
+                </span>
+                <span class="hide-menu">@lang('Sell History')</span>
+              </a>
+            </li>
+                  <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ route('user.crypto.buy.log') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-history"></i>
+                </span>
+                <span class="hide-menu">@lang('Buy History')</span>
+              </a>
+            </li>
             @endif
           </li>
           @if ($general->buy_giftcard > 0 || $general->sell_giftcard > 0)

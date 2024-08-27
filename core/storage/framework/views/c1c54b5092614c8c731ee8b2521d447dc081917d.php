@@ -262,6 +262,22 @@
                 <span class="hide-menu"><?php echo app('translator')->get('Crypto Wallet'); ?></span>
               </a>
             </li>
+                  <li class="sidebar-item">
+              <a class="sidebar-link" href="<?php echo e(route('user.crypto.sell.log')); ?>" aria-expanded="false">
+                <span>
+                  <i class="ti ti-history"></i>
+                </span>
+                <span class="hide-menu"><?php echo app('translator')->get('Sell History'); ?></span>
+              </a>
+            </li>
+                  <li class="sidebar-item">
+              <a class="sidebar-link" href="<?php echo e(route('user.crypto.buy.log')); ?>" aria-expanded="false">
+                <span>
+                  <i class="ti ti-history"></i>
+                </span>
+                <span class="hide-menu"><?php echo app('translator')->get('Buy History'); ?></span>
+              </a>
+            </li>
             <?php endif; ?>
           </li>
           <?php if($general->buy_giftcard > 0 || $general->sell_giftcard > 0): ?>
