@@ -30,7 +30,7 @@ class CoinController extends Controller
         $coin = new Cryptocurrency();
         $path = imagePath()['coin']['path'];
         if ($request->hasFile('logo')) {
-            $request->validate([ 
+            $request->validate([
                 'logo'     => ['required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
             ]);
             try {
@@ -45,14 +45,14 @@ class CoinController extends Controller
                 $notify[] = ['error', 'Could not upload your currency logo'];
                 return back()->withNotify($notify)->withInput();
             }
-        } 
+        }
 
         $coin->name = $request->name;
         $coin->symbol = $request->symbol;
-        $coin->save(); 
+        $coin->save();
         $notify[] = ['success', 'New Asset Added Successfully'];
         return back()->withNotify($notify);
-        
+
     }
 
 
@@ -388,7 +388,7 @@ class CoinController extends Controller
          if(!$currency){
          $notify[] = ['error', 'Invalid Currency or Currency Not Found'];
             return back()->withNotify($notify);
-         } 
+         }
 
          $baseurl = "https://coinremitter.com/api/v3/".$currency->symbol."/get-transaction-by-address";
           $curl = curl_init();
@@ -427,14 +427,9 @@ class CoinController extends Controller
         $user = User::whereId($order->user_id)->firstOrFail();
         $currency = Cryptocurrency::whereId($order->product_id)->firstOrFail();
 
-        if($order->source == 'main')
-        {
           $user->balance += $order->value;
-        }
-        else
-        {
-          $user->ref_balance += $order->value;
-        }
+
+
         $user->save();
         $transaction               = new Transaction();
         $transaction->user_id      = $order->user_id;
