@@ -29,10 +29,10 @@
 
                                         <!--begin::Action-->
                                         <a href="<?php echo e(route('user.crypto.sell')); ?>" class="btn btn-primary er fs-6 px-8 py-4 mb-4">
-                                            <?php echo app('translator')->get('Sell Asset Now'); ?> </a>
+                                            <?php echo app('translator')->get('Sell Crypto Now'); ?> </a>
 
                                             <a href="<?php echo e(route('user.crypto.buy')); ?>" class="btn btn-secondary er fs-6 px-8 py-4 mb-4">
-                                                <?php echo app('translator')->get('Buy Asset Now'); ?> </a>
+                                                <?php echo app('translator')->get('Buy Crypto Now'); ?> </a>
                                         <br> <br>
 
 

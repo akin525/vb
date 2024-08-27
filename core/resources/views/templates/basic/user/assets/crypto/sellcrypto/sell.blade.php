@@ -277,95 +277,93 @@
                                             <!--begin::Label-->
                                             <label class="form-label mb-3">@lang('Select Base Currency')</label>
                                             <!--end::Label-->
-
                                             <!--begin::Input-->
                                             <select name="country" class="form-select form-select-solid"
-                                                data-control="select2" id="youSendCurrency" data-hide-search="false"
-                                                onchange="populate()" data-placeholder="@lang('Select Base Currency')">
-                                                <option selected disableds>@lang('Select a base currency')...</option>
+                                                    data-control="select2" id="youSendCurrency" data-hide-search="false"
+                                                    onchange="populate()" data-placeholder="@lang('Select Base Currency')">
+                                                <option selected disabled>@lang('Select a base currency')...</option>
                                                 <option data-callingCode="USD" data-countrycurrency="USD"
-                                                    data-isoName="USD" data-countrycontinent="USD"
-                                                    data-currencies="{{ $currencies }}" value="USD"
-                                                    data-icon="currency-flag currency-flag-usd me-1">USD</option>
-                                            </select> <!--end::Input-->
+                                                        data-isoName="USD" data-countrycontinent="USD"
+                                                        data-currencies="{{ $currencies }}" value="USD"
+                                                        data-icon="currency-flag currency-flag-usd me-1">USD</option>
+                                            </select>
+                                            <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
+
                                         @push('script')
                                             <script>
                                                 function populate() {
-                                                    // START GET DATA \\
+                                                    // START GET DATA
                                                     const loadingEl = document.createElement("div");
                                                     document.body.prepend(loadingEl);
-                                                    loadingEl.classList.add("page-loader");
-                                                    loadingEl.classList.add("flex-column");
-                                                    loadingEl.classList.add("bg-dark");
-                                                    loadingEl.classList.add("bg-opacity-25");
+                                                    loadingEl.classList.add("page-loader", "flex-column", "bg-dark", "bg-opacity-25");
                                                     loadingEl.innerHTML = `
-                                                    <span class="spinner-border text-primary" role="status"></span>
-                                                    <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
-                                                `;
+            <span class="spinner-border text-primary" role="status"></span>
+            <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
+        `;
 
                                                     // Show page loading
                                                     KTApp.showPageLoading();
                                                     document.getElementById('providers').innerHTML = '';
                                                     var currencies = $("#youSendCurrency option:selected").attr('data-currencies');
-                                                    document.getElementById("amountlist").innerHTML = ``;
+                                                    document.getElementById("amountlist").innerHTML = '';
 
                                                     assets = JSON.parse(currencies);
                                                     let html = '';
                                                     assets.map(plan => {
-                                                        let htmlSegment =
-                                                            `<label class="d-flex flex-stack cursor-pointer mb-5" for="${plan['id']}" >
-                                                                        <span class="d-flex align-items-center me-2">
-                                                                            <span class="symbol symbol-50px me-6">
-                                                                                <span class="symbol-label bg-light-primary">
-                                                                                    <i class="ti ti-image fs-2x text-warning"><img src="{{ url('/') }}/assets/images/coins/${plan['image']}" width="30" class="path1"/></i>
-                                                                                </span>
-
-                                                                            </span>
-                                                                            <span class="d-flex flex-column">
-                                                                                <span class="fw-bold fs-6">${plan['name']}</span>
-                                                                                <span class="fs-7 text-muted">${plan['symbol']}</span>
-                                                                            </span>
-                                                                        </span>
-
-                                                                        <span class="form-check form-check-custom form-check-solid">
-                                                                            <input class="form-check-input" type="radio" onchange="networkprovider('${plan['id']}','${plan['image']}','${plan['name']}','${plan['id']}')"
-                                                                                name="asset" id="${plan['id']}" value="${plan['id']}" />
-                                                                        </span>
-                                                                    </label>
-                                                                    `;
+                                                        let htmlSegment = `
+                <label class="d-flex flex-stack cursor-pointer mb-5" for="${plan['id']}" >
+                    <span class="d-flex align-items-center me-2">
+                        <span class="symbol symbol-50px me-6">
+                            <span class="symbol-label bg-light-primary">
+                                <img src="{{ url('/') }}/assets/images/coins/${plan['image']}" width="30" class="path1"/>
+                            </span>
+                        </span>
+                        <span class="d-flex flex-column">
+                            <span class="fw-bold fs-6">${plan['name']}</span>
+                            <span class="fs-7 text-muted">${plan['symbol']}</span>
+                        </span>
+                    </span>
+                    <span class="form-check form-check-custom form-check-solid">
+                        <input class="form-check-input" type="radio" onchange="networkprovider('${plan['id']}','${plan['image']}','${plan['name']}','${plan['id']}')"
+                            name="asset" id="${plan['id']}" value="${plan['id']}" />
+                    </span>
+                </label>
+            `;
                                                         html += htmlSegment;
                                                     });
 
-                                                    document.getElementById('providers').innerHTML =
-                                                        ` <div class="mb-0"> <label class="d-flex align-items-center form-label mb-5">
-                                                                        @lang('Select Asset Currency')
-                                                                        <span class="ms-1"  data-bs-toggle="tooltip" title="Please select asset currency" >
-                                                                        <i class="ti ti-alert-circle text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i></span>
-                                                                        </label> ${html} </div>
-                                                                    `;
+                                                    document.getElementById('providers').innerHTML = `
+            <div class="mb-0">
+                <label class="d-flex align-items-center form-label mb-5">
+                    @lang('Select Asset Currency')
+                                                    <span class="ms-1" data-bs-toggle="tooltip" title="Please select asset currency">
+                                                        <i class="ti ti-alert-circle text-gray-500 fs-6"></i>
+                                                    </span>
+                                                </label>
+${html}
+            </div>
+        `;
                                                     KTApp.hidePageLoading();
                                                     loadingEl.remove();
                                                 }
-                                                // END GET DATA \\
-                                            </script>
-                                            <script>
+                                                // END GET DATA
+
                                                 function networkprovider(operatorId, image, name, coin) {
                                                     document.getElementById("networkprovider").innerHTML = name;
                                                     document.getElementById("coin").value = null;
                                                     document.getElementById("ourrate").innerHTML = null;
+
                                                     const loadingEl = document.createElement("div");
                                                     document.body.prepend(loadingEl);
-                                                    loadingEl.classList.add("page-loader");
-                                                    loadingEl.classList.add("flex-column");
-                                                    loadingEl.classList.add("bg-dark");
-                                                    loadingEl.classList.add("bg-opacity-25");
+                                                    loadingEl.classList.add("page-loader", "flex-column", "bg-dark", "bg-opacity-25");
                                                     loadingEl.innerHTML = `
-                                                                      <span class="spinner-border text-primary" role="status"></span>
-                                                                      <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
-                                                                  `;
+        <span class="spinner-border text-primary" role="status"></span>
+        <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
+    `;
                                                     KTApp.showPageLoading();
+
                                                     var raw = JSON.stringify({
                                                         _token: "{{ csrf_token() }}",
                                                         coin: operatorId,
@@ -379,6 +377,7 @@
                                                         },
                                                         body: raw
                                                     };
+
                                                     fetch("{{ route('user.crypto.sell.coin.details') }}", requestOptions)
                                                         .then(response => response.text())
                                                         .then(result => {
@@ -390,185 +389,162 @@
                                                             if (resp.ok != false) {
                                                                 document.getElementById("coin").value = coin;
 
-                                                                document.getElementById("ourrate").innerHTML = "1USD" + "&nbsp;=&nbsp;" +
-                                                                    resp.ourrate +"{{$general->cur_text}}";
+                                                                // Set the rate variable here
+                                                                rate = parseFloat(resp.ourrate);
 
-                                                                document.getElementById("globalrate").innerHTML = "1" + resp.currency +
-                                                                    "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.currency;
+                                                                document.getElementById("ourrate").innerHTML = "1 USD&nbsp;=&nbsp;" + rate + "{{$general->cur_text}}";
+                                                                document.getElementById("globalrate").innerHTML = "1 " + resp.currency + "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.currency;
+
+                                                                calc(); // Update the calculation
                                                             }
-
                                                         })
                                                         .catch(error => {
-                                                                console.log(error);
-                                                            }
-
-                                                        );
+                                                            console.log(error);
+                                                        });
                                                 }
-                                                // END GET OPERATORS
+
+
                                             </script>
                                         @endpush
 
-
                                         <!--begin::Input group-->
                                         <div class="mb-0 fv-row">
-
                                             <!--begin::Options-->
                                             <div id="providers"></div>
                                             <input id="coin" hidden>
                                             <!--end::Options-->
                                         </div>
                                         <!--end::Input group-->
-                                    </div>
-                                    <!--end::Wrapper-->
-                                </div>
-                                <!--end::Step 2-->
 
-                                <!--begin::Step 3-->
-                                <div >
-                                    <!--begin::Wrapper-->
-                                    <div class="w-100">
-                                        <!--begin::Heading-->
-                                        <div class="pb-10 pb-lg-12">
-                                            <!--begin::Title-->
-                                            <h2 class="fw-bold text-dark">@lang('Trade Amount')</h2>
-                                            <!--end::Title-->
+                                        <!--begin::Step 3-->
+                                        <div>
+                                            <!--begin::Wrapper-->
+                                            <div class="w-100">
+                                                <!--begin::Heading-->
+                                                <div class="pb-10 pb-lg-12">
+                                                    <!--begin::Title-->
+                                                    <h2 class="fw-bold text-dark">@lang('Trade Amount')</h2>
+                                                    <!--end::Title-->
 
-                                            <!--begin::Notice-->
-                                            <div class="text-muted fw-semibold fs-6">
-                                                @lang('Please enter trade amount below')</a>.
+                                                    <!--begin::Notice-->
+                                                    <div class="text-muted fw-semibold fs-6">
+                                                        @lang('Please enter trade amount below').
+                                                    </div>
+                                                    <!--end::Notice-->
+                                                </div>
+                                                <!--end::Heading-->
+
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label required">@lang('Enter Amount')</label>
+                                                    <!--end::Label-->
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">USD</span>
+                                                        <input name="amount" id="amount" type="number" oninput="calc()"
+                                                               class="form-control form-control-lg form-control-solid" value="" />
+                                                    </div>
+                                                    <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <!--begin::Input group-->
+                                                <div class="mb-10 fv-row">
+                                                    <!--begin::Fixed Amount-->
+                                                    <div id="amountlist"></div>
+                                                    <!--end::Fixed Amount-->
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <script>
+                                                    function calc() {
+                                                        let amount = parseFloat(document.getElementById("amount").value);
+                                                        if (!isNaN(amount) && rate) {
+                                                            let nairaAmount = amount * rate;
+                                                            document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                        }
+                                                    }
+
+                                                </script>
                                             </div>
-                                            <!--end::Notice-->
-                                        </div>
-                                        <!--end::Heading-->
+                                            <!--end::Wrapper-->
 
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label required">@lang('Enter Amount')</label>
-                                            <!--end::Label-->
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">USD</span>
-                                                <input name="amount" id="amount" type="number"
-                                                    class="form-control form-control-lg form-control-solid"
-                                                    value="" />
+                                        </div>
+                                        <!--end::Step 3-->
+
+                                        <!--begin::Step 4-->
+                                        <div>
+                                            <!--begin::Wrapper-->
+                                            <div class="w-100">
+                                                <!--begin::Heading-->
+                                                <div class="pb-10 pb-lg-15">
+                                                    <!--begin::Title-->
+                                                    <h2 class="fw-bold text-dark">@lang('Preview Transaction')</h2>
+                                                    <!--end::Title-->
+
+                                                    <!--begin::Notice-->
+                                                    <div class="text-muted fw-semibold fs-6">
+                                                        @lang('If you need more info, please check out ')
+                                                        <a href="#" class="text-primary fw-bold">@lang('Help Page')</a>.
+                                                    </div>
+                                                    <!--end::Notice-->
+                                                </div>
+                                                <!--end::Heading-->
+
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Documents-->
+                                                    <!--begin::Table-->
+                                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                        <tbody class="fw-semibold text-gray-600">
+                                                        <tr>
+                                                            <td class="text-muted">
+                                                                <div class="d-flex align-items-center">
+                                                                    <i class="ti ti-wifi fs-2 me-2"></i> @lang('Asset')
+                                                                    <span class="ms-1" data-bs-toggle="tooltip" title="This is the selected asset to sell.">
+                                    <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="fw-bold text-end"><a href="#" class="text-gray-600 text-hover-primary" id="networkprovider"></a></td>
+                                                        </tr>
+                                                        @if($general->crypto_auto)
+                                                            <tr>
+                                                                <td class="text-muted">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <i class="ti ti-globe fs-2 me-2"></i> @lang('Global Price')
+                                                                        <span class="ms-1" data-bs-toggle="tooltip" title="This is the real-time global price.">
+                                    <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="fw-bold text-end">
+                                                                    <span id="globalrate"></span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                        <tr>
+                                                            <td class="text-muted">
+                                                                <div class="d-flex align-items-center">
+                                                                    <i class="ti ti-exchange fs-2 me-2"></i> @lang('Our Price')
+                                                                    <span class="ms-1" data-bs-toggle="tooltip" title="This is the price we are offering for this transaction.">
+                                    <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="fw-bold text-end">
+                                                                <span id="ourrate"></span>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <!--end::Table-->
+                                                    <!--end::Documents-->
+                                                </div>
+                                                <!--end::Input group-->
+
                                             </div>
+                                            <!--end::Wrapper-->
                                         </div>
-                                        <!--end::Input group-->
-
-
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Fixed Amount-->
-                                            <div id="amountlist"></div>
-                                            <!--end::Fixed Amount-->
-                                        </div>
-                                        <!--end::Input group-->
-
-                                    </div>
-                                    <!--end::Wrapper-->
-
-                                </div>
-                                <!--end::Step 3-->
-
-                                <!--begin::Step 4-->
-                                <div >
-                                    <!--begin::Wrapper-->
-                                    <div class="w-100">
-                                        <!--begin::Heading-->
-                                        <div class="pb-10 pb-lg-15">
-                                            <!--begin::Title-->
-                                            <h2 class="fw-bold text-dark">@lang('Preview Transaction')</h2>
-                                            <!--end::Title-->
-
-                                            <!--begin::Notice-->
-                                            <div class="text-muted fw-semibold fs-6">
-                                                @lang('If you need more info, please check out ')
-                                                <a href="#" class="text-primary fw-bold">@lang('Help Page')</a>.
-                                            </div>
-                                            <!--end::Notice-->
-                                        </div>
-                                        <!--end::Heading-->
-
-
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-10">
-
-
-                                            <!--begin::Documents-->
-                                            <!--begin::Table-->
-                                            <table
-                                                class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
-                                                <tbody class="fw-semibold text-gray-600">
-
-                                                    <tr>
-                                                        <td class="text-muted">
-                                                            <div class="d-flex align-items-center">
-                                                                <i class="ti ti-wifi fs-2 me-2"><span
-                                                                        class="path1"></span><span
-                                                                        class="path2"></span><span
-                                                                        class="path3"></span><span
-                                                                        class="path4"></span><span
-                                                                        class="path5"></span></i> @lang('Asset')
-
-
-                                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                                    title="This is the selected asset to sell.">
-                                                                    <i class="ti ti-alert-circle  text-gray-500 fs-6"><span
-                                                                            class="path1"></span><span
-                                                                            class="path2"></span><span
-                                                                            class="path3"></span></i></span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-bold text-end"><a href="#"
-                                                                class="text-gray-600 text-hover-primary"
-                                                                id="networkprovider"></a>
-                                                        </td>
-                                                    </tr>
-                                                    @if($general->crypto_auto)
-                                                    <tr>
-                                                        <td class="text-muted">
-                                                            <div class="d-flex align-items-center">
-                                                                <i class="ti ti-globe fs-2 me-2"><span
-                                                                        class="path1"></span><span
-                                                                        class="path2"></span></i> @lang('Global Price')
-
-
-                                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                                    title="This is the global price of your asset">
-                                                                    <i class="ti ti-alert-circle  text-gray-500 fs-6"><span
-                                                                            class="path1"></span><span
-                                                                            class="path2"></span><span
-                                                                            class="path3"></span></i></span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-bold text-end" id="">
-                                                            <a href="#" class="text-gray-600 text-hover-primary"
-                                                                id="globalrate"></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-
-                                                    <tr>
-                                                        <td class="text-muted">
-                                                            <div class="d-flex align-items-center">
-                                                                <i class="ti ti-exchange fs-2 me-2"><span
-                                                                        class="path1"></span><span
-                                                                        class="path2"></span></i> @lang('Our Rate')
-
-                                                                <span class="ms-1" data-bs-toggle="tooltip"
-                                                                    title="This is the rate at which we buy your asset">
-                                                                    <i class="ti ti-alert-circle  text-gray-500 fs-6"><span
-                                                                            class="path1"></span><span
-                                                                            class="path2"></span><span
-                                                                            class="path3"></span></i></span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-bold text-end" id="ourrate"></td>
-                                                    </tr>
-                                                    <tr></tr>
-                                                </tbody>
-                                            </table>
+                                        <!--end::Step 4-->
 
                                             <br><br><br>
 

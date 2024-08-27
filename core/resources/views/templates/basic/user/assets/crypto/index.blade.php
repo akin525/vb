@@ -30,10 +30,10 @@
 
                                         <!--begin::Action-->
                                         <a href="{{ route('user.crypto.sell') }}" class="btn btn-primary er fs-6 px-8 py-4 mb-4">
-                                            @lang('Sell Asset Now') </a>
+                                            @lang('Sell Crypto Now') </a>
 
                                             <a href="{{ route('user.crypto.buy') }}" class="btn btn-secondary er fs-6 px-8 py-4 mb-4">
-                                                @lang('Buy Asset Now') </a>
+                                                @lang('Buy Crypto Now') </a>
                                         <br> <br>
 
 
