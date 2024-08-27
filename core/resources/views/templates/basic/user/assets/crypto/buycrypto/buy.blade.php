@@ -472,22 +472,13 @@
                                                     class="form-control form-control-lg form-control-solid"
                                                     value="" />
                                             </div>
-                                            <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>
+{{--                                            <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>--}}
 
                                         </div>
                                         <!--end::Input group-->
 
 
-                                        <script>
-                                            function calc() {
-                                                let amount = parseFloat(document.getElementById("amount").value);
-                                                if (!isNaN(amount) && rate) {
-                                                    let nairaAmount = amount * rate;
-                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
-                                                }
-                                            }
 
-                                        </script>
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Fixed Amount-->
@@ -562,7 +553,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <i class="ti ti-globe fs-2 me-2"><span
                                                                         class="path1"></span><span
-                                                                        class="path2"></span></i> @lang('Global Price')
+                                                                        class="path2"></span></i> @lang('Total Amount')
 
 
                                                                 <span class="ms-1" data-bs-toggle="tooltip"
@@ -574,12 +565,22 @@
                                                             </div>
                                                         </td>
                                                         <td class="fw-bold text-end" id="">
-                                                            <a href="#" class="text-gray-600 text-hover-primary"
-                                                               id="globalrate"></a>
+                                                            <b class="text-success">₦ <span id="shownow1"></span></b>
+
                                                         </td>
                                                     </tr>
                                                 @endif
 
+                                                <script>
+                                                    function calc() {
+                                                        let amount = parseFloat(document.getElementById("amount").value);
+                                                        if (!isNaN(amount) && rate) {
+                                                            let nairaAmount = amount * rate;
+                                                            document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                        }
+                                                    }
+
+                                                </script>
                                                 <tr>
                                                     <td class="text-muted">
                                                         <div class="d-flex align-items-center">

@@ -444,7 +444,7 @@ ${html}
                                                         <input name="amount" id="amount" type="number" oninput="calc()"
                                                                class="form-control form-control-lg form-control-solid" value="" />
                                                     </div>
-                                                    <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>
+{{--                                                    <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>--}}
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -456,16 +456,7 @@ ${html}
                                                 </div>
                                                 <!--end::Input group-->
 
-                                                <script>
-                                                    function calc() {
-                                                        let amount = parseFloat(document.getElementById("amount").value);
-                                                        if (!isNaN(amount) && rate) {
-                                                            let nairaAmount = amount * rate;
-                                                            document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
-                                                        }
-                                                    }
 
-                                                </script>
                                             </div>
                                             <!--end::Wrapper-->
 
@@ -511,16 +502,26 @@ ${html}
                                                             <tr>
                                                                 <td class="text-muted">
                                                                     <div class="d-flex align-items-center">
-                                                                        <i class="ti ti-globe fs-2 me-2"></i> @lang('Global Price')
+                                                                        <i class="ti ti-globe fs-2 me-2"></i> @lang('Total Amount To Receive')
                                                                         <span class="ms-1" data-bs-toggle="tooltip" title="This is the real-time global price.">
                                     <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>
                                                                     </div>
                                                                 </td>
                                                                 <td class="fw-bold text-end">
-                                                                    <span id="globalrate"></span>
+                                                                    <b class="text-success">₦ <span id="shownow1"></span></b>
                                                                 </td>
                                                             </tr>
                                                         @endif
+                                                        <script>
+                                                            function calc() {
+                                                                let amount = parseFloat(document.getElementById("amount").value);
+                                                                if (!isNaN(amount) && rate) {
+                                                                    let nairaAmount = amount * rate;
+                                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                                }
+                                                            }
+
+                                                        </script>
                                                         <tr>
                                                             <td class="text-muted">
                                                                 <div class="d-flex align-items-center">
