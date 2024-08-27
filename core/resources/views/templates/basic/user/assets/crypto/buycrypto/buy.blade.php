@@ -405,13 +405,19 @@
                                                             SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
                                                             if (resp.ok != false) {
                                                                 document.getElementById("coin").value = coin;
-                                                                document.getElementById("globalrate").innerHTML = "1" + resp.rate.fiat_symbol +
-                                                                    "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.rate.crypto_symbol;
-                                                                document.getElementById("ourrate").innerHTML = "1" + resp.rate.fiat_symbol + "&nbsp;=&nbsp;" +
-                                                                    resp.ourrate + "{{$general->cur_text}}";
+
+                                                                // Set the rate variable here
+                                                                rate = parseFloat(resp.ourrate);
+
+                                                                document.getElementById("ourrate").innerHTML = "1 USD&nbsp;=&nbsp;" + rate + "{{$general->cur_text}}";
+                                                                document.getElementById("globalrate").innerHTML = "1 " + resp.currency + "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.currency;
+
                                                             }
 
+                                                            calc(); // Update the calculation
+
                                                         })
+
                                                         .catch(error => {
                                                                 console.log(error);
                                                             }
@@ -462,15 +468,26 @@
                                             <!--end::Label-->
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="basic-addon1">USD</span>
-                                                <input name="amount" id="amount"
+                                                <input name="amount" id="amount" oninput="calc()"
                                                     class="form-control form-control-lg form-control-solid"
                                                     value="" />
                                             </div>
+                                            <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>
+
                                         </div>
                                         <!--end::Input group-->
 
 
+                                        <script>
+                                            function calc() {
+                                                let amount = parseFloat(document.getElementById("amount").value);
+                                                if (!isNaN(amount) && rate) {
+                                                    let nairaAmount = amount * rate;
+                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                }
+                                            }
 
+                                        </script>
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Fixed Amount-->
