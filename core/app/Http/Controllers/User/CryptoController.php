@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Models\ChargesLimit;
 use App\Models\Cryptocurrency;
-use App\Models\Cryptowallet; 
-use App\Models\Cryptotrx; 
-use App\Models\Transaction; 
+use App\Models\Cryptowallet;
+use App\Models\Cryptotrx;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +30,7 @@ class CryptoController extends Controller
 		$user = Auth::user();
 		$pageTitle = 'Currency Rates';
 		$coins = Cryptocurrency::whereStatus(1)->get();
+//        return $coins;
 		return view($this->activeTemplate .'user.assets.crypto.rates', compact('pageTitle', 'user', 'coins'));
 	}
 
@@ -77,10 +78,10 @@ class CryptoController extends Controller
         $wallet->label = $reply['data']['label'];
         $wallet->address =$reply['data']['address'];
         $wallet->qrcode = $reply['data']['qr_code'];
-        $wallet->status = 1; 
-        $wallet->save(); 
+        $wallet->status = 1;
+        $wallet->save();
 		}
-		
+
 		$pageTitle = $coin->name.' Wallet';
 		$trx = Cryptotrx::where('user_id', $user->id)->whereCoin_id($coin->id)->take(5)->latest()->get();
 		return view($this->activeTemplate.'user.wallet.wallet', compact('pageTitle', 'user', 'wallet', 'trx', 'coin'));
@@ -91,7 +92,7 @@ class CryptoController extends Controller
 	{
 		$user = auth()->user();
 		$json = file_get_contents('php://input');
-		$input = json_decode($json, true);	 
+		$input = json_decode($json, true);
 		$address = $input['address'];
 		$coin = Cryptocurrency::whereId(decrypt($id))->whereStatus(1)->firstOrFail();
 		try{
@@ -125,7 +126,7 @@ class CryptoController extends Controller
 				return response()->json(['ok'=>false,'status'=>'danger','message'=> 'wrong wallet address'],400);
 			}
 		}
-		catch (\Exception $e) {  
+		catch (\Exception $e) {
 			return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
 		}
 
@@ -134,7 +135,7 @@ class CryptoController extends Controller
 	{
 		$user = auth()->user();
 		$json = file_get_contents('php://input');
-		$input = json_decode($json, true);	 
+		$input = json_decode($json, true);
 		$amount = $input['amount'];
 		$coin = Cryptocurrency::whereId(decrypt($id))->whereStatus(1)->firstOrFail();
 		$wallet = Cryptowallet::whereCoinId($coin->id)->whereUserId($user->id)->whereStatus(1)->first();
@@ -150,8 +151,8 @@ class CryptoController extends Controller
 		{
 			return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Maximum Amount is '.$coin->maximum_amount.'USD'],400);
 		}
-		
-		
+
+
 		try{
 			$baseurl = "https://coinremitter.com/api/v3/".$coin->symbol."/get-fiat-to-crypto-rate";
 			$curl = curl_init();
@@ -182,9 +183,9 @@ class CryptoController extends Controller
 			if($reply['data']['crypto_amount'])
 			{
 				return response()->json(['ok'=>true,'status'=>'success','message'=> $reply['data']['crypto_amount'].$reply['data']['crypto_symbol'],'content'=> ''],200);
-			} 
+			}
 		}
-		catch (\Exception $e) {  
+		catch (\Exception $e) {
 			return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
 		}
 
@@ -194,8 +195,8 @@ class CryptoController extends Controller
 	{
 		$user = auth()->user();
 		$json = file_get_contents('php://input');
-		$input = json_decode($json, true);	 
-		$amount = $input['amount'];	 
+		$input = json_decode($json, true);
+		$amount = $input['amount'];
 		$source = $input['source'];
 		$coin = Cryptocurrency::whereId(decrypt($id))->whereStatus(1)->firstOrFail();
 		$wallet = Cryptowallet::whereCoinId($coin->id)->whereUserId($user->id)->whereAddress($source)->whereStatus(1)->first();
@@ -229,7 +230,7 @@ class CryptoController extends Controller
 			if($wallet->balance < $reply['data']['crypto_amount'])
 			{
 				return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
-			}   
+			}
 
 				$wallet->balance -= $reply['data']['crypto_amount'];
 				$wallet->save();
@@ -261,20 +262,20 @@ class CryptoController extends Controller
 				$trx->hash = null;
 				$trx->trxid = getTrx();
 				$trx->explorer_url = "#";
-				$trx->wallet_id = $wallet->id; 
-				$trx->status = 1; 
-				$trx->save(); 
-				
+				$trx->wallet_id = $wallet->id;
+				$trx->status = 1;
+				$trx->save();
+
 				 // Send Mail
 				 notify($user, 'USER_MESSAGE', [
 					'message' => 'Your currency swap transaction was successful. Your account has been credited with accordingly. Please login to account to check status',
 					'subject' => 'Currency Swap'
 				]);
-				
+
 				return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Successful','content'=> json_encode($reply['data'])],200);
-		 
+
 		}
-		catch (\Exception $e) {  
+		catch (\Exception $e) {
 			return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
 		}
 
@@ -284,8 +285,8 @@ class CryptoController extends Controller
 	{
 		$user = auth()->user();
 		$json = file_get_contents('php://input');
-		$input = json_decode($json, true);	 
-		$amount = $input['amount'];	 
+		$input = json_decode($json, true);
+		$amount = $input['amount'];
 		$address = $input['address'];
 		$source = $input['source'];
 		$coin = Cryptocurrency::whereId(decrypt($id))->whereStatus(1)->firstOrFail();
@@ -334,9 +335,9 @@ class CryptoController extends Controller
 				$trx->hash = $reply['data']['txid'];
 				$trx->trxid = $reply['data']['id'];
 				$trx->explorer_url = $reply['data']['explorer_url'];
-				$trx->wallet_id = $reply['data']['wallet_id']; 
-				$trx->status = 1; 
-				$trx->save(); 
+				$trx->wallet_id = $reply['data']['wallet_id'];
+				$trx->status = 1;
+				$trx->save();
 				$wallet->balance -= $reply['data']['total_amount'];
 				$wallet->save();
 
@@ -347,9 +348,9 @@ class CryptoController extends Controller
 				]);
 
 				return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Successful','content'=> json_encode($reply['data'])],200);
-			} 
+			}
 		}
-		catch (\Exception $e) {  
+		catch (\Exception $e) {
 			return response()->json(['ok'=>false,'status'=>'danger','message'=> $e->getMessage()],400);
 		}
 
@@ -383,7 +384,7 @@ class CryptoController extends Controller
 		return view($this->activeTemplate.'user.wallet.transactions', compact('pageTitle', 'user', 'wallet', 'transactions', 'coin'));
 	}
 
-	 
 
-	 
+
+
 }

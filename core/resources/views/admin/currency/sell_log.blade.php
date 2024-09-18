@@ -19,134 +19,107 @@
                         @lang('A table showing all the ') {{$pageTitle}} @lang('on your account. You can export transaction record')
                       </p>
                       <div class="table-responsive">
-                        <table
-                          id="file_export"
-                          class="table border table-striped table-bordered display text-nowrap"
-                        >
-                          <thead>
-                            <!-- start row -->
-                            <tr>
-                                <th>@lang('Asset')</th>
-                                <th class="text-center">@lang('Initiated')</th>
-                                <th class="text-center">@lang('TRX')</th>
-                                 <th class="text-center">@lang('Conversion | Value')</th>
-                                 <th class="text-center">@lang('Rate')</th>
-                                <th class="text-center">@lang('Status')</th>
-                            </tr>
-                            <!-- end row -->
-                          </thead>
-                          <tbody>
+                          <table
+                              id="file_export"
+                              class="table border table-striped table-bordered display text-nowrap"
+                          >
+                              <thead>
+                              <!-- start row -->
+                              <tr>
+                                  <th>@lang('Asset')</th>
+                                  <th class="text-center">@lang('Initiated')</th>
+                                  <th class="text-center">@lang('TRX')</th>
+                                  <th class="text-center">@lang('Conversion | Value')</th>
+                                  <th class="text-center">@lang('Rate')</th>
+                                  <th class="text-center">@lang('Receipt')</th> <!-- New column for receipt -->
+                                  <th class="text-center">@lang('Status')</th>
+                              </tr>
+                              <!-- end row -->
+                              </thead>
+                              <tbody>
 
-                            @forelse(@$log as $deposit)
-                                    <tr>
-                                        <td>
-                                            <span class="fw-bold">
+                              @forelse(@$log as $deposit)
+                                  <tr>
+                                      <td>
+          <span class="fw-bold">
+            <span class="text-primary">{{ __($deposit->product_name) }}<small> ({{ __($deposit->asset->symbol) }})</small></span>
+          </span>
+                                          <br>
+                                          <span class="symbol symbol-40px me-6">
+            <span class="symbol-label bg-light-primary">
+              <i class="ti ti-image fs-2x text-warning"><img src="{{ url('/') }}/assets/images/coins/{{$deposit->asset->image}}" width="30" class="path1"/></i>
+            </span>
+          </span>
+                                      </td>
 
-                                              <span
-                                                    class="text-primary">{{ __($deposit->product_name) }}<small> ({{ __($deposit->asset->symbol) }})</small></span>
-                                            </span>
-                                            <br>
-                                            <span class="symbol symbol-40px me-6">
-                                              <span class="symbol-label bg-light-primary">
-                                                  <i class="ti ti-image fs-2x text-warning"><img src="{{ url('/') }}/assets/images/coins/{{$deposit->asset->image}}" width="30" class="path1"/></i>
-                                              </span>
+                                      <td class="text-center">
+                                          {{ showDateTime($deposit->created_at) }}<br>{{ diffForHumans($deposit->created_at) }}
+                                      </td>
 
-                                          </span>
-                                        </td>
+                                      <td class="text-center">
+                                          {{ ($deposit->deposit_code) }}
+                                      </td>
 
-                                        <td class="text-center">
-                                            {{ showDateTime($deposit->created_at) }}<br>{{ diffForHumans($deposit->created_at) }}
-                                        </td>
+                                      <td class="text-center">
+                                          <small> {{ showAmount($deposit->payment) }}{{ __(@$deposit->asset->symbol) }}</small>
+                                          <br>
+                                          <strong>{{ showAmount($deposit->price) }} {{ __($deposit->currency) }}</strong>
+                                      </td>
 
-                                        <td class="text-center">
-                                            {{ ($deposit->deposit_code) }}
-                                        </td>
-
-                                        <td class="text-center">
-                                           <small> {{ showAmount($deposit->payment) }}{{ __(@$deposit->asset->symbol) }}</small>
-                                            <br>
-                                            <strong>{{ showAmount($deposit->price) }} {{ __($deposit->currency) }}</strong>
-                                        </td>
-                                        <td class="text-center">
+                                      <td class="text-center">
                                           {{ __($deposit->value) }}{{ __($general->cur_text) }}
-                                        </td>
-                                        <td class="text-center">
-                                           <label class='badge text-white  @if($deposit->status== "success") bg-success @else bg-warning @endif'> @php echo $deposit->status @endphp</label>
-                                           @if($deposit->status != "success")
-                                           <a href="#" data-bs-toggle="modal" data-bs-target="#al-success-alert{{$deposit->id}}" class="btn btn-sm btn-success">Approve</a>
-                                           <a href="" class="btn btn-sm btn-danger">Decline</a>
-                                           @endif
-                                        </td>
-                                    </tr>
+                                      </td>
+                                      <td class="text-center">
+                                          @if($deposit->val_2) <!-- Assuming val_2 holds the receipt image name -->
+                                          <!-- Button to trigger the modal -->
+                                          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#receiptModal{{ $deposit->id }}">
+                                              View Receipt
+                                          </button>
+                                          @else
+                                              <span>No Receipt</span>
+                                          @endif
+                                      </td>
+                                      <td class="text-center">
+                                          <label class='badge text-white @if($deposit->status == "success") bg-success @else bg-warning @endif'>
+                                              @php echo $deposit->status @endphp
+                                          </label>
+                                          @if($deposit->status != "success")
+                                              <a href="#" data-bs-toggle="modal" data-bs-target="#al-success-alert{{$deposit->id}}" class="btn btn-sm btn-success">Approve</a>
+                                              <a href="" class="btn btn-sm btn-danger">Decline</a>
+                                          @endif
+                                      </td>
 
-                                    <!-- Vertically centered modal -->
-                                    <div class="modal fade" id="al-success-alert{{$deposit->id}}" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                      <div
-                                        class="modal-content modal-filled bg-light-success text-success"
-                                      >
-                                        <div class="modal-body p-4">
-                                          <div class="text-center text-success">
-                                            <i class="ti ti-circle-check fs-7"></i>
-                                            <h4 class="mt-2">Approve Transaction!</h4>
-                                            <p class="mt-3 text-success-50">
-                                              @lang('You are about to approve this transaction. Please click on the continue button below to continue process')
-                                            </p>
-                                            <button type="button" class="btn btn-light my-2"  data-bs-dismiss="modal">
-                                              Cancel
-                                            </button>
-                                            <a href="{{route('admin.crypto.assetselltrade.approve',$deposit->trx)}}" class="btn btn-success my-2">
-                                              Continue
-                                            </a>
+                                      <!-- Receipt Image Column -->
+
+                                  </tr>
+                                  <!-- Modal for displaying the receipt -->
+                                  <div class="modal fade" id="receiptModal{{ $deposit->id }}" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="receiptModalLabel">Receipt for Transaction {{ $deposit->deposit_code }}</h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                  @if($deposit->val_2)
+                                                      <img src="{{ url('/') }}/assets/images/trade/{{$deposit->user->username}}/{{ $deposit->val_2}}" alt="Receipt" class="img-fluid">
+                                                  @else
+                                                      <p>No receipt uploaded.</p>
+                                                  @endif
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              </div>
                                           </div>
-                                        </div>
                                       </div>
-                                      <!-- /.modal-content -->
-                                    </div>
                                   </div>
+                              @empty
+                                  {!!emptyData2()!!}
+                              @endforelse
+                              <!-- end row -->
+                              </tbody>
+                          </table>
 
-
-                                  <div class="modal fade" id="al-success-alert{{$deposit->id}}" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                      <div
-                                        class="modal-content modal-filled bg-light-success text-success"
-                                      >
-                                        <div class="modal-body p-4">
-                                          <div class="text-center text-success">
-                                            <i class="ti ti-circle-check fs-7"></i>
-                                            <h4 class="mt-2">Decline Transaction!</h4>
-                                            <p class="mt-3 text-success-50">
-                                              @lang('You are about to decline this transaction. Please click on the continue button below to continue process')
-                                            </p>
-                                            <button type="button" class="btn btn-light my-2"  data-bs-dismiss="modal">
-                                              Cancel
-                                            </button>
-                                            <a href="{{route('admin.crypto.assetselltrade.decline',$deposit->trx)}}" class="btn btn-success my-2">
-                                              Continue
-                                            </a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <!-- /.modal-content -->
-                                    </div>
-                                  </div>
-                                @empty
-                                    {!!emptyData2()!!}
-                                @endforelse
-                            <!-- end row -->
-                            <!-- end row -->
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                                <th>@lang('Product | ID')</th>
-                                <th class="text-center">@lang('Initiated')</th>
-                                <th class="text-center">@lang('TRX')</th>
-                                <th class="text-center">@lang('Conversion | Value')</th>
-                                <th class="text-center">@lang('Rate')</th>
-                                <th class="text-center">@lang('Status')</th>
-                            </tr>
-                          </tfoot>
-                        </table>
                       </div>
                       @if ($log->hasPages())
                     <div class="card-footer">

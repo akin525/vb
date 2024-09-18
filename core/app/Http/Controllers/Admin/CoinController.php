@@ -415,7 +415,8 @@ class CoinController extends Controller
     public function selllog(Request $request, $id)
     {
         $pageTitle       = 'Sales Log';
-        $log = Order::whereType('sell_crypto')->whereStatus($id)->searchable(['deposit_code'])->with('asset')->orderBy('id', 'desc')->paginate(getPaginate());
+        $log = Order::whereType('sell_crypto')->whereStatus($id)->searchable(['deposit_code'])->with('asset', 'user')->orderBy('id', 'desc')->paginate(getPaginate());
+//        return $log;
         return view('admin.currency.sell_log', compact('pageTitle', 'log'));
     }
 
