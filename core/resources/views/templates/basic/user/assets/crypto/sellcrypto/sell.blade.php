@@ -351,10 +351,12 @@ ${html}
                                                 // END GET DATA
 
                                                 function networkprovider(operatorId, image, name, coin) {
+                                                    // Update UI with the selected network provider
                                                     document.getElementById("networkprovider").innerHTML = name;
                                                     document.getElementById("coin").value = null;
                                                     document.getElementById("ourrate").innerHTML = null;
 
+                                                    // Create and display loading element
                                                     const loadingEl = document.createElement("div");
                                                     document.body.prepend(loadingEl);
                                                     loadingEl.classList.add("page-loader", "flex-column", "bg-dark", "bg-opacity-25");
@@ -364,48 +366,79 @@ ${html}
     `;
                                                     KTApp.showPageLoading();
 
-                                                    var raw = JSON.stringify({
+                                                    // Prepare request payload
+                                                    const raw = JSON.stringify({
                                                         _token: "{{ csrf_token() }}",
                                                         coin: operatorId,
                                                         amount: 1,
                                                     });
 
-                                                    var requestOptions = {
+                                                    const requestOptions = {
                                                         method: 'POST',
                                                         headers: {
+                                                            'Content-Type': 'application/json', // Ensure the content type is set
                                                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                         },
                                                         body: raw
                                                     };
 
+                                                    // Fetch coin details
                                                     fetch("{{ route('user.crypto.sell.coin.details') }}", requestOptions)
-                                                        .then(response => response.text())
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error("Network response was not ok");
+                                                            }
+                                                            return response.text();
+                                                        })
                                                         .then(result => {
-                                                            let html = '';
+                                                            // Hide loading state and remove loading element
                                                             KTApp.hidePageLoading();
                                                             loadingEl.remove();
+
+                                                            // Parse JSON response
                                                             const resp = JSON.parse(result);
                                                             SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
-                                                            if (resp.ok != false) {
+
+                                                            if (resp.ok !== false) {
                                                                 document.getElementById("coin").value = coin;
 
-                                                                // Set the rate variable here
-                                                                rate = parseFloat(resp.ourrate);
+                                                                // Parse and set the rate variable
+                                                                const rate = parseFloat(resp.ourrate);
+                                                                if (isNaN(rate)) {
+                                                                    console.error("Invalid rate in response:", resp.ourrate);
+                                                                    return; // Exit early if rate is invalid
+                                                                }
 
                                                                 document.getElementById("ourrate").innerHTML = "1 USD&nbsp;=&nbsp;" + rate + "{{$general->cur_text}}";
-                                                                document.getElementById("globalrate").innerHTML = "1 " + resp.currency + "&nbsp;=&nbsp;" + resp.rate.crypto_amount + resp.currency;
+                                                                document.getElementById("rateInput").value = rate;
 
+                                                                // Check if resp.rate.crypto_amount exists and has a valid value
+                                                                if (resp.rate && resp.rate.crypto_amount) {
+                                                                    document.getElementById("globalrate").innerHTML = "1 " + resp.currency + "&nbsp;=&nbsp;" + resp.rate.crypto_amount + " " + resp.currency;
+                                                                } else {
+                                                                    console.error('Invalid crypto_amount in response');
+                                                                }
+
+                                                                // Set the hidden input value for rate
+                                                                document.getElementById("rateInput").value = rate;
+
+                                                                // Call the calculation function
                                                                 calc(); // Update the calculation
+                                                            } else {
+                                                                console.error('Response was not successful:', resp.message);
                                                             }
                                                         })
                                                         .catch(error => {
-                                                            console.log(error);
+                                                            console.error('Fetch error:', error);
+                                                            KTApp.hidePageLoading();
+                                                            loadingEl.remove();
                                                         });
                                                 }
 
 
                                             </script>
                                         @endpush
+                                        <input type="hidden" id="rateInput" name="rate" value="">
 
                                         <!--begin::Input group-->
                                         <div class="mb-0 fv-row">
@@ -415,6 +448,7 @@ ${html}
                                             <!--end::Options-->
                                         </div>
                                         <!--end::Input group-->
+
 
                                         <!--begin::Step 3-->
                                         <div>
@@ -892,18 +926,28 @@ ${html}
                                                                 o.disabled = false;
                                                             }
                                                             function calc(rate, amount) {
-                                                                if (!isNaN(amount) && rate) {
+                                                                if (!isNaN(amount) && !isNaN(rate)) {
                                                                     let nairaAmount = amount * rate;
-                                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                                    console.log(nairaAmount);
+                                                                    const resultElement = document.getElementById("shownow1");
+                                                                    if (resultElement) {
+                                                                        resultElement.innerText = nairaAmount.toFixed(2);
+                                                                    } else {
+                                                                        console.error("Element with ID 'shownow1' not found.");
+                                                                    }
+                                                                } else {
+                                                                    console.error("Invalid rate or amount:", rate, amount);
                                                                 }
                                                             }
+
                                                             if (resp.ok !== false && resp.auto !== false) {
 
                                                                 var qrcode = "https://quickchart.io/qr?text=" + encodeURIComponent(resp.data.address) + "&size=300";
                                                                 let coinvalue = resp.data.total_amount;
-                                                                let rate = parseFloat(resp.ourrate); // Convert the rate to a float
+                                                                let rate = document.getElementById("rateInput").value
                                                                 if (isNaN(rate)) {
                                                                     console.error("Invalid rate:", resp.ourrate); // Log an error if the rate is invalid
+
                                                                 } else {
                                                                     console.info("Rate:", rate);
                                                                 }
@@ -911,6 +955,7 @@ ${html}
                                                                 // Get the amount input value
                                                                 let amount = parseFloat(document.getElementById("amount").value); // Get the USD amount from the input field
                                                                 console.info("Amount:", amount);
+                                                                console.info("rate:", rate);
 
                                                                 // Call the `calc` function to show the conversion
                                                                 calc(rate, amount); // Calculate and display Naira value
@@ -965,6 +1010,11 @@ ${html}
                                                             </div>
                                                         </div>
                                                     `;
+                                                                setTimeout(() => {
+                                                                    const rate =document.getElementById("rateInput").value; /* your rate calculation */;
+                                                                    const amount =document.getElementById("amount").value; /* your amount calculation */;
+                                                                    calc(rate, amount);  // Call the function after DOM update
+                                                                }, 100); // Delay of 100ms
                                                             }
 
                                                             SlimNotifierJs.notification(resp.status, resp.status, resp.message, 3000);
