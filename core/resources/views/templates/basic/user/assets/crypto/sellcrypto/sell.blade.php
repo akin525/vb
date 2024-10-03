@@ -441,7 +441,7 @@ ${html}
                                                     <!--end::Label-->
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="basic-addon1">USD</span>
-                                                        <input name="amount" id="amount" type="number" oninput="calc()"
+                                                        <input name="amount" id="amount" type="number"
                                                                class="form-control form-control-lg form-control-solid" value="" />
                                                     </div>
 {{--                                                    <span class="text-danger">Total Amount</span> <b class="text-success">₦<span id="shownow1"></span></b>--}}
@@ -498,30 +498,30 @@ ${html}
                                                             </td>
                                                             <td class="fw-bold text-end"><a href="#" class="text-gray-600 text-hover-primary" id="networkprovider"></a></td>
                                                         </tr>
-                                                        @if($general->crypto_auto)
-                                                            <tr>
-                                                                <td class="text-muted">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <i class="ti ti-globe fs-2 me-2"></i> @lang('Total Amount To Receive')
-                                                                        <span class="ms-1" data-bs-toggle="tooltip" title="This is the real-time global price.">
-                                    <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-bold text-end">
-                                                                    <b class="text-success">₦ <span id="shownow1"></span></b>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                        <script>
-                                                            function calc() {
-                                                                let amount = parseFloat(document.getElementById("amount").value);
-                                                                if (!isNaN(amount) && rate) {
-                                                                    let nairaAmount = amount * rate;
-                                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
-                                                                }
-                                                            }
+{{--                                                        @if($general->crypto_auto)--}}
+{{--                                                            <tr>--}}
+{{--                                                                <td class="text-muted">--}}
+{{--                                                                    <div class="d-flex align-items-center">--}}
+{{--                                                                        <i class="ti ti-globe fs-2 me-2"></i> @lang('Total Amount To Receive')--}}
+{{--                                                                        <span class="ms-1" data-bs-toggle="tooltip" title="This is the real-time global price.">--}}
+{{--                                    <i class="ti ti-alert-circle text-gray-500 fs-6"></i></span>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </td>--}}
+{{--                                                                <td class="fw-bold text-end">--}}
+{{--                                                                    <b class="text-success">₦ <span id="shownow1"></span></b>--}}
+{{--                                                                </td>--}}
+{{--                                                            </tr>--}}
+{{--                                                        @endif--}}
+{{--                                                        <script>--}}
+{{--                                                            function calc() {--}}
+{{--                                                                let amount = parseFloat(document.getElementById("amount").value);--}}
+{{--                                                                if (!isNaN(amount) && rate) {--}}
+{{--                                                                    let nairaAmount = amount * rate;--}}
+{{--                                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);--}}
+{{--                                                                }--}}
+{{--                                                            }--}}
 
-                                                        </script>
+{{--                                                        </script>--}}
                                                         <tr>
                                                             <td class="text-muted">
                                                                 <div class="d-flex align-items-center">
@@ -891,12 +891,29 @@ ${html}
                                                                 o.removeAttribute("data-kt-indicator");
                                                                 o.disabled = false;
                                                             }
-
+                                                            function calc(rate, amount) {
+                                                                if (!isNaN(amount) && rate) {
+                                                                    let nairaAmount = amount * rate;
+                                                                    document.getElementById("shownow1").innerText = nairaAmount.toFixed(2);
+                                                                }
+                                                            }
                                                             if (resp.ok !== false && resp.auto !== false) {
+
                                                                 var qrcode = "https://quickchart.io/qr?text=" + encodeURIComponent(resp.data.address) + "&size=300";
                                                                 let coinvalue = resp.data.total_amount;
-                                                                console.info(coinvalue);
+                                                                let rate = parseFloat(resp.ourrate); // Convert the rate to a float
+                                                                if (isNaN(rate)) {
+                                                                    console.error("Invalid rate:", resp.ourrate); // Log an error if the rate is invalid
+                                                                } else {
+                                                                    console.info("Rate:", rate);
+                                                                }
 
+                                                                // Get the amount input value
+                                                                let amount = parseFloat(document.getElementById("amount").value); // Get the USD amount from the input field
+                                                                console.info("Amount:", amount);
+
+                                                                // Call the `calc` function to show the conversion
+                                                                calc(rate, amount); // Calculate and display Naira value
                                                                 o.removeAttribute("data-kt-indicator");
                                                                 o.disabled = false;
 
@@ -921,8 +938,12 @@ ${html}
                                                                         <div class="p-3">
                                                                             <h5 class="fs-5 fw-semibold mb-4">Payment Summary</h5>
                                                                             <div class="d-flex justify-content-between mb-4">
+                                                                                <p class="mb-0 fs-4"><b>Naira Value</b></p>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>₦<span id="shownow1"></span></b></h6>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between mb-4">
                                                                                 <p class="mb-0 fs-4"><b>Fiat Value</b></p>
-                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b>${Object.values(coinvalue)[1]}${Object.keys(coinvalue)[1]}</b></h6>
+                                                                                <h6 class="mb-0 fs-4 fw-semibold text-primary"><b></b></h6>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between mb-4">
                                                                                 <p class="mb-0 fs-4"><b>Crypto Value</b></p>
