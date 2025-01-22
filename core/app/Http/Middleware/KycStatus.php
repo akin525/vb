@@ -18,10 +18,10 @@ class KycStatus
     {
         $general = gs();
         $user = auth()->user();
-        if ($user->kyc_complete != 1) {
-            $notify[] = ['error', 'Please complete your KYC before proceding'];
-            return back()->withNotify($notify);
-        }
+//        if ($user->kyc_complete != 1) {
+//            $notify[] = ['error', 'Please complete your KYC before proceding'];
+//            return back()->withNotify($notify);
+//        }
         return $next($request);
     }
 }
