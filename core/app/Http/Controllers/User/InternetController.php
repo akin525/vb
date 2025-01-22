@@ -415,7 +415,6 @@ class InternetController extends Controller
 
         $request->validate([
             'pro'=>'required',
-            'name'=>'required',
             'provider'=>'required',
         ]);
         $auth = env('GIFTBILLS');
@@ -448,7 +447,7 @@ class InternetController extends Controller
 
 //return $success;
         foreach ($data as $plan){
-            $success =$request->name;
+            $success =$request->provider;
             $planid = $plan["id"];
             $price= $plan['amount'];
             $catid=$request->pro;
