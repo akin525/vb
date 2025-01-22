@@ -23,4 +23,4 @@ Route::any('/savings/cronjob', 'ApiController@savings')->name('api.savings');
 Route::any('/fixed/cronjob', 'ApiController@fixed')->name('api.fixed');
 
 
-Route::post('list', [\App\Http\Controllers\User\InternetController::class, 'list'])->name('list');
+Route::post('listdata', [\App\Http\Controllers\User\InternetController::class, 'list'])->name('listdata');
