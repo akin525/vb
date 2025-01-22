@@ -542,43 +542,26 @@ class AirtimeController extends Controller
         $wallet = "main";
         $phone = @$input['phone'];
 
-//        if (Hash::check($password, $user->trx_password)) {
-//            $passcheck = true;
-//            } else {
-//            $passcheck = false;
-//                return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
-//            }
-
-
-//        if($wallet == 'main')
-//        {
             $balance = $user->balance;
-//        }
-//        else
-//        {
-//            $balance = $user->ref_balance;
-//        }
 
         if($amount > $balance)
         {
             $mg='Insufficient wallet balance';
             return response()->json($mg, Response::HTTP_BAD_REQUEST);
 
-//            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
         }
 
         $mode = env('MODE');
         $auth = env('GIFTBILLS');
-//        return response()->json($auth, Response::HTTP_BAD_REQUEST);
 
-        if($mode == 'TEST')
-        {
-        $url = 'https://sandbox.giftbills.com/api/v1/airtime/topup';
-        }
-        else
-        {
+//        if($mode == 'TEST')
+//        {
+//        $url = 'https://sandbox.giftbills.com/api/v1/airtime/topup';
+//        }
+//        else
+//        {
         $url = 'https://giftbills.com/api/v1/airtime/topup';
-        }
+//        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => $url,
@@ -619,16 +602,10 @@ class AirtimeController extends Controller
         // END AIRTIME VENDING \\
         if($reply['success'] == true )
         {
-            if($wallet == 'main')
-            {
+
                 $user->balance -= $amount;
                 $balance_after = $user->balance;
-            }
-            else
-            {
-                $user->ref_balance -= $amount;
-                $balance_after = $user->ref_balance;
-            }
+
             $user->save();
             $order               = new Order();
             $order->user_id      = $user->id;
