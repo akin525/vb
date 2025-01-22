@@ -16,12 +16,12 @@
                     <select  name="id" id="firstSelect" class="text-success form-control" required="">
                         <option>Select Your Network</option>
                         <option value="MTN">MTN</option>
-                        <option value="GLO">GLO-DG</option>
-                        <option value="GLO_CG">GLO-CG</option>
-                        <option value="9MOBILE">9MOBILE-DG</option>
-                        <option value="9MOBILE_SME">9MOBILE-SME</option>
-                        <option value="AIRTEL_DG">AIRTEL_DG</option>
-                        <option value="AIRTEL_CG">AIRTEL_CG</option>
+                        <option value="GLO">GLO</option>
+{{--                        <option value="GLO_CG">GLO-CG</option>--}}
+                        <option value="9MOBILE">9MOBILE</option>
+{{--                        <option value="9MOBILE_SME">9MOBILE-SME</option>--}}
+{{--                        <option value="AIRTEL_DG">AIRTEL_DG</option>--}}
+                        <option value="AIRTEL">AIRTEL</option>
                     </select>
 
                     <br>

@@ -465,7 +465,7 @@ class InternetController extends Controller
             ]);
         }
 
-    return $data1;
+        return $data1;
 
 //    return view('pam', compact('product'));
 
