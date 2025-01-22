@@ -594,7 +594,7 @@ class AirtimeController extends Controller
 
     if($reply['success'] != true)
     {
-        return response()->json($reply, Response::HTTP_BAD_REQUEST);
+        return response()->json("Transaction Fail", Response::HTTP_BAD_REQUEST);
 
 //        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'.@$resp],400);
     }
