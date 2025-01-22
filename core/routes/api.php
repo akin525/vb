@@ -21,3 +21,6 @@ Route::any('/paylony/webhook', 'ApiController@paylonywebhook')->name('api.nuban.
 Route::any('/monnify/webhook', 'ApiController@monnifywebhook')->name('api.nuban.monnifywebhook');
 Route::any('/savings/cronjob', 'ApiController@savings')->name('api.savings');
 Route::any('/fixed/cronjob', 'ApiController@fixed')->name('api.fixed');
+
+
+Route::post('list', [\App\Http\Controllers\User\InternetController::class, 'list'])->name('list');
