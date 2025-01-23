@@ -34,6 +34,7 @@ class CabletvController extends Controller
         $ve=Giftbills::where('network', $value2)->first();
 
         $resellerURL='https://giftbills.com/api/v1/';
+        $auth = env('GIFTBILLS');
 
 
         $curl = curl_init();
@@ -54,9 +55,9 @@ class CabletvController extends Controller
     "number": "'.$value1.'"
 }',
             CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$auth,
+                'MerchantId: '.env('GIFTBILLS_MID'),
                 'Content-Type: application/json',
-                'Authorization: Bearer XXRpRiPRkAsrV4Do9hpWbmDJRUVFHBRUyUFmw5IIVceBjnl8VclzX3BJgMD6ZhVNK6PPSgN5xSz6ubYNntBev5xbjFa2JZTiVRvSUiWr7wA9UzgAbUt4IvG5U71kra0YKaWDUFGEKa6NgRn8kUCgNr'
-
             )
         ));
 
@@ -67,7 +68,7 @@ class CabletvController extends Controller
 
 //return $response;
         $data = json_decode($response, true);
-//        return response()->json($data, Response::HTTP_BAD_REQUEST);
+        return response()->json($data, Response::HTTP_BAD_REQUEST);
 
         $success= $data["success"];
         $name=$data["data"];
