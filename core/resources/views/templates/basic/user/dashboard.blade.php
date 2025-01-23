@@ -457,7 +457,7 @@
                         </a>
                     </div>
                     <div class="col-4 col-sm-3 col-lg-3">
-                        <a href="{{url('user/cabltv')}}">
+                        <a href="{{url('user/cabletv')}}">
                             <div class="card">
                                 <div class="card-body p-3 text-center">
                              <span style="font-size: 30px;">
