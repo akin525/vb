@@ -2,7 +2,7 @@
 @section('panel')
     <!-- File export -->
     <div class="row">
-        <div class="col-12">
+        <div class="">
             <!--begin::Card-->
             <div class="card">
                 <!--begin::Card body-->
