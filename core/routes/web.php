@@ -55,3 +55,4 @@ Route::controller('SiteController')->group(function () {
 //Route::post('user/crypto/sell/confirm', [SellCryptoController::class, 'sellConfirmManual'])->name('user.crypto.sell.confirm');
 
 Route::get('getlist/{selectedValue}', [\App\Http\Controllers\User\InternetController::class, 'fecthdata'])->name('getlist');
+Route::get('verifytv/{value1}/{value2}', [\App\Http\Controllers\User\CabletvController::class, 'verifytv'])->name('verifytv');
