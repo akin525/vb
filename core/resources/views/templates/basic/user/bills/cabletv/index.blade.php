@@ -14,7 +14,7 @@
                                 <div class="content container-fluid">
                                     <div class="row justify-content-lg-center">
                                         <div class="col-lg-10">
-                                            <div class="loading-overlay" id="loadingSpinner" style="display: none;">
+                                            <div class="loading-overlay" id="loadingSpinner1" style="display: none;">
                                                 <div class="loading-spinner"></div>
                                             </div>
                                             <div class="page-header">
