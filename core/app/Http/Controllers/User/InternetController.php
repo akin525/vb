@@ -240,7 +240,7 @@ class InternetController extends Controller
 
         $auth = env('GIFTBILLS');
 
-       $plan=Giftbills::where('id', $request->id)->first();
+       $plan=Giftbills::where('id', $request->productid)->first();
        if (!$plan){
            return response()->json("invalid dataplan", Response::HTTP_BAD_REQUEST);
 
