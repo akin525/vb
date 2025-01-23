@@ -8,17 +8,6 @@
                 <!--begin::Card body-->
                 <div class="card-body">
                     <!--begin::Heading-->
-                    <div class="card-px text-center pt-15 pb-15">
-                        <!--begin::Alert-->
-
-                        <!--begin::Notice-->
-                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed  p-6">
-                            <!--begin::Icon-->
-                            <i class="ti ti-alert-circle fs-2tx text-warning me-4"><span class="path1"></span><span
-                                    class="path2"></span><span class="path3"></span></i> <!--end::Icon-->
-
-                            <!--begin::Wrapper-->
-
 
 
                             <div class="page-wrapper">
