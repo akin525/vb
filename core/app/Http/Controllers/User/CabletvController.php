@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
+
 class CabletvController extends Controller
 {
 
