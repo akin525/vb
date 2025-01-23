@@ -343,7 +343,7 @@ class InternetController extends Controller
         }
         else
         {
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> $response['message']. 'API ERROR'],400);
+            return response()->json(['ok'=>false,'status'=>'danger','message'=> "Transaction Error". 'API ERROR'],400);
         }
         //return json_decode($resp,true);
     }
