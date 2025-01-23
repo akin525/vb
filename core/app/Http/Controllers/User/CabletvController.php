@@ -70,10 +70,10 @@ class CabletvController extends Controller
 
 //return $response;
         $data = json_decode($response, true);
-        return response()->json($data, Response::HTTP_BAD_REQUEST);
+//        return response()->json($data, Response::HTTP_BAD_REQUEST);
 
         $success= $data["success"];
-        $name=$data["data"];
+        $name=$data["data"]["Customer_Name"];
         if ($success = true){
             $log=$name;
         }else{
