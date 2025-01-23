@@ -316,6 +316,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('internet_operators', 'internet_operators')->name('internet.operators');
                 Route::post('internet_operator_id', 'operatorsInternetdetails')->name('internet.operatorsInternetdetails');
                 Route::get('history', 'history')->name('internet.history');
+
             });
 
             Route::controller('InternetSmeController')->prefix('internet/sme')->group(function () {

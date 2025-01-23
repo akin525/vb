@@ -114,18 +114,18 @@ class InternetSmeController extends Controller
         }
     }
 
-    public function buy_internet_post_n3tdata()
+    public function buy_internet_post_n3tdata(Request $request)
     {
         try {
         $user = auth()->user();
-        $json = file_get_contents('php://input');
-        $input = json_decode($json, true);
-        $password = $input['password'];
-        $arr = explode("|", $input['amount'], 3);
+//        $json = file_get_contents('php://input');
+//        $input = json_decode($json, true);
+//        $password = $input['password'];
+//        $arr = explode("|", $input['amount'], 3);
 
-        $amount =  $arr[1];
-        $data_plan = $input['data_plan'];
-        $networkname = $input['networkname'];
+//        $amount =  $arr[1];
+//        $data_plan = $input['data_plan'];
+//        $networkname = $input['networkname'];
         $plan = $arr[0];
         $network = $arr[2];
         $phone = $input['phone'];

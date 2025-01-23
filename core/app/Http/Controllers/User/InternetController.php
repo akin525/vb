@@ -12,6 +12,7 @@ use App\Models\GeneralSetting;
 use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -213,132 +214,110 @@ class InternetController extends Controller
         $countries = $this->getCountries();
         return view($this->activeTemplate . 'user.bills.internet.internet_buy', compact('pageTitle','countries'));
     }
-    public function buy_internet_post()
+    public function buy_internet_post(Request $request)
     {
-        if(env('MODE') == "TEST")
-        {
-            $url = "https://topups-sandbox.reloadly.com/topups";
-        }
-        else
-        {
-            $url = "https://topups.reloadly.com/topups";
-        }
-        $token = getToken('topups');
+
+        $request->validate([
+            'id'=>'required',
+            'number'=>'required',
+            'refid'=>'required',
+        ]);
+            $url = "https://giftbills.com/api/v1";
+
+//        $token = getToken('topups');
         $user = auth()->user();
-        $json = file_get_contents('php://input');
-        $input = json_decode($json, true);
-        $password = $input['password'];
-        $arr = explode("|", $input['amount'], 2);
+//        $json = file_get_contents('php://input');
+//        $input = json_decode($json, true);
+//        $password = $input['password'];
+//        $arr = explode("|", $input['amount'], 2);
 
-        $amount =  $arr[0];
-        $plan = $arr[1];
-        $phone = $input['phone'];
-        $wallet = "main";
-        $operatorId = @$input['operator'];
+//        $amount =  $arr[0];
+//        $plan = $arr[1];
+//        $phone = $input['phone'];
+//        $wallet = "main";
+//        $operatorId = @$input['operator'];
 
-        if (Hash::check($password, $user->trx_password)) {
-            $passcheck = true;
-            } else {
-            $passcheck = false;
-                return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
-            }
 
-        // return $this->operatorsdetails($operatorId);
+        $auth = env('GIFTBILLS');
 
-        $operator = $this->operatorsdetails($operatorId);
-        $operatorId = @$operator['operatorId'];
-        $operatorName = $operator['name'];
-        $operatorLogo = @$operator['logoUrls'][0];
-        $operatorCurrency = @$operator['destinationCurrencyCode'];
-        $countryCode = @$operator['country']['isoName'];
-        $min = $operator['minAmount'];
-        $max = $operator['maxAmount'];
-        $rate = $operator['fx']['rate'];
+       $plan=Giftbills::where('id', $request->id)->first();
+       if (!$plan){
+           return response()->json("invalid dataplan", Response::HTTP_BAD_REQUEST);
 
-        if($amount < $min &&  $min > 0)
+       }
+       $amount=$plan->amount;
+
+        if($amount < 0)
         {
             return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Minimum amount you can purchase is '.getAmount($min)],400);
         }
-        if($amount > $max  &&  $max > 0)
-        {
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Maximum amount you can purchase is '.getAmount($max)],400);
-        }
-        $payment = $amount/$rate;
-        if($wallet == 'main')
-        {
+
+
             $balance = $user->balance;
-        }
-        else
-        {
-            $balance = $user->ref_balance;
-        }
+        $payment = $amount;
+
         if($payment > $balance)
         {
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
+            $mg='Insufficient wallet balance';
+            return response()->json($mg, Response::HTTP_BAD_REQUEST);
+
+//            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
         }
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-        $headers = array(
-        "Authorization: Bearer ".$token."",
-        "Content-Type: application/json",
-        );
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        $code = getTrx();
-        $data = <<<DATA
-        {
-            "operatorId": "$operatorId",
-            "amount": "$amount",
-            "useLocalAmount": true,
-            "customIdentifier": "$code",
-            "recipientEmail": "$user->email",
-            "recipientPhone": {
-                "countryCode": "$countryCode",
-                "number": "$phone"
-            }
-        }
-        DATA;
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        //for debug only!
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS =>'{
+        "provider": "'.$plan->code.'",
+        "number": "'.$request->number.'",
+        "plan_id": "'.$plan->plan_id.'",
+        "reference": "'.$request->refid.'"
+        }',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$auth,
+                'MerchantId: '.env('GIFTBILLS_MID'),
+                'Content-Type: application/json',
+            ),
+        ));
+
         $resp = curl_exec($curl);
+        $response = $resp;
+        $reply = json_decode($resp, true);
+        // return $response;
         curl_close($curl);
-        //var_dump($resp);
         $response = json_decode($resp,true);
 
         // END AIRTIME VENDING \\
-        if(isset($response['status']) && isset($response['transactionId']) > 0)
+        if($response['success']==true)
         {
-            if($wallet == 'main')
-            {
+
                 $user->balance -= $payment;
                 $balance_after = $user->balance;
-            }
-            else
-            {
-                $user->ref_balance -= $payment;
-                $balance_after = $user->ref_balance;
-            }
+
             $user->save();
             $order               = new Order();
             $order->user_id      = $user->id;
             $order->type         =  'internet';
-            $order->val_1   = $phone;
-            $order->val_2   = $plan;
-            $order->product_id   = $operatorId;
-            $order->product_name = @$operatorName;
-            $order->product_logo = @$operatorLogo;
+            $order->val_1   = $request->number;
+            $order->val_2   = $plan->network;
+            $order->product_id   = $plan->id;
+            $order->product_name = $plan->network;
+            $order->product_logo = $plan->plan;
             $order->details      = json_encode($response,true);
             $order->quantity     = 1;
             $order->price        = $amount;
-            $order->currency     = @$response['requestedAmountCurrencyCode'];
-            $order->status       = @$response['status'];
+            $order->currency     = 'NGN';
+            $order->status       = @$response['success'];
             $order->payment      = @$payment;
-            $order->trx          = $code;
-            $order->source       = $wallet;
+            $order->trx          = $request->refid;
+            $order->source       = 'wallet';
             $order->balance_before  = $balance;
             $order->balance_after   = $balance_after;
             $order->transaction_id  = $response['transactionId'];
@@ -351,21 +330,12 @@ class InternetController extends Controller
             $transaction->post_balance = $order->balance_after;
             $transaction->charge       = 0;
             $transaction->trx_type     = '-';
-            $transaction->details      = 'Purchased internet subscription via ' . strToUpper($wallet).' Wallet';
+            $transaction->details      = 'Purchased internet subscription via  Wallet';
             $transaction->trx          = $order->trx;
             $transaction->remark       = 'internet';
             $transaction->save();
 
-            notify($user,'INTERNET_BUY', [
-                'provider'        => @$operatorName,
-                'currency'        => @$operatorCurrency,
-                'amount'          => @showAmount($amount),
-                'product'         => @$plan,
-                'beneficiary'     => @$phone,
-                'rate'           => @showAmount($payment),
-                'purchase_at'     => @Carbon::now(),
-                'trx'             => @$code,
-            ]);
+
 
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successful','orderid'=> $response['transactionId']],200);
         }
