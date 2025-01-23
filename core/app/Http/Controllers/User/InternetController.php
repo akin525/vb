@@ -294,7 +294,7 @@ class InternetController extends Controller
         // return $response;
         curl_close($curl);
         $response = json_decode($resp,true);
-        return response()->json($response, Response::HTTP_BAD_REQUEST);
+//        return response()->json($response, Response::HTTP_BAD_REQUEST);
 
         // END AIRTIME VENDING \\
         if($response['success']==true)
