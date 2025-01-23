@@ -227,7 +227,7 @@
                             // For example, perform an AJAX request or update the page content
                             $('#loadingSpinner').show();
                             $.ajax({
-                                url: "",
+                                url: "{{route('user.buy.cabletv')}}",
                                 type: 'POST',
                                 data: formData,
                                 success: function(response) {
