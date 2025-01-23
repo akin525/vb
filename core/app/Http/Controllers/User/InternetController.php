@@ -222,7 +222,7 @@ class InternetController extends Controller
             'number'=>'required',
             'refid'=>'required',
         ]);
-            $url = "https://giftbills.com/api/v1";
+            $url = "https://giftbills.com/api/v1/internet/data";
 
 //        $token = getToken('topups');
         $user = auth()->user();
@@ -241,7 +241,6 @@ class InternetController extends Controller
         $auth = env('GIFTBILLS');
 
        $plan=Giftbills::where('id', $request->productid)->first();
-        return response()->json($plan, Response::HTTP_BAD_REQUEST);
 
        if (!$plan){
            return response()->json("invalid dataplan", Response::HTTP_BAD_REQUEST);
