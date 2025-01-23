@@ -178,7 +178,7 @@
                     var third = $('#name');
 
                     if (inputValue.length === 10 || inputValue.length === 11) {
-                        $('#loadingSpinner1').show();
+                        $('#loadingSpinner').show();
 
                         $.ajax({
                             url: '{{ url('verifytv') }}/' + inputValue + '/' + secondS.val(),
@@ -188,11 +188,11 @@
                                 value2: secondS.val()
                             },
                             success: function(response) {
-                                $('#loadingSpinner1').hide();
+                                $('#loadingSpinner').hide();
                                 $('#name').val(response);
                             },
                             error: function(xhr) {
-                                $('#loadingSpinner1').hide();
+                                $('#loadingSpinner').hide();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'fail',
