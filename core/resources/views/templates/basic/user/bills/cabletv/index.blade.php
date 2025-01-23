@@ -126,8 +126,14 @@
                 <!--end::Card body-->
             </div>
             <!--end::Card-->
-        </div>
 
+
+    @endsection
+
+    @push('breadcrumb-plugins')
+        <a class="btn btn-sm btn-primary" href="{{ route('user.cabletv.history') }}"> <i class="ti ti-printer"></i> @lang('Subscription Log')</a>
+    @endpush
+    @push('script')
         <script>
             $(document).ready(function() {
                 $('#firstSelect').change(function() {
@@ -274,10 +280,4 @@
             });
 
         </script>
-    @endsection
-
-    @push('breadcrumb-plugins')
-        <a class="btn btn-sm btn-primary" href="{{ route('user.cabletv.history') }}"> <i class="ti ti-printer"></i> @lang('Subscription Log')</a>
-    @endpush
-    @push('script')
     @endpush
