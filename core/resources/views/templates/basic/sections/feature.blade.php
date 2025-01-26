@@ -6,7 +6,7 @@ $featureContent = getContent('feature.content', true);
 <!-- =========== features Section Start =========== -->
 <section class="pt-0 mt-3 gray-simple">
     <div class="container">
-        
+
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-10 col-md-12 col-sm-12 mb-5 wow animated fadeInUp">
                 <div class="sec-heading center">
@@ -17,7 +17,7 @@ $featureContent = getContent('feature.content', true);
                 </div>
             </div>
         </div>
-        
+
         <div class="row justify-content-center gy-xl-5 gy-lg-4 gy-5 gx-xl-5 gx-lg-4 gx-3">
             @forelse($featureElements as $item)
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
@@ -26,7 +26,7 @@ $featureContent = getContent('feature.content', true);
                         @php echo @$item->data_values->icon @endphp
                     </div>
                     <div class="benifits-title mt-3 mb-3">
-                        <h4 class="fs-5">{{ @$item->data_values->title }}</h4>	
+                        <h4 class="fs-5">{{ @$item->data_values->title }}</h4>
                     </div>
                     <div class="benifits-desc">
                         <p class="mb-0">{{ @$item->data_values->content }}</p>
@@ -34,14 +34,13 @@ $featureContent = getContent('feature.content', true);
                 </div>
             </div>
             @empty
-            {!!emptyData!!}
+            {!!"emptyData"!!}
             @endforelse
-             
+
         </div>
-        
+
     </div>
 </section>
 <div class="clearfix"></div>
-  
+
 <!-- =========== features Section End =========== -->
- 

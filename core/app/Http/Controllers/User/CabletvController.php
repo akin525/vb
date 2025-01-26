@@ -276,70 +276,44 @@ class CabletvController extends Controller
 
 
 
-    public function buy_cabletv_post()
+    public function buy_cabletv_post(Request $request)
     {
         $user = auth()->user();
-        $json = file_get_contents('php://input');
-        $input = json_decode($json, true);
-        $password = $input['password'];
-        $arr = explode("|", $input['plan'], 2);
-        $amount =  @$arr[1];
-        $plan = @$arr['0'];
-        $customername = $input['customername'];
-        $number = $input['number'];
-        $wallet = @$input['wallet'];
-        $decoder = @$input['decoder'];
 
-        if (Hash::check($password, $user->trx_password)) {
-            $passcheck = true;
-            } else {
-            $passcheck = false;
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'The password doesn\'t match!'],400);
+
+        $plan=Giftbills::where('id', $request->id)->first();
+        if (!$plan){
+            return response()->json("invalid CableID", Response::HTTP_BAD_REQUEST);
+
         }
-        $total = env('CABLECHARGE')+$amount;
-        $payment = $total;
-        if($wallet == 'main')
-        {
+        $payment=$plan->amount;
+
             $balance = $user->balance;
-        }
-        else
-        {
-            $balance = $user->ref_balance;
-        }
+
         if($payment > $balance)
         {
-            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
+            $mg='Insufficient wallet balance';
+            return response()->json($mg, Response::HTTP_BAD_REQUEST);
+//            return response()->json(['ok'=>false,'status'=>'danger','message'=> 'Insufficient wallet balance'],400);
         }
 
-        if($general->cabletv_provider == 'VTPASS')
-        {
-           return $this->buy_cabletv_vtpass($decoder,$wallet,$number,$customername,$plan,$amount,$payment);
-        }
-        if($general->cabletv_provider == 'N3TDATA')
-        {
-           return $this->buy_cabletv_n3t($decoder,$wallet,$number,$customername,$plan,$amount,$payment);
-        }
+        $provider=$request->product;
+        $number=$request->number;
+        $plan_id=$plan->plan_id;
+        $reference=$request->refid;
+
+           return $this->buy_cabletv_vtpass($provider, $number, $plan_id, $reference, $payment);
+
     }
 
-    public function buy_cabletv_vtpass($decoder,$wallet,$number,$customername,$plan,$amount,$payment)
+    public function buy_cabletv_vtpass($provider, $number, $plan_id, $reference, $payment)
     {
         $user = auth()->user();
-        $mode = env('MODE');
-        $username = env('VTPASSUSERNAME');
-        $password = env('VTPASSPASSWORD');
-        $str = $username.':'.$password;
-        $auth = base64_encode($str);
-        $datecode = date('Y').date('m').date('d').date('H').date('i').date('s');
-        $codex = substr(str_shuffle('01234567890') , 0 , 5 );
-        $trx = $datecode.$codex;
-        if($mode == 'TEST')
-        {
-        $url = 'https://sandbox.vtpass.com/api/pay';
-        }
-        else
-        {
-        $url = 'https://vtpass.com/api/pay';
-        }
+
+        $url = "https://giftbills.com/api/v1/tv/pay";
+        $auth = env('GIFTBILLS');
+
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => $url,
@@ -351,15 +325,15 @@ class CabletvController extends Controller
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS =>'{
-        "billersCode": "'.$number.'",
-        "phone": "'.$number.'",
-        "variation_code": "'.$plan.'",
-        "serviceID": "'.$decoder.'",
-        "request_id": "'.$trx.'"
+        "provider": "'.$provider.'",
+        "number": "'.$number.'",
+        "plan_id": "'.$plan_id.'",
+        "reference": "'.$reference.'",
         }',
       CURLOPT_HTTPHEADER => array(
-    'Authorization: Basic '.$auth,
-    'Content-Type: application/json',
+          'Authorization: Bearer '.$auth,
+          'MerchantId: '.env('GIFTBILLS_MID'),
+          'Content-Type: application/json',
       ),
     ));
 
@@ -367,59 +341,34 @@ class CabletvController extends Controller
     $response = $resp;
     $reply = json_decode($resp, true);
     curl_close($curl);
-    if(!isset($reply['code'] ))
-    {
-        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'],400);
-    }
 
-    if(isset($reply['content']['errors'] ))
-    {
-        return response()->json(['ok'=>false,'status'=>'danger','message'=> @json_encode($reply).'We cant processs this request at the moment'],400);
-    }
-
-    if($reply['code'] != "000")
-    {
-        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'],400);
-    }
-
-    if(!isset($reply['content']['transactions']['transactionId']))
-    {
-        return response()->json(['ok'=>false,'status'=>'danger','message'=> 'We cant processs this request at the moment'],400);
-    }
-        if($reply['code'] == 000)
+        if($reply['success'] == true)
         {
-            if($wallet == 'main')
-            {
+
                 $user->balance -= $payment;
                 $balance_after = $user->balance;
-            }
-            else
-            {
-                $user->ref_balance -= $payment;
-                $balance_after = $user->ref_balance;
-            }
-            //return $reply;
+
 
             $user->save();
             $order               = new Order();
             $order->user_id      = $user->id;
             $order->type         =  'cabletv';
-            $order->val_1   = $customername;
+            $order->val_1   = Auth::user()->name;
             $order->val_2   = $number;
-            $order->product_id   = @$decoder;
-            $order->product_name = @$plan;
-            $order->product_logo = @$decoder;
+            $order->product_id   = @$plan_id;
+            $order->product_name = @$plan_id;
+            $order->product_logo = @$plan_id;
             $order->details      = @json_encode($response,true);
             $order->quantity     = 1;
-            $order->price        = @$reply['content']['transactions']['amount'];
-            $order->currency     = @$reply['content']['transactions']['product_name'];
-            $order->status       = @$reply['content']['transactions']['status'];
+            $order->price        = @$payment;
+            $order->currency     = "NGN";
+            $order->status       = 1;
             $order->payment      = @$payment;
-            $order->trx          = @$trx;
-            $order->source       = $wallet;
-            $order->balance_before  = $balance;
+            $order->trx          = @$reference;
+            $order->source       = "wallet";
+            $order->balance_before  =0;
             $order->balance_after   = $balance_after;
-            $order->transaction_id  = @$reply['content']['transactions']['transactionId'];
+            $order->transaction_id  = @$reference;
             $order->save();
 
             $transaction               = new Transaction();
@@ -433,15 +382,6 @@ class CabletvController extends Controller
             $transaction->remark       = 'cabletv';
             $transaction->save();
 
-            notify($user,'CABLETV_BUY', [
-                'provider'        => @$decoder,
-                'amount'          => @showAmount($payment),
-                'product'         => @$plan,
-                'beneficiary'     => @$customername.'|Decoder:'.$number,
-                'rate'            => @showAmount($payment),
-                'purchase_at'     => @Carbon::now(),
-                'trx'             => @$trx,
-            ]);
 
             return response()->json(['ok'=>true,'status'=>'success','message'=> 'Transaction Was Successfull','orderid'=> $trx],200);
         }
