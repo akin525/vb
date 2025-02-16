@@ -23,26 +23,27 @@
 							</div>
 						</div>
 						<div class="nav-menus-wrapper" style="transition-property: none;">
-							<ul class="nav-menu"> 
-								<li><a href="{{ route('home') }}">@lang('Home')</a></li> 
-                                <li><a href="JavaScript:Void(0);">@lang('Pages')<span class="submenu-indicator"></span></a>
-									<ul class="nav-dropdown nav-submenu">
-										@php
-											$pages = App\Models\Page::where('tempname', $activeTemplate)
-												->where('is_default', 0)
-												->get();
-                                        //$pages = getContent('pages.element', null, false, true);
-                                        @endphp
-										@foreach ($pages as $k => $data)
-										<li>
-											<a href="{{ route('pages', [$data->slug]) }}">{{ __($data->name) }}</a>                                
-										</li>
-                                        @endforeach 
-										<li>
-											<a href="{{ route('rates') }}">@lang('Rates')</a>                                
-										</li>
-									</ul>
-								</li>
+							<ul class="nav-menu">
+								<li><a href="{{ route('home') }}">@lang('Home')</a></li>
+								<li><a href="{{ route('rates') }}">@lang('Rates')</a></li>
+{{--                                <li><a href="JavaScript:Void(0);">@lang('Pages')<span class="submenu-indicator"></span></a>--}}
+{{--									<ul class="nav-dropdown nav-submenu">--}}
+{{--										@php--}}
+{{--											$pages = App\Models\Page::where('tempname', $activeTemplate)--}}
+{{--												->where('is_default', 0)--}}
+{{--												->get();--}}
+{{--                                        //$pages = getContent('pages.element', null, false, true);--}}
+{{--                                        @endphp--}}
+{{--										@foreach ($pages as $k => $data)--}}
+{{--										<li>--}}
+{{--											<a href="{{ route('pages', [$data->slug]) }}">{{ __($data->name) }}</a>--}}
+{{--										</li>--}}
+{{--                                        @endforeach--}}
+{{--										<li>--}}
+{{--											<a href="{{ route('rates') }}">@lang('Rates')</a>--}}
+{{--										</li>--}}
+{{--									</ul>--}}
+{{--								</li>--}}
 								<li><a href="{{ route('contact') }}">@lang('Contact')</a></li>
 							</ul>
 							<ul class="nav-menu nav-menu-social align-to-right">
@@ -65,10 +66,10 @@
 						</div>
 					</nav>
 				</div>
-			</div> 
+			</div>
 			<!-- End Navigation -->
 			<div class="clearfix"></div>
 			<!-- ============================================================== -->
 			<!-- Top header  -->
 			<!-- ============================================================== -->
- 
+
